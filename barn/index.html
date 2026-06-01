@@ -653,12 +653,6 @@
             </div>
 
             <div class="setting-group">
-                <label for="videoPathsInput">Treat video(s) (comma-separated)</label>
-                <input type="text" id="videoPathsInput" placeholder="videos/treat.mp4, videos/treat-2.mp4">
-                <div class="hint">First playable video is used. Leave empty for always-text.</div>
-            </div>
-
-            <div class="setting-group">
                 <div class="checkbox-group">
                     <input type="checkbox" id="textModeOnly">
                     <label for="textModeOnly" style="margin:0;">Text-only mode (ignore videos)</label>
@@ -688,8 +682,8 @@
             counter: 0,
             decay: 0.05,
             baseProb: 0.5,
-            videoPaths: [],
-            textModeOnly: true,
+            videoPaths: ['videos/treat.mp4'],
+            textModeOnly: false,
             showCounter: false,
         };
 
@@ -721,7 +715,6 @@
         const counterInput = document.getElementById('counterInput');
         const decayInput = document.getElementById('decayInput');
         const baseProbInput = document.getElementById('baseProbInput');
-        const videoPathsInput = document.getElementById('videoPathsInput');
         const textModeOnlyCheck = document.getElementById('textModeOnly');
         const showCounterCheck = document.getElementById('showCounter');
         const confettiCanvas = document.getElementById('confettiCanvas');
@@ -841,22 +834,6 @@
                 resultVideo.src = src;
                 resultVideo.style.display = 'block';
                 resultVideo.load();
-
-                const ready = await new Promise(resolve => {
-                    const timeout = setTimeout(() => resolve(false), 12000);
-                    resultVideo.oncanplaythrough = () => { clearTimeout(timeout); resolve(true); };
-                    resultVideo.onerror = () => { clearTimeout(timeout); resolve(false); };
-                    // Firefox/Mobile Safari sometimes don't fire canplaythrough
-                    resultVideo.oncanplay = () => { clearTimeout(timeout); resolve(true); };
-                });
-
-                if (!ready) {
-                    resultVideo.style.display = 'none';
-                    resultVideo.src = '';
-                    resultVideo.load();
-                    continue;
-                }
-
                 try {
                     await resultVideo.play();
                     resultVideo.classList.add('visible');
@@ -864,8 +841,6 @@
                 } catch {
                     resultVideo.style.display = 'none';
                     resultVideo.classList.remove('visible');
-                    resultVideo.src = '';
-                    resultVideo.load();
                 }
             }
             return false;
@@ -961,7 +936,6 @@
             counterInput.value = state.counter;
             decayInput.value = state.decay;
             baseProbInput.value = state.baseProb;
-            videoPathsInput.value = state.videoPaths.join(', ');
             textModeOnlyCheck.checked = state.textModeOnly;
             showCounterCheck.checked = state.showCounter;
             settingsOverlay.classList.add('visible');
@@ -981,7 +955,6 @@
             const nb = parseFloat(baseProbInput.value);
             if (!isNaN(nb) && nb >= 0.05 && nb <= 1) state.baseProb = nb;
 
-            state.videoPaths = videoPathsInput.value.split(',').map(s => s.trim()).filter(Boolean);
             state.textModeOnly = textModeOnlyCheck.checked;
             state.showCounter = showCounterCheck.checked;
 
@@ -1055,8 +1028,8 @@
         // ---------- Init ----------
         updateUI();
         console.log('🐷 Barn Treats loaded!');
-        console.log('   Drop treat videos in videos/ and configure paths in settings.');
-        console.log('   Default: text mode is ON. Uncheck in settings to enable videos.');
+        console.log('   Looking for videos/treat.mp4 by default.');
+        console.log('   Fallback to text mode if no video is found.');
     })();
     </script>
 </body>
