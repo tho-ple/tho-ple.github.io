@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Barn Treats</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1a0f08">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+            --bg: #1a0f08;
+            --surface: #2c1810;
+            --surface2: #4a2c1a;
+            --accent: #cc3333;
+            --accent2: #d4a017;
+            --wood: #6B3A2A;
+            --text: #f5e6d3;
+            --text2: #c4a882;
+            --radius: 16px;
+            --font: Georgia, 'Times New Roman', Times, serif;
+        }
+        html, body {
+            height: 100%;
+            overflow: hidden;
+            font-family: var(--font);
+            background: var(--bg);
+            color: var(--text);
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            touch-action: manipulation;
+        }
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background:
+                radial-gradient(ellipse at 50% 0%, #1a3a1a 0%, transparent 50%),
+                radial-gradient(ellipse at 20% 100%, #1a0f08 0%, transparent 40%),
+                linear-gradient(180deg, #0d0805 0%, #1a0f08 40%, #2c1810 100%);
+        }
+
+        /* Fence decoration at bottom */
+        #fence {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 32px;
+            background:
+                linear-gradient(90deg,
+                    #5a3a1a 0%, #5a3a1a 12%, transparent 12%, transparent 13%,
+                    #5a3a1a 13%, #5a3a1a 25%, transparent 25%, transparent 26%,
+                    #5a3a1a 26%, #5a3a1a 38%, transparent 38%, transparent 39%,
+                    #5a3a1a 39%, #5a3a1a 51%, transparent 51%, transparent 52%,
+                    #5a3a1a 52%, #5a3a1a 64%, transparent 64%, transparent 65%,
+                    #5a3a1a 65%, #5a3a1a 77%, transparent 77%, transparent 78%,
+                    #5a3a1a 78%, #5a3a1a 90%, transparent 90%, transparent 91%,
+                    #5a3a1a 91%, #5a3a1a 100%),
+                linear-gradient(180deg, transparent calc(100% - 8px), #3a2210 calc(100% - 8px));
+            border-top: 2px solid #3a2210;
+            z-index: 0;
+            pointer-events: none;
+        }
+        #fence::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(90deg,
+                    #8B6914 1px, transparent 1px,
+                    transparent 12.5%, #8B6914 12.5%, #8B6914 calc(12.5% + 1px), transparent calc(12.5% + 1px),
+                    transparent 25%, #8B6914 25%, #8B6914 calc(25% + 1px), transparent calc(25% + 1px),
+                    transparent 37.5%, #8B6914 37.5%, #8B6914 calc(37.5% + 1px), transparent calc(37.5% + 1px),
+                    transparent 50%, #8B6914 50%, #8B6914 calc(50% + 1px), transparent calc(50% + 1px),
+                    transparent 62.5%, #8B6914 62.5%, #8B6914 calc(62.5% + 1px), transparent calc(62.5% + 1px),
+                    transparent 75%, #8B6914 75%, #8B6914 calc(75% + 1px), transparent calc(75% + 1px),
+                    transparent 87.5%, #8B6914 87.5%, #8B6914 calc(87.5% + 1px), transparent calc(87.5% + 1px));
+        }
+
+        #app {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            padding: 24px 24px 56px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Settings icon - barn style */
+        #settingsBtn {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 44px;
+            height: 44px;
+            border: 2px solid var(--accent2);
+            background: var(--surface);
+            color: var(--accent2);
+            font-size: 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font);
+        }
+        #settingsBtn:hover, #settingsBtn:focus-visible {
+            background: var(--surface2);
+        }
+        #settingsBtn:active {
+            transform: scale(0.92);
+        }
+
+        /* Wood plank title bar */
+        #titleBar {
+            background:
+                linear-gradient(180deg, #3a2210, #2c1810);
+            border: 2px solid #5a3a1a;
+            border-radius: 8px;
+            padding: 8px 24px;
+            margin-bottom: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+            position: relative;
+        }
+        #titleBar::before {
+            content: '';
+            position: absolute;
+            inset: 2px;
+            border-radius: 4px;
+            background:
+                repeating-linear-gradient(
+                    90deg,
+                    transparent, transparent 20px,
+                    rgba(255,255,255,0.02) 20px, rgba(255,255,255,0.02) 21px
+                );
+            pointer-events: none;
+        }
+        #title {
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: var(--accent2);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        }
+
+        #subtitle {
+            font-size: 14px;
+            color: var(--text2);
+            margin-bottom: 28px;
+            text-align: center;
+            line-height: 1.5;
+            font-style: italic;
+            transition: opacity 0.3s;
+        }
+
+        /* Main button - barn wheel / hay bale */
+        #treatButton {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 6px solid var(--accent2);
+            background:
+                radial-gradient(circle at 40% 35%, #5a3a1a, #2c1810 60%, #1a0f08);
+            color: var(--accent2);
+            font-size: 60px;
+            cursor: pointer;
+            position: relative;
+            transition: transform 0.15s, box-shadow 0.15s;
+            box-shadow:
+                0 0 30px rgba(212, 160, 23, 0.12),
+                0 0 60px rgba(212, 160, 23, 0.05),
+                inset 0 -20px 40px rgba(0,0,0,0.4),
+                inset 0 20px 40px rgba(255,255,255,0.03);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        /* Rope-like decoration around button */
+        #treatButton::before {
+            content: '';
+            position: absolute;
+            inset: -12px;
+            border-radius: 50%;
+            border: 2px dashed rgba(212, 160, 23, 0.2);
+            animation: rope-turn 20s linear infinite;
+        }
+        @keyframes rope-turn {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        /* Outer glow ring */
+        #treatButton::after {
+            content: '';
+            position: absolute;
+            inset: -8px;
+            border-radius: 50%;
+            border: 1px solid rgba(212, 160, 23, 0.12);
+            animation: pulse-ring 3s ease-in-out infinite;
+        }
+        @keyframes pulse-ring {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.06); opacity: 0.3; }
+        }
+        #treatButton:hover, #treatButton:focus-visible {
+            box-shadow:
+                0 0 50px rgba(212, 160, 23, 0.2),
+                0 0 80px rgba(212, 160, 23, 0.08),
+                inset 0 -20px 40px rgba(0,0,0,0.4),
+                inset 0 20px 40px rgba(255,255,255,0.05);
+        }
+        #treatButton:active {
+            transform: scale(0.95);
+        }
+        #treatButton .label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+        #treatButton .label span:first-child {
+            font-size: 52px;
+            line-height: 1;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+        #treatButton .label span:last-child {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--accent2);
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+        }
+
+        /* Rolling indicator */
+        #rollingIndicator {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            background: var(--surface);
+            border: 1px solid var(--surface2);
+            border-radius: 24px;
+            padding: 8px 20px;
+        }
+        #rollingIndicator.visible {
+            display: flex;
+        }
+        .rolling-emoji {
+            font-size: 28px;
+            animation: roll-bounce 0.15s steps(1) infinite;
+        }
+        @keyframes roll-bounce {
+            0% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.2) rotate(15deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+
+        /* Result overlay */
+        #resultOverlay {
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at center, rgba(44,24,16,0.95) 0%, rgba(13,8,5,0.97) 100%);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        #resultOverlay.visible {
+            display: flex;
+            opacity: 1;
+        }
+        #resultContent {
+            text-align: center;
+            max-width: 90vw;
+            max-height: 85vh;
+            animation: result-enter 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+        }
+        @keyframes result-enter {
+            0% { transform: scale(0.6) translateY(30px); opacity: 0; }
+            100% { transform: scale(1) translateY(0); opacity: 1; }
+        }
+        #resultVideo {
+            max-width: 100%;
+            max-height: 55vh;
+            border-radius: var(--radius);
+            display: none;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.6), 0 0 0 2px var(--surface2);
+            margin-bottom: 16px;
+        }
+        #resultVideo.visible {
+            display: block;
+        }
+        #resultEmoji {
+            font-size: 72px;
+            margin-bottom: 12px;
+            display: block;
+            filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+        }
+        #resultTitle {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        #resultTitle.treat {
+            color: var(--accent2);
+        }
+        #resultTitle.notreat {
+            color: var(--text2);
+        }
+        #resultMessage {
+            font-size: 16px;
+            color: var(--text2);
+            margin-top: 4px;
+            line-height: 1.5;
+            font-style: italic;
+        }
+        #resultDismiss {
+            margin-top: 24px;
+            padding: 10px 32px;
+            border: 2px solid var(--accent2);
+            border-radius: 24px;
+            background: transparent;
+            color: var(--accent2);
+            font-size: 14px;
+            font-family: var(--font);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        #resultDismiss:hover {
+            background: rgba(212, 160, 23, 0.12);
+        }
+        #resultDismiss.hidden {
+            display: none;
+        }
+
+        /* Confetti canvas */
+        #confettiCanvas {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 101;
+        }
+
+        /* Settings modal - farm style */
+        #settingsOverlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 200;
+        }
+        #settingsOverlay.visible {
+            display: flex;
+        }
+        #settingsModal {
+            background:
+                linear-gradient(180deg, #3a2210, #2c1810);
+            border: 2px solid #5a3a1a;
+            border-radius: var(--radius);
+            padding: 32px;
+            width: 360px;
+            max-width: 92vw;
+            max-height: 85vh;
+            overflow-y: auto;
+            animation: modal-enter 0.3s ease;
+            box-shadow: 0 16px 64px rgba(0,0,0,0.6);
+            position: relative;
+        }
+        #settingsModal::before {
+            content: '';
+            position: absolute;
+            inset: 2px;
+            border-radius: 12px;
+            background:
+                repeating-linear-gradient(
+                    90deg,
+                    transparent, transparent 30px,
+                    rgba(255,255,255,0.015) 30px, rgba(255,255,255,0.015) 31px
+                );
+            pointer-events: none;
+        }
+        @keyframes modal-enter {
+            0% { transform: scale(0.9) translateY(20px); opacity: 0; }
+            100% { transform: scale(1) translateY(0); opacity: 1; }
+        }
+        #settingsModal h2 {
+            font-size: 18px;
+            margin-bottom: 24px;
+            color: var(--accent2);
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        }
+        .setting-group {
+            margin-bottom: 18px;
+        }
+        .setting-group label {
+            display: block;
+            font-size: 13px;
+            color: var(--text2);
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+        .setting-group input[type="number"],
+        .setting-group input[type="text"] {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 8px;
+            background: rgba(0,0,0,0.3);
+            color: var(--text);
+            font-size: 15px;
+            font-family: var(--font);
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .setting-group input[type="number"]:focus,
+        .setting-group input[type="text"]:focus {
+            border-color: var(--accent2);
+        }
+        .setting-group .hint {
+            font-size: 11px;
+            color: var(--text2);
+            margin-top: 4px;
+            opacity: 0.7;
+        }
+        .setting-group .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 4px;
+        }
+        .setting-group .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--accent2);
+        }
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 24px;
+        }
+        .modal-buttons button {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            font-family: var(--font);
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .modal-buttons button:active {
+            transform: scale(0.97);
+        }
+        .modal-buttons .btn-primary {
+            background: var(--accent2);
+            color: #1a0f08;
+        }
+        .modal-buttons .btn-primary:hover {
+            background: #e8b830;
+        }
+        .modal-buttons .btn-secondary {
+            background: var(--surface2);
+            color: var(--text);
+        }
+        .modal-buttons .btn-secondary:hover {
+            background: #5a3a2a;
+        }
+        .modal-buttons .btn-danger {
+            background: #5a1a1a;
+            color: var(--text);
+        }
+        .modal-buttons .btn-danger:hover {
+            background: #7a2020;
+        }
+        .modal-close {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: none;
+            border: none;
+            color: var(--text2);
+            font-size: 22px;
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+            z-index: 1;
+        }
+        .modal-close:hover {
+            background: rgba(255,255,255,0.08);
+        }
+
+        /* Text mode badge */
+        #modeBadge {
+            position: absolute;
+            bottom: 56px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 11px;
+            color: var(--text2);
+            opacity: 0.6;
+            letter-spacing: 1px;
+            font-style: italic;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            #treatButton {
+                width: 160px;
+                height: 160px;
+                font-size: 48px;
+            }
+            #treatButton .label span:first-child {
+                font-size: 40px;
+            }
+            #resultEmoji {
+                font-size: 56px;
+            }
+            #resultTitle {
+                font-size: 22px;
+            }
+            #settingsModal {
+                padding: 24px;
+            }
+        }
+        @media (max-height: 640px) {
+            #treatButton {
+                width: 130px;
+                height: 130px;
+            }
+            #treatButton .label span:first-child {
+                font-size: 32px;
+            }
+            #subtitle {
+                margin-bottom: 20px;
+            }
+            #titleBar {
+                padding: 5px 16px;
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--surface2);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div id="fence"></div>
+
+    <div id="app">
+        <button id="settingsBtn" aria-label="Settings">&#9881;</button>
+
+        <div id="titleBar">
+            <div id="title">Barn Treats</div>
+        </div>
+        <div id="subtitle">Give the piggy a pat when you deserve a treat</div>
+
+        <div id="rollingIndicator">
+            <span class="rolling-emoji">&#127920;</span>
+            <span style="color:var(--text2);font-size:14px;">The pig is thinkin&rsquo;...</span>
+        </div>
+
+        <button id="treatButton">
+            <span class="label">
+                <span>&#128056;</span>
+                <span>PET ME</span>
+            </span>
+        </button>
+
+        <div id="modeBadge">text mode</div>
+    </div>
+
+    <!-- Result overlay -->
+    <div id="resultOverlay">
+        <div id="resultContent">
+            <video id="resultVideo" playsinline muted></video>
+            <div id="resultEmoji"></div>
+            <div id="resultTitle"></div>
+            <div id="resultMessage"></div>
+            <button id="resultDismiss">Back to barn</button>
+        </div>
+    </div>
+    <canvas id="confettiCanvas" width="0" height="0"></canvas>
+
+    <!-- Settings -->
+    <div id="settingsOverlay">
+        <div id="settingsModal">
+            <button class="modal-close" id="settingsClose">&times;</button>
+            <h2>Barn Settings</h2>
+
+            <div class="setting-group">
+                <label for="counterInput">Hidden Counter</label>
+                <input type="number" id="counterInput" min="0" step="1">
+                <div class="hint">Total clicks so far. Higher = treats get rarer.</div>
+            </div>
+
+            <div class="setting-group">
+                <label for="decayInput">Hunger (higher = harder to get treats)</label>
+                <input type="number" id="decayInput" min="0.01" max="1" step="0.01" value="0.05">
+                <div class="hint">How fast treat chance drops (0.01 = slow, 0.2 = fast)</div>
+            </div>
+
+            <div class="setting-group">
+                <label for="baseProbInput">Starting Treat Chance</label>
+                <input type="number" id="baseProbInput" min="0.05" max="1" step="0.05" value="0.5">
+                <div class="hint">0.05 = 5%, 1.0 = 100% — odds on your first click</div>
+            </div>
+
+            <div class="setting-group">
+                <label for="videoPathsInput">Treat video(s) (comma-separated)</label>
+                <input type="text" id="videoPathsInput" placeholder="videos/treat.mp4, videos/treat-2.mp4">
+                <div class="hint">First playable video is used. Leave empty for always-text.</div>
+            </div>
+
+            <div class="setting-group">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="textModeOnly">
+                    <label for="textModeOnly" style="margin:0;">Text-only mode (ignore videos)</label>
+                </div>
+            </div>
+
+            <div class="setting-group">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="showCounter">
+                    <label for="showCounter" style="margin:0;">Show counter on screen</label>
+                </div>
+            </div>
+
+            <div class="modal-buttons">
+                <button class="btn-primary" id="settingsSave">Save</button>
+                <button class="btn-secondary" id="settingsCancel">Cancel</button>
+                <button class="btn-danger" id="settingsReset">Reset All</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    (function() {
+        'use strict';
+
+        const DEFAULTS = {
+            counter: 0,
+            decay: 0.05,
+            baseProb: 0.5,
+            videoPaths: [],
+            textModeOnly: true,
+            showCounter: false,
+        };
+
+        const STORAGE_KEY = 'treat-button-state';
+
+        let state = loadState();
+        let isAnimating = false;
+        let rollingInterval = null;
+
+        // DOM refs
+        const btn = document.getElementById('treatButton');
+        const subtitleEl = document.getElementById('subtitle');
+        const modeBadge = document.getElementById('modeBadge');
+        const btnLabel = btn.querySelector('.label span:last-child');
+        const btnEmoji = btn.querySelector('.label span:first-child');
+        const resultOverlay = document.getElementById('resultOverlay');
+        const resultVideo = document.getElementById('resultVideo');
+        const resultEmoji = document.getElementById('resultEmoji');
+        const resultTitle = document.getElementById('resultTitle');
+        const resultMessage = document.getElementById('resultMessage');
+        const resultDismiss = document.getElementById('resultDismiss');
+        const rollingIndicator = document.getElementById('rollingIndicator');
+        const settingsOverlay = document.getElementById('settingsOverlay');
+        const settingsBtn = document.getElementById('settingsBtn');
+        const settingsClose = document.getElementById('settingsClose');
+        const settingsSave = document.getElementById('settingsSave');
+        const settingsCancel = document.getElementById('settingsCancel');
+        const settingsReset = document.getElementById('settingsReset');
+        const counterInput = document.getElementById('counterInput');
+        const decayInput = document.getElementById('decayInput');
+        const baseProbInput = document.getElementById('baseProbInput');
+        const videoPathsInput = document.getElementById('videoPathsInput');
+        const textModeOnlyCheck = document.getElementById('textModeOnly');
+        const showCounterCheck = document.getElementById('showCounter');
+        const confettiCanvas = document.getElementById('confettiCanvas');
+
+        function loadState() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (raw) {
+                    const parsed = JSON.parse(raw);
+                    return { ...DEFAULTS, ...parsed };
+                }
+            } catch (e) {}
+            return { ...DEFAULTS };
+        }
+
+        function saveState() {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+            } catch (e) {}
+        }
+
+        // ---------- Probability ----------
+        function getTreatProbability() {
+            const p = state.baseProb / (1 + state.counter * state.decay);
+            return Math.max(0.02, Math.min(0.99, p));
+        }
+
+        function isTreat() {
+            return Math.random() < getTreatProbability();
+        }
+
+        // ---------- Confetti (farm colors) ----------
+        function launchConfetti() {
+            const canvas = confettiCanvas;
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const colors = ['#d4a017', '#cc3333', '#228B22', '#8B6914', '#f5e6d3', '#cd5c5c'];
+            const particles = [];
+            const count = 120;
+
+            for (let i = 0; i < count; i++) {
+                particles.push({
+                    x: canvas.width * 0.5 + (Math.random() - 0.5) * 120,
+                    y: canvas.height * 0.3,
+                    vx: (Math.random() - 0.5) * 14,
+                    vy: -Math.random() * 16 - 4,
+                    w: Math.random() * 10 + 3,
+                    h: Math.random() * 6 + 3,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    rotation: Math.random() * 360,
+                    rotSpeed: (Math.random() - 0.5) * 12,
+                    gravity: 0.3 + Math.random() * 0.15,
+                    drag: 0.99,
+                });
+            }
+
+            let frame = 0;
+            const maxFrames = 200;
+
+            function animate() {
+                if (frame >= maxFrames) {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    return;
+                }
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                for (const p of particles) {
+                    p.vy += p.gravity;
+                    p.vx *= p.drag;
+                    p.vy *= p.drag;
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.rotation += p.rotSpeed;
+
+                    ctx.save();
+                    ctx.translate(p.x, p.y);
+                    ctx.rotate(p.rotation * Math.PI / 180);
+                    ctx.fillStyle = p.color;
+                    ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+                    ctx.restore();
+                }
+
+                frame++;
+                requestAnimationFrame(animate);
+            }
+            animate();
+        }
+
+        // ---------- Rolling animation ----------
+        function startRolling() {
+            const emojis = ['🐷', '🐮', '🐔', '🐴', '🌾', '🚜', '🌽', '🐑', '🍎', '🧀'];
+            let idx = 0;
+            rollingIndicator.classList.add('visible');
+            rollingIndicator.querySelector('.rolling-emoji').textContent = emojis[0];
+
+            rollingInterval = setInterval(() => {
+                idx = (idx + 1) % emojis.length;
+                rollingIndicator.querySelector('.rolling-emoji').textContent = emojis[idx];
+            }, 100);
+        }
+
+        function stopRolling() {
+            rollingIndicator.classList.remove('visible');
+            if (rollingInterval) {
+                clearInterval(rollingInterval);
+                rollingInterval = null;
+            }
+        }
+
+        // ---------- Video playback ----------
+        async function tryPlayVideo(paths) {
+            for (const p of paths) {
+                const src = p.trim();
+                if (!src) continue;
+                resultVideo.src = src;
+                resultVideo.style.display = 'block';
+                resultVideo.load();
+                try {
+                    await resultVideo.play();
+                    resultVideo.classList.add('visible');
+                    return true;
+                } catch {
+                    resultVideo.style.display = 'none';
+                    resultVideo.classList.remove('visible');
+                }
+            }
+            return false;
+        }
+
+        // ---------- Handle click ----------
+        async function handleClick() {
+            if (isAnimating) return;
+            isAnimating = true;
+
+            state.counter++;
+            saveState();
+            updateUI();
+
+            btnEmoji.textContent = '🐖';
+            startRolling();
+
+            const treat = isTreat();
+
+            // Anticipation
+            const delay = 1200 + Math.random() * 800;
+            await new Promise(r => setTimeout(r, delay));
+            stopRolling();
+
+            // Reset overlay
+            resultVideo.classList.remove('visible');
+            resultVideo.pause();
+            resultVideo.src = '';
+            resultVideo.style.display = '';
+            resultDismiss.classList.remove('hidden');
+
+            // No-treat is always text
+            if (!treat) {
+                resultEmoji.textContent = '😔';
+                resultTitle.textContent = 'No treat today';
+                resultTitle.className = 'notreat';
+                resultMessage.textContent = 'The piggy is sleeping. Try again later.';
+                resultOverlay.classList.add('visible');
+                btnEmoji.textContent = '😔';
+            } else {
+                // Treat — try video unless text-only mode
+                let videoPlayed = false;
+                if (!state.textModeOnly && state.videoPaths.length > 0) {
+                    videoPlayed = await tryPlayVideo(state.videoPaths);
+                }
+
+                if (videoPlayed) {
+                    resultEmoji.textContent = '';
+                    resultTitle.textContent = '';
+                    resultTitle.className = '';
+                    resultMessage.textContent = '';
+                    resultDismiss.classList.add('hidden');
+
+                    resultVideo.addEventListener('ended', () => {
+                        resultDismiss.classList.remove('hidden');
+                    }, { once: true });
+
+                    setTimeout(() => {
+                        resultDismiss.classList.remove('hidden');
+                    }, 8000);
+                } else {
+                    resultEmoji.textContent = '🐷';
+                    resultTitle.textContent = 'TREAT TIME!';
+                    resultTitle.className = 'treat';
+                    resultMessage.textContent = 'The piggy loves you! Have a treat.';
+                }
+
+                launchConfetti();
+                resultOverlay.classList.add('visible');
+                btnEmoji.textContent = '🎉';
+            }
+
+            setTimeout(() => {
+                if (!isAnimating) btnEmoji.textContent = '🐷';
+            }, 1500);
+
+            isAnimating = false;
+        }
+
+        // ---------- Dismiss ----------
+        function dismissResult() {
+            resultOverlay.classList.remove('visible');
+            resultVideo.pause();
+            resultVideo.src = '';
+            resultVideo.classList.remove('visible');
+            resultVideo.style.display = '';
+            resultDismiss.classList.remove('hidden');
+            btnEmoji.textContent = '🐷';
+        }
+
+        // ---------- Settings ----------
+        function openSettings() {
+            counterInput.value = state.counter;
+            decayInput.value = state.decay;
+            baseProbInput.value = state.baseProb;
+            videoPathsInput.value = state.videoPaths.join(', ');
+            textModeOnlyCheck.checked = state.textModeOnly;
+            showCounterCheck.checked = state.showCounter;
+            settingsOverlay.classList.add('visible');
+        }
+
+        function closeSettings() {
+            settingsOverlay.classList.remove('visible');
+        }
+
+        function saveSettings() {
+            const nc = parseInt(counterInput.value, 10);
+            if (!isNaN(nc) && nc >= 0) state.counter = nc;
+
+            const nd = parseFloat(decayInput.value);
+            if (!isNaN(nd) && nd >= 0.01 && nd <= 1) state.decay = nd;
+
+            const nb = parseFloat(baseProbInput.value);
+            if (!isNaN(nb) && nb >= 0.05 && nb <= 1) state.baseProb = nb;
+
+            state.videoPaths = videoPathsInput.value.split(',').map(s => s.trim()).filter(Boolean);
+            state.textModeOnly = textModeOnlyCheck.checked;
+            state.showCounter = showCounterCheck.checked;
+
+            saveState();
+            updateUI();
+            closeSettings();
+        }
+
+        function resetAll() {
+            if (confirm('Reset everything? Counter and all settings will be cleared.')) {
+                state = { ...DEFAULTS };
+                saveState();
+                closeSettings();
+                updateUI();
+            }
+        }
+
+        // ---------- UI update ----------
+        function updateUI() {
+            subtitleEl.textContent = state.showCounter
+                ? `Give the piggy a pat when you deserve a treat · ${state.counter} pats`
+                : 'Give the piggy a pat when you deserve a treat';
+
+            if (state.textModeOnly || state.videoPaths.length === 0) {
+                modeBadge.textContent = 'text mode';
+            } else {
+                modeBadge.textContent = '🎬 video ready';
+            }
+        }
+
+        // ---------- Keyboard ----------
+        document.addEventListener('keydown', (e) => {
+            if (e.key === ' ' || e.key === 'Enter') {
+                if (settingsOverlay.classList.contains('visible')) {
+                    if (e.key === 'Enter') saveSettings();
+                    return;
+                }
+                if (resultOverlay.classList.contains('visible')) {
+                    dismissResult();
+                    return;
+                }
+                e.preventDefault();
+                handleClick();
+            }
+            if (e.key === 'Escape') {
+                if (resultOverlay.classList.contains('visible')) dismissResult();
+                if (settingsOverlay.classList.contains('visible')) closeSettings();
+            }
+        });
+
+        // ---------- Events ----------
+        btn.addEventListener('click', handleClick);
+        resultDismiss.addEventListener('click', dismissResult);
+        resultOverlay.addEventListener('click', (e) => {
+            if (e.target === resultOverlay) dismissResult();
+        });
+        settingsBtn.addEventListener('click', openSettings);
+        settingsClose.addEventListener('click', closeSettings);
+        settingsCancel.addEventListener('click', closeSettings);
+        settingsOverlay.addEventListener('click', (e) => {
+            if (e.target === settingsOverlay) closeSettings();
+        });
+        settingsSave.addEventListener('click', saveSettings);
+        settingsReset.addEventListener('click', resetAll);
+
+        window.addEventListener('resize', () => {
+            confettiCanvas.width = window.innerWidth;
+            confettiCanvas.height = window.innerHeight;
+        });
+
+        // ---------- Init ----------
+        updateUI();
+        console.log('🐷 Barn Treats loaded!');
+        console.log('   Drop treat videos in videos/ and configure paths in settings.');
+        console.log('   Default: text mode is ON. Uncheck in settings to enable videos.');
+    })();
+    </script>
+</body>
+</html>
