@@ -841,6 +841,22 @@
                 resultVideo.src = src;
                 resultVideo.style.display = 'block';
                 resultVideo.load();
+
+                const ready = await new Promise(resolve => {
+                    const timeout = setTimeout(() => resolve(false), 12000);
+                    resultVideo.oncanplaythrough = () => { clearTimeout(timeout); resolve(true); };
+                    resultVideo.onerror = () => { clearTimeout(timeout); resolve(false); };
+                    // Firefox/Mobile Safari sometimes don't fire canplaythrough
+                    resultVideo.oncanplay = () => { clearTimeout(timeout); resolve(true); };
+                });
+
+                if (!ready) {
+                    resultVideo.style.display = 'none';
+                    resultVideo.src = '';
+                    resultVideo.load();
+                    continue;
+                }
+
                 try {
                     await resultVideo.play();
                     resultVideo.classList.add('visible');
@@ -848,6 +864,8 @@
                 } catch {
                     resultVideo.style.display = 'none';
                     resultVideo.classList.remove('visible');
+                    resultVideo.src = '';
+                    resultVideo.load();
                 }
             }
             return false;
