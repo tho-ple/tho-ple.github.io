@@ -1,9 +1,11 @@
-const CACHE = 'treat-button-v1';
+const CACHE = 'barn-treats-v1';
 const ASSETS = [
-    '/',
-    '/index.html',
-    '/manifest.json',
-    '/sw.js',
+    './',
+    './index.html',
+    './manifest.json',
+    './sw.js',
+    './icon-192.png',
+    './icon-512.png',
 ];
 
 self.addEventListener('install', (event) => {
