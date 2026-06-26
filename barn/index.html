@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Barn Treats</title>
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#1a0f08">
+    <meta name="theme-color" content="#f7f2ec">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <style>
@@ -15,15 +15,16 @@
             box-sizing: border-box;
         }
         :root {
-            --bg: #1a0f08;
-            --surface: #2c1810;
-            --surface2: #4a2c1a;
-            --accent: #cc3333;
-            --accent2: #d4a017;
-            --wood: #6B3A2A;
-            --text: #f5e6d3;
-            --text2: #c4a882;
-            --radius: 16px;
+            --bg: #f2efe8;
+            --surface: #ece4d6;
+            --surface2: #ddd0be;
+            --accent: #e8bc9e;
+            --accent2: #dbb88a;
+            --wood: #d4c4a8;
+            --grass: #c8d8b8;
+            --text: #4a3f35;
+            --text2: #9a8a7a;
+            --radius: 14px;
             --font: Georgia, 'Times New Roman', Times, serif;
         }
         html, body {
@@ -41,47 +42,44 @@
             align-items: center;
             justify-content: center;
             background:
-                radial-gradient(ellipse at 50% 0%, #1a3a1a 0%, transparent 50%),
-                radial-gradient(ellipse at 20% 100%, #1a0f08 0%, transparent 40%),
-                linear-gradient(180deg, #0d0805 0%, #1a0f08 40%, #2c1810 100%);
+                radial-gradient(ellipse at 50% 0%, #ece4d6 0%, transparent 60%),
+                radial-gradient(ellipse at 50% 105%, var(--grass) 0%, transparent 50%);
+            background-color: var(--bg);
         }
 
-        /* Fence decoration at bottom */
-        #fence {
+        /* Grass strip at bottom */
+        #grass {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            height: 32px;
-            background:
-                linear-gradient(90deg,
-                    #5a3a1a 0%, #5a3a1a 12%, transparent 12%, transparent 13%,
-                    #5a3a1a 13%, #5a3a1a 25%, transparent 25%, transparent 26%,
-                    #5a3a1a 26%, #5a3a1a 38%, transparent 38%, transparent 39%,
-                    #5a3a1a 39%, #5a3a1a 51%, transparent 51%, transparent 52%,
-                    #5a3a1a 52%, #5a3a1a 64%, transparent 64%, transparent 65%,
-                    #5a3a1a 65%, #5a3a1a 77%, transparent 77%, transparent 78%,
-                    #5a3a1a 78%, #5a3a1a 90%, transparent 90%, transparent 91%,
-                    #5a3a1a 91%, #5a3a1a 100%),
-                linear-gradient(180deg, transparent calc(100% - 8px), #3a2210 calc(100% - 8px));
-            border-top: 2px solid #3a2210;
+            height: 40px;
+            background: linear-gradient(180deg, var(--grass), #b8c8a8);
             z-index: 0;
             pointer-events: none;
         }
-        #fence::before {
-            content: '';
-            position: absolute;
-            inset: 0;
+
+        /* Wooden fence */
+        #fence {
+            position: fixed;
+            bottom: 32px;
+            left: 0;
+            right: 0;
+            height: 20px;
             background:
                 linear-gradient(90deg,
-                    #8B6914 1px, transparent 1px,
-                    transparent 12.5%, #8B6914 12.5%, #8B6914 calc(12.5% + 1px), transparent calc(12.5% + 1px),
-                    transparent 25%, #8B6914 25%, #8B6914 calc(25% + 1px), transparent calc(25% + 1px),
-                    transparent 37.5%, #8B6914 37.5%, #8B6914 calc(37.5% + 1px), transparent calc(37.5% + 1px),
-                    transparent 50%, #8B6914 50%, #8B6914 calc(50% + 1px), transparent calc(50% + 1px),
-                    transparent 62.5%, #8B6914 62.5%, #8B6914 calc(62.5% + 1px), transparent calc(62.5% + 1px),
-                    transparent 75%, #8B6914 75%, #8B6914 calc(75% + 1px), transparent calc(75% + 1px),
-                    transparent 87.5%, #8B6914 87.5%, #8B6914 calc(87.5% + 1px), transparent calc(87.5% + 1px));
+                    var(--wood) 0%, var(--wood) 10%, transparent 10%, transparent 11%,
+                    var(--wood) 11%, var(--wood) 21%, transparent 21%, transparent 22%,
+                    var(--wood) 22%, var(--wood) 32%, transparent 32%, transparent 33%,
+                    var(--wood) 33%, var(--wood) 43%, transparent 43%, transparent 44%,
+                    var(--wood) 44%, var(--wood) 54%, transparent 54%, transparent 55%,
+                    var(--wood) 55%, var(--wood) 65%, transparent 65%, transparent 66%,
+                    var(--wood) 66%, var(--wood) 76%, transparent 76%, transparent 77%,
+                    var(--wood) 77%, var(--wood) 87%, transparent 87%, transparent 88%,
+                    var(--wood) 88%, var(--wood) 100%),
+                linear-gradient(180deg, transparent calc(100% - 6px), var(--surface2) calc(100% - 6px));
+            z-index: 0;
+            pointer-events: none;
         }
 
         #app {
@@ -91,22 +89,22 @@
             justify-content: center;
             width: 100%;
             height: 100%;
-            padding: 24px 24px 56px;
+            padding: 24px 24px 72px;
             position: relative;
             z-index: 1;
         }
 
-        /* Settings icon - barn style */
+        /* Settings icon */
         #settingsBtn {
             position: absolute;
             top: 16px;
             right: 16px;
-            width: 44px;
-            height: 44px;
-            border: 2px solid var(--accent2);
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--surface2);
             background: var(--surface);
-            color: var(--accent2);
-            font-size: 20px;
+            color: var(--text2);
+            font-size: 18px;
             border-radius: 8px;
             cursor: pointer;
             transition: background 0.2s, transform 0.2s;
@@ -125,125 +123,72 @@
 
         /* Wood plank title bar */
         #titleBar {
-            background:
-                linear-gradient(180deg, #3a2210, #2c1810);
-            border: 2px solid #5a3a1a;
+            background: var(--surface);
+            border: 1px solid var(--surface2);
             border-radius: 8px;
             padding: 8px 24px;
             margin-bottom: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.4);
-            position: relative;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
         }
         #titleBar::before {
-            content: '';
-            position: absolute;
-            inset: 2px;
-            border-radius: 4px;
-            background:
-                repeating-linear-gradient(
-                    90deg,
-                    transparent, transparent 20px,
-                    rgba(255,255,255,0.02) 20px, rgba(255,255,255,0.02) 21px
-                );
-            pointer-events: none;
+            display: none;
         }
         #title {
             font-size: 14px;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 4px;
-            color: var(--accent2);
-            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+            color: var(--text2);
         }
 
         #subtitle {
             font-size: 14px;
             color: var(--text2);
-            margin-bottom: 28px;
+            margin-bottom: 24px;
             text-align: center;
             line-height: 1.5;
             font-style: italic;
             transition: opacity 0.3s;
         }
 
-        /* Main button - barn wheel / hay bale */
+        /* Main button */
         #treatButton {
-            width: 200px;
-            height: 200px;
+            width: 180px;
+            height: 180px;
             border-radius: 50%;
-            border: 6px solid var(--accent2);
+            border: 3px solid var(--accent2);
             background:
-                radial-gradient(circle at 40% 35%, #5a3a1a, #2c1810 60%, #1a0f08);
-            color: var(--accent2);
-            font-size: 60px;
+                radial-gradient(circle at 40% 35%, #f5e6d3, var(--surface) 60%, var(--surface2));
+            font-size: 64px;
             cursor: pointer;
             position: relative;
-            transition: transform 0.15s, box-shadow 0.15s;
+            transition: transform 0.15s, box-shadow 0.2s;
             box-shadow:
-                0 0 30px rgba(212, 160, 23, 0.12),
-                0 0 60px rgba(212, 160, 23, 0.05),
-                inset 0 -20px 40px rgba(0,0,0,0.4),
-                inset 0 20px 40px rgba(255,255,255,0.03);
+                0 4px 16px rgba(0,0,0,0.06),
+                0 8px 32px rgba(0,0,0,0.04);
             display: flex;
             align-items: center;
             justify-content: center;
             outline: none;
             -webkit-tap-highlight-color: transparent;
         }
-        /* Rope-like decoration around button */
-        #treatButton::before {
-            content: '';
-            position: absolute;
-            inset: -12px;
-            border-radius: 50%;
-            border: 2px dashed rgba(212, 160, 23, 0.2);
-            animation: rope-turn 20s linear infinite;
-        }
-        @keyframes rope-turn {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        /* Outer glow ring */
-        #treatButton::after {
-            content: '';
-            position: absolute;
-            inset: -8px;
-            border-radius: 50%;
-            border: 1px solid rgba(212, 160, 23, 0.12);
-            animation: pulse-ring 3s ease-in-out infinite;
-        }
-        @keyframes pulse-ring {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.06); opacity: 0.3; }
-        }
         #treatButton:hover, #treatButton:focus-visible {
             box-shadow:
-                0 0 50px rgba(212, 160, 23, 0.2),
-                0 0 80px rgba(212, 160, 23, 0.08),
-                inset 0 -20px 40px rgba(0,0,0,0.4),
-                inset 0 20px 40px rgba(255,255,255,0.05);
+                0 6px 24px rgba(0,0,0,0.10),
+                0 12px 40px rgba(0,0,0,0.06);
+            transform: scale(1.02);
         }
         #treatButton:active {
-            transform: scale(0.95);
+            transform: scale(0.94);
         }
         #treatButton .label {
             display: flex;
-            flex-direction: column;
             align-items: center;
-            gap: 6px;
+            justify-content: center;
         }
-        #treatButton .label span:first-child {
-            font-size: 52px;
+        #treatButton .label span {
+            font-size: 56px;
             line-height: 1;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
-        }
-        #treatButton .label span:last-child {
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: var(--accent2);
-            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
         }
 
         /* Rolling indicator */
@@ -251,18 +196,18 @@
             display: none;
             align-items: center;
             justify-content: center;
-            gap: 12px;
+            gap: 10px;
             margin-bottom: 16px;
             background: var(--surface);
             border: 1px solid var(--surface2);
-            border-radius: 24px;
-            padding: 8px 20px;
+            border-radius: 20px;
+            padding: 6px 16px;
         }
         #rollingIndicator.visible {
             display: flex;
         }
         .rolling-emoji {
-            font-size: 28px;
+            font-size: 24px;
             animation: roll-bounce 0.15s steps(1) infinite;
         }
         @keyframes roll-bounce {
@@ -271,12 +216,72 @@
             100% { transform: scale(1) rotate(0deg); }
         }
 
+        /* Hunger meter */
+        #hungerMeter {
+            width: 240px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        #hungerLabel {
+            font-size: 11px;
+            color: var(--text2);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 6px;
+        }
+        #trough {
+            position: relative;
+            height: 20px;
+            border-radius: 10px;
+            background: var(--surface);
+            border: 1px solid var(--surface2);
+            overflow: hidden;
+        }
+        #trough::before {
+            display: none;
+        }
+        #troughFill {
+            height: 100%;
+            width: 0%;
+            border-radius: 10px;
+            background: linear-gradient(90deg, var(--accent), var(--accent2) 60%, #e8c8a0);
+            transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+        }
+        #troughFill::after {
+            display: none;
+        }
+        #troughFill.glow {
+            box-shadow:
+                0 0 12px rgba(219, 184, 138, 0.5),
+                0 0 24px rgba(219, 184, 138, 0.25);
+            animation: trough-glow 1.2s ease-in-out infinite;
+        }
+        @keyframes trough-glow {
+            0%, 100% { box-shadow: 0 0 12px rgba(219, 184, 138, 0.5), 0 0 24px rgba(219, 184, 138, 0.25); }
+            50% { box-shadow: 0 0 20px rgba(219, 184, 138, 0.7), 0 0 40px rgba(219, 184, 138, 0.4); }
+        }
+        #hungerStages {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 4px;
+            font-size: 9px;
+            color: var(--text2);
+            opacity: 0.4;
+            padding: 0 4px;
+        }
+        #hungerStatus {
+            font-size: 11px;
+            color: var(--text2);
+            margin-top: 4px;
+            min-height: 1.2em;
+        }
+
         /* Result overlay */
         #resultOverlay {
             position: fixed;
             inset: 0;
-            background:
-                radial-gradient(ellipse at center, rgba(44,24,16,0.95) 0%, rgba(13,8,5,0.97) 100%);
+            background: rgba(247, 242, 236, 0.92);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             display: none;
@@ -306,7 +311,7 @@
             max-height: 55vh;
             border-radius: var(--radius);
             display: none;
-            box-shadow: 0 8px 40px rgba(0,0,0,0.6), 0 0 0 2px var(--surface2);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
             margin-bottom: 16px;
         }
         #resultVideo.visible {
@@ -322,7 +327,6 @@
             font-size: 28px;
             font-weight: 700;
             margin-bottom: 6px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
         #resultTitle.treat {
             color: var(--accent2);
@@ -340,17 +344,17 @@
         #resultDismiss {
             margin-top: 24px;
             padding: 10px 32px;
-            border: 2px solid var(--accent2);
-            border-radius: 24px;
-            background: transparent;
-            color: var(--accent2);
+            border: 1px solid var(--surface2);
+            border-radius: 20px;
+            background: var(--surface);
+            color: var(--text2);
             font-size: 14px;
             font-family: var(--font);
             cursor: pointer;
             transition: background 0.2s;
         }
         #resultDismiss:hover {
-            background: rgba(212, 160, 23, 0.12);
+            background: var(--surface2);
         }
         #resultDismiss.hidden {
             display: none;
@@ -364,11 +368,11 @@
             z-index: 101;
         }
 
-        /* Settings modal - farm style */
+        /* Settings modal */
         #settingsOverlay {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.75);
+            background: rgba(247, 242, 236, 0.85);
             backdrop-filter: blur(6px);
             -webkit-backdrop-filter: blur(6px);
             display: none;
@@ -380,31 +384,20 @@
             display: flex;
         }
         #settingsModal {
-            background:
-                linear-gradient(180deg, #3a2210, #2c1810);
-            border: 2px solid #5a3a1a;
+            background: var(--surface);
+            border: 1px solid var(--surface2);
             border-radius: var(--radius);
-            padding: 32px;
-            width: 360px;
+            padding: 28px;
+            width: 340px;
             max-width: 92vw;
             max-height: 85vh;
             overflow-y: auto;
             animation: modal-enter 0.3s ease;
-            box-shadow: 0 16px 64px rgba(0,0,0,0.6);
+            box-shadow: 0 8px 40px rgba(0,0,0,0.08);
             position: relative;
         }
         #settingsModal::before {
-            content: '';
-            position: absolute;
-            inset: 2px;
-            border-radius: 12px;
-            background:
-                repeating-linear-gradient(
-                    90deg,
-                    transparent, transparent 30px,
-                    rgba(255,255,255,0.015) 30px, rgba(255,255,255,0.015) 31px
-                );
-            pointer-events: none;
+            display: none;
         }
         @keyframes modal-enter {
             0% { transform: scale(0.9) translateY(20px); opacity: 0; }
@@ -413,11 +406,10 @@
         #settingsModal h2 {
             font-size: 18px;
             margin-bottom: 24px;
-            color: var(--accent2);
+            color: var(--text);
             text-align: center;
             text-transform: uppercase;
             letter-spacing: 3px;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
         }
         .setting-group {
             margin-bottom: 18px;
@@ -433,9 +425,9 @@
         .setting-group input[type="text"] {
             width: 100%;
             padding: 10px 14px;
-            border: 1px solid rgba(255,255,255,0.08);
+            border: 1px solid var(--surface2);
             border-radius: 8px;
-            background: rgba(0,0,0,0.3);
+            background: var(--bg);
             color: var(--text);
             font-size: 15px;
             font-family: var(--font);
@@ -486,24 +478,24 @@
         }
         .modal-buttons .btn-primary {
             background: var(--accent2);
-            color: #1a0f08;
+            color: #fff;
         }
         .modal-buttons .btn-primary:hover {
-            background: #e8b830;
+            background: #c9a070;
         }
         .modal-buttons .btn-secondary {
             background: var(--surface2);
             color: var(--text);
         }
         .modal-buttons .btn-secondary:hover {
-            background: #5a3a2a;
+            background: #d0c0a8;
         }
         .modal-buttons .btn-danger {
-            background: #5a1a1a;
-            color: var(--text);
+            background: #d4a098;
+            color: #fff;
         }
         .modal-buttons .btn-danger:hover {
-            background: #7a2020;
+            background: #c09088;
         }
         .modal-close {
             position: absolute;
@@ -524,20 +516,19 @@
             z-index: 1;
         }
         .modal-close:hover {
-            background: rgba(255,255,255,0.08);
+            background: var(--surface2);
         }
 
         /* Text mode badge */
         #modeBadge {
             position: absolute;
-            bottom: 56px;
+            bottom: 72px;
             left: 50%;
             transform: translateX(-50%);
             font-size: 11px;
             color: var(--text2);
-            opacity: 0.6;
+            opacity: 0.4;
             letter-spacing: 1px;
-            font-style: italic;
             pointer-events: none;
             white-space: nowrap;
         }
@@ -545,12 +536,11 @@
         /* Responsive */
         @media (max-width: 480px) {
             #treatButton {
-                width: 160px;
-                height: 160px;
-                font-size: 48px;
+                width: 150px;
+                height: 150px;
             }
-            #treatButton .label span:first-child {
-                font-size: 40px;
+            #treatButton .label span {
+                font-size: 44px;
             }
             #resultEmoji {
                 font-size: 56px;
@@ -561,20 +551,53 @@
             #settingsModal {
                 padding: 24px;
             }
+            #hungerMeter {
+                width: 200px;
+            }
+            #grass {
+                height: 32px;
+            }
+            #fence {
+                bottom: 26px;
+                height: 16px;
+            }
         }
         @media (max-height: 640px) {
             #treatButton {
-                width: 130px;
-                height: 130px;
+                width: 120px;
+                height: 120px;
             }
-            #treatButton .label span:first-child {
-                font-size: 32px;
+            #treatButton .label span {
+                font-size: 36px;
             }
             #subtitle {
-                margin-bottom: 20px;
+                margin-bottom: 16px;
             }
             #titleBar {
                 padding: 5px 16px;
+            }
+            #hungerMeter {
+                width: 180px;
+                margin-bottom: 12px;
+            }
+            #trough {
+                height: 16px;
+            }
+            #hungerStages, #hungerStatus {
+                display: none;
+            }
+            #grass {
+                height: 28px;
+            }
+            #fence {
+                bottom: 22px;
+                height: 14px;
+            }
+            #app {
+                padding: 24px 24px 56px;
+            }
+            #modeBadge {
+                bottom: 56px;
             }
         }
 
@@ -591,6 +614,7 @@
     </style>
 </head>
 <body>
+    <div id="grass"></div>
     <div id="fence"></div>
 
     <div id="app">
@@ -599,17 +623,29 @@
         <div id="titleBar">
             <div id="title">Barn Treats</div>
         </div>
-        <div id="subtitle">Give the piggy a pat when you deserve a treat</div>
+        <div id="subtitle">See what the piggy has for you</div>
 
         <div id="rollingIndicator">
             <span class="rolling-emoji">&#127920;</span>
-            <span style="color:var(--text2);font-size:14px;">The pig is thinkin&rsquo;...</span>
+            <span id="rollingText" style="color:var(--text2);font-size:14px;">The piggy is thinkin&rsquo;...</span>
+        </div>
+
+        <div id="hungerMeter">
+            <div id="hungerLabel">Treat Meter</div>
+            <div id="trough">
+                <div id="troughFill"></div>
+            </div>
+            <div id="hungerStages">
+                <span>stuffed</span>
+                <span>hungry</span>
+                <span>starvin&rsquo;</span>
+            </div>
+            <div id="hungerStatus">The piggy is full</div>
         </div>
 
         <button id="treatButton">
             <span class="label">
                 <span>&#128056;</span>
-                <span>PET ME</span>
             </span>
         </button>
 
@@ -635,21 +671,9 @@
             <h2>Barn Settings</h2>
 
             <div class="setting-group">
-                <label for="counterInput">Hidden Counter</label>
-                <input type="number" id="counterInput" min="0" step="1">
-                <div class="hint">Total clicks so far. Higher = treats get rarer.</div>
-            </div>
-
-            <div class="setting-group">
-                <label for="decayInput">Hunger (higher = harder to get treats)</label>
-                <input type="number" id="decayInput" min="0.01" max="1" step="0.01" value="0.05">
-                <div class="hint">How fast treat chance drops (0.01 = slow, 0.2 = fast)</div>
-            </div>
-
-            <div class="setting-group">
-                <label for="baseProbInput">Starting Treat Chance</label>
-                <input type="number" id="baseProbInput" min="0.05" max="1" step="0.05" value="0.5">
-                <div class="hint">0.05 = 5%, 1.0 = 100% — odds on your first click</div>
+                <label for="counterInput">Total Treats</label>
+                <input type="number" id="counterInput" min="0" step="1" readonly style="background:var(--bg);color:var(--text2);cursor:not-allowed;border-color:var(--surface2);">
+                <div class="hint">How many times you&rsquo;ve asked. Read-only.</div>
             </div>
 
             <div class="setting-group">
@@ -680,14 +704,18 @@
 
         const DEFAULTS = {
             counter: 0,
-            decay: 0.05,
-            baseProb: 0.5,
+            patsSinceLastTreat: 0,
             videoPaths: ['videos/treat.mp4'],
             textModeOnly: false,
             showCounter: false,
         };
 
         const STORAGE_KEY = 'treat-button-state';
+
+        // Internal probability constants (not configurable)
+        const MIN_CHANCE = 0.04;
+        const MAX_CHANCE = 0.99;
+        const STREAK_CAP = 10;
 
         let state = loadState();
         let isAnimating = false;
@@ -697,8 +725,7 @@
         const btn = document.getElementById('treatButton');
         const subtitleEl = document.getElementById('subtitle');
         const modeBadge = document.getElementById('modeBadge');
-        const btnLabel = btn.querySelector('.label span:last-child');
-        const btnEmoji = btn.querySelector('.label span:first-child');
+        const btnEmoji = btn.querySelector('.label span');
         const resultOverlay = document.getElementById('resultOverlay');
         const resultVideo = document.getElementById('resultVideo');
         const resultEmoji = document.getElementById('resultEmoji');
@@ -706,6 +733,7 @@
         const resultMessage = document.getElementById('resultMessage');
         const resultDismiss = document.getElementById('resultDismiss');
         const rollingIndicator = document.getElementById('rollingIndicator');
+        const rollingText = document.getElementById('rollingText');
         const settingsOverlay = document.getElementById('settingsOverlay');
         const settingsBtn = document.getElementById('settingsBtn');
         const settingsClose = document.getElementById('settingsClose');
@@ -713,10 +741,10 @@
         const settingsCancel = document.getElementById('settingsCancel');
         const settingsReset = document.getElementById('settingsReset');
         const counterInput = document.getElementById('counterInput');
-        const decayInput = document.getElementById('decayInput');
-        const baseProbInput = document.getElementById('baseProbInput');
         const textModeOnlyCheck = document.getElementById('textModeOnly');
         const showCounterCheck = document.getElementById('showCounter');
+        const troughFill = document.getElementById('troughFill');
+        const hungerStatus = document.getElementById('hungerStatus');
         const confettiCanvas = document.getElementById('confettiCanvas');
 
         function loadState() {
@@ -738,12 +766,31 @@
 
         // ---------- Probability ----------
         function getTreatProbability() {
-            const p = state.baseProb / (1 + state.counter * state.decay);
-            return Math.max(0.02, Math.min(0.99, p));
+            const t = Math.min(1, state.patsSinceLastTreat / STREAK_CAP);
+            const curve = t * t * (3 - 2 * t);
+            const prob = MIN_CHANCE + (MAX_CHANCE - MIN_CHANCE) * curve;
+            const jitter = (Math.random() - 0.5) * 0.1;
+            return Math.max(MIN_CHANCE, Math.min(MAX_CHANCE, prob + jitter));
         }
 
         function isTreat() {
             return Math.random() < getTreatProbability();
+        }
+
+        // ---------- Hunger Meter ----------
+        const HUNGER_STATUSES = [
+            { max: 0.25, label: 'The piggy is full' },
+            { max: 0.50, label: 'The piggy is peckish' },
+            { max: 0.75, label: 'The piggy is getting hungry' },
+            { max: 0.90, label: 'The piggy is very hungry!' },
+            { max: 1.00, label: 'The piggy is STARVING!' },
+        ];
+        function updateHungerMeter() {
+            const pct = Math.min(100, (state.patsSinceLastTreat / STREAK_CAP) * 100);
+            troughFill.style.width = pct + '%';
+            troughFill.classList.toggle('glow', pct >= 90);
+            const status = HUNGER_STATUSES.find(s => pct / 100 <= s.max) || HUNGER_STATUSES[HUNGER_STATUSES.length - 1];
+            hungerStatus.textContent = status.label;
         }
 
         // ---------- Confetti (farm colors) ----------
@@ -806,11 +853,44 @@
         }
 
         // ---------- Rolling animation ----------
+        const VERBS = [
+            'is thinking', 'is dreaming', 'is looking', 'is searching',
+            'is hoping', 'is wishing', 'is waiting', 'is checking',
+            'is planning', 'is humming', 'is wondering', 'is asking',
+            'is peeking', 'is smiling', 'is listening', 'is preparing',
+            'is gazing', 'is resting', 'is nodding', 'is hoping',
+        ];
+        const ADVERBS = [
+            'happily', 'eagerly', 'gently', 'quietly',
+            'secretly', 'patiently', 'carefully', 'proudly',
+            'softly', 'sleepily', 'merrily', 'fondly',
+            'gratefully', 'playfully', 'calmly', 'warmly',
+            'slowly', 'brightly', 'sneakily', 'lovingly',
+        ];
+        const ACTIONS = [
+            'about their favourite snack', 'for a tasty treat',
+            'about how great you are', 'in the cozy hay',
+            'through the snack stash', 'at the twinkling stars',
+            'for hidden goodies', 'for you',
+            'on the lookout', 'about what to get you',
+            'in the warm barn', 'about today',
+            'for the perfect moment', 'with all their heart',
+            'about nothing at all', 'for a little while',
+            'in piggy heaven', 'about the little things',
+            'for a snack break', 'about tomorrow',
+        ];
+        function randomRollingMessage() {
+            const verb = VERBS[Math.floor(Math.random() * VERBS.length)];
+            const adverb = ADVERBS[Math.floor(Math.random() * ADVERBS.length)];
+            const action = ACTIONS[Math.floor(Math.random() * ACTIONS.length)];
+            return `Piggy ${verb} ${adverb} ${action}...`;
+        }
         function startRolling() {
-            const emojis = ['🐷', '🐮', '🐔', '🐴', '🌾', '🚜', '🌽', '🐑', '🍎', '🧀'];
+            const emojis = ['🐷', '🍟', '🍿', '🥨', '🌾', '🧀', '🍎', '🥜', '🍪', '🍩'];
             let idx = 0;
             rollingIndicator.classList.add('visible');
             rollingIndicator.querySelector('.rolling-emoji').textContent = emojis[0];
+            rollingText.textContent = randomRollingMessage();
 
             rollingInterval = setInterval(() => {
                 idx = (idx + 1) % emojis.length;
@@ -852,6 +932,7 @@
             isAnimating = true;
 
             state.counter++;
+            state.patsSinceLastTreat++;
             saveState();
             updateUI();
 
@@ -877,10 +958,13 @@
                 resultEmoji.textContent = '😔';
                 resultTitle.textContent = 'No treat today';
                 resultTitle.className = 'notreat';
-                resultMessage.textContent = 'The piggy is sleeping. Try again later.';
+                resultMessage.textContent = 'No luck this time. Try again!';
                 resultOverlay.classList.add('visible');
                 btnEmoji.textContent = '😔';
             } else {
+                state.patsSinceLastTreat = 0;
+                saveState();
+                updateUI();
                 // Treat — try video unless text-only mode
                 let videoPlayed = false;
                 if (!state.textModeOnly && state.videoPaths.length > 0) {
@@ -905,7 +989,7 @@
                     resultEmoji.textContent = '🐷';
                     resultTitle.textContent = 'TREAT TIME!';
                     resultTitle.className = 'treat';
-                    resultMessage.textContent = 'The piggy loves you! Have a treat.';
+                    resultMessage.textContent = 'The piggy shared a snack!';
                 }
 
                 launchConfetti();
@@ -934,8 +1018,6 @@
         // ---------- Settings ----------
         function openSettings() {
             counterInput.value = state.counter;
-            decayInput.value = state.decay;
-            baseProbInput.value = state.baseProb;
             textModeOnlyCheck.checked = state.textModeOnly;
             showCounterCheck.checked = state.showCounter;
             settingsOverlay.classList.add('visible');
@@ -948,12 +1030,6 @@
         function saveSettings() {
             const nc = parseInt(counterInput.value, 10);
             if (!isNaN(nc) && nc >= 0) state.counter = nc;
-
-            const nd = parseFloat(decayInput.value);
-            if (!isNaN(nd) && nd >= 0.01 && nd <= 1) state.decay = nd;
-
-            const nb = parseFloat(baseProbInput.value);
-            if (!isNaN(nb) && nb >= 0.05 && nb <= 1) state.baseProb = nb;
 
             state.textModeOnly = textModeOnlyCheck.checked;
             state.showCounter = showCounterCheck.checked;
@@ -975,14 +1051,16 @@
         // ---------- UI update ----------
         function updateUI() {
             subtitleEl.textContent = state.showCounter
-                ? `Give the piggy a pat when you deserve a treat · ${state.counter} pats`
-                : 'Give the piggy a pat when you deserve a treat';
+                ? `Ask the piggy for a treat · ${state.counter} times`
+                : 'See what the piggy has for you';
 
             if (state.textModeOnly || state.videoPaths.length === 0) {
                 modeBadge.textContent = 'text mode';
             } else {
                 modeBadge.textContent = '🎬 video ready';
             }
+
+            updateHungerMeter();
         }
 
         // ---------- Keyboard ----------
