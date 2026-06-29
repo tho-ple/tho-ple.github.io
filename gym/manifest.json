@@ -2,7 +2,7 @@
   "name": "Trainings-Logger",
   "short_name": "GymLog",
   "description": "Persönlicher Trainings-Logger für Ganzkörper-Krafttraining",
-  "start_url": "/index.html",
+  "start_url": ".",
   "display": "standalone",
   "background_color": "#f0f2f5",
   "theme_color": "#1e293b",
