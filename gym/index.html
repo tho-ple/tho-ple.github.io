@@ -34,11 +34,19 @@ header h1{font-size:1.25rem;font-weight:700;letter-spacing:-.02em}
 .group-card{margin-bottom:16px;background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;border-left:4px solid var(--border);transition:border-color .15s}
 .group-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px 10px;gap:8px}
 .group-name{font-weight:600;font-size:1rem}
-.btn-info{background:0 0;border:none;color:var(--text2);cursor:pointer;padding:4px 6px;border-radius:6px;font-size:1.125rem;min-height:44px;min-width:44px;display:flex;align-items:center;justify-content:center;transition:background .15s}
-.btn-info:hover{background:var(--border)}
 .group-body{padding:0 16px 14px}
 .exercise-select{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;background:var(--card);color:var(--text);appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;cursor:pointer;min-height:44px}
 .exercise-select:focus{outline:2px solid var(--primary);outline-offset:1px;border-color:transparent}
+/* Exercise Row */
+.exercise-row{display:flex;gap:8px;align-items:flex-start}
+.exercise-row .exercise-select{flex:1}
+/* Notes */
+.btn-note{background:0 0;border:1px solid var(--border);color:var(--text2);cursor:pointer;padding:4px 6px;border-radius:8px;font-size:1rem;min-height:44px;min-width:44px;display:flex;align-items:center;justify-content:center;transition:background .15s,color .15s,border-color .15s;flex-shrink:0}
+.btn-note:hover{background:var(--border)}
+.btn-note.has-note{color:var(--primary);border-color:var(--primary)}
+.note-area{margin-top:8px;margin-bottom:4px}
+.note-textarea{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);resize:vertical;min-height:60px;font-size:.875rem;font-family:var(--font);transition:border-color .15s}
+.note-textarea:focus{outline:2px solid var(--primary);outline-offset:1px;border-color:transparent}
 /* Sets */
 .sets-header{display:flex;justify-content:space-between;align-items:center;margin-top:12px;margin-bottom:6px}
 .sets-header span{font-size:.8125rem;color:var(--text2);font-weight:500}
@@ -89,15 +97,6 @@ header h1{font-size:1.25rem;font-weight:700;letter-spacing:-.02em}
 .history-set{background:var(--bg);border-radius:4px;padding:2px 8px;font-size:.75rem;color:var(--text2)}
 .empty-state{text-align:center;padding:48px 16px;color:var(--text2)}
 .empty-state p{font-size:.9375rem}
-/* Info Modal */
-.info-overlay{position:fixed;inset:0;background:rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;z-index:100;padding:24px}
-.info-modal h3{font-size:1.0625rem;margin-bottom:12px}
-.info-modal ul{list-style:none;padding:0}
-.info-modal li{padding:6px 0;font-size:.9375rem;color:var(--text);border-bottom:1px solid var(--border)}
-.info-modal li:last-child{border-bottom:none}
-.info-modal .info-reps{margin-top:12px;padding-top:12px;border-top:1px solid var(--border);font-size:.875rem;color:var(--text2)}
-.btn-close-info{display:block;width:100%;margin-top:16px;padding:12px;background:var(--border);border:none;border-radius:8px;cursor:pointer;font-size:.9375rem;font-weight:500;min-height:44px;transition:background .15s}
-.btn-close-info:hover{background:#cbd5e1}
 /* Utilities */
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0}
 .mt-8{margin-top:8px}
@@ -142,7 +141,6 @@ header h1{font-size:1.25rem;font-weight:700;letter-spacing:-.02em}
     <div id="historyList"></div>
   </div>
 
-  <div id="infoModal"></div>
 </div>
 
 <script>
@@ -153,13 +151,11 @@ header h1{font-size:1.25rem;font-weight:700;letter-spacing:-.02em}
 
 const CATEGORY_COLORS = {
   Beine: '#3b82f6',
-  Waden: '#8b5cf6',
   Druecken: '#ef4444',
   Arme: '#ec4899',
   Ziehen: '#10b981',
   Schulter: '#f59e0b',
-  Trapez: '#14b8a6',
-  Rumpf: '#6366f1'
+  Trapez: '#14b8a6'
 };
 
 const DAY_A = {
@@ -184,15 +180,7 @@ const DAY_A = {
       defaultSets: 3,
       repsHint: '3 × 10–12 Wdh.'
     },
-    {
-      key: 'calves',
-      name: 'Waden',
-      category: 'Waden',
-      exercises: ['Wadenheben an der Maschine', 'Wadenheben stehend mit Hanteln'],
-      examples: ['Wadenheben an der Maschine', 'Wadenheben stehend mit Hanteln'],
-      defaultSets: 3,
-      repsHint: '3 × 12–15 Wdh.'
-    },
+
     {
       key: 'pushA',
       name: 'Drücken',
@@ -221,23 +209,15 @@ const DAY_A = {
       repsHint: '3 × 10–12 Wdh.'
     },
     {
-      key: 'sideShouldersA',
-      name: 'Schulter – Seite',
+      key: 'shouldersA',
+      name: 'Schulter',
       category: 'Schulter',
-      exercises: ['Lateral Raises (Maschine sitzend)', 'Seitheben mit Hanteln'],
-      examples: ['Lateral Raises (Maschine sitzend)', 'Seitheben mit Hanteln'],
+      exercises: ['Lateral Raises (Maschine sitzend)', 'Seitheben mit Hanteln', 'Schulterdrücken (Maschine)'],
+      examples: ['Lateral Raises (Maschine sitzend)', 'Seitheben mit Hanteln', 'Schulterdrücken (Maschine)'],
       defaultSets: 3,
-      repsHint: '3 × 12–15 Wdh.'
+      repsHint: '3 × 10–12 Wdh.'
     },
-    {
-      key: 'coreA',
-      name: 'Rumpf',
-      category: 'Rumpf',
-      exercises: ['Plank (Unterarmstütz)', 'Dead Bug'],
-      examples: ['Plank (Unterarmstütz)', 'Dead Bug'],
-      defaultSets: 2,
-      repsHint: '2 × 30–45 Sekunden'
-    }
+
   ]
 };
 
@@ -267,8 +247,8 @@ const DAY_B = {
       key: 'pullLats',
       name: 'Ziehen – Latissimus',
       category: 'Ziehen',
-      exercises: ['Klimmzug (Maschine, unterstützt)', 'Lat Pulldown'],
-      examples: ['Klimmzug (Maschine, unterstützt)', 'Lat Pulldown'],
+      exercises: ['Klimmzug (Maschine, unterstützt)', 'Lat Pulldown', 'T-Bar Row'],
+      examples: ['Klimmzug (Maschine, unterstützt)', 'Lat Pulldown', 'T-Bar Row'],
       defaultSets: 3,
       repsHint: '3–4 × 8–10 Wdh.'
     },
@@ -276,8 +256,8 @@ const DAY_B = {
       key: 'biceps',
       name: 'Bizeps',
       category: 'Arme',
-      exercises: ['Bizepscurl mit Hanteln', 'Bizepscurl am Kabel'],
-      examples: ['Bizepscurl mit Hanteln', 'Bizepscurl am Kabel'],
+      exercises: ['Bizepscurl mit Hanteln', 'Bizepscurl am Kabel', 'Arm Curl Maschine', 'Preacher Curl'],
+      examples: ['Bizepscurl mit Hanteln', 'Bizepscurl am Kabel', 'Arm Curl Maschine', 'Preacher Curl'],
       defaultSets: 3,
       repsHint: '2–3 × 10–12 Wdh.'
     },
@@ -300,32 +280,15 @@ const DAY_B = {
       repsHint: '2–3 × max. Wdh.'
     },
     {
-      key: 'pushShouldersB',
-      name: 'Schulter – Drücken',
+      key: 'shouldersB',
+      name: 'Schulter',
       category: 'Schulter',
-      exercises: ['Schulterdrücken (Maschine)', 'Schulterdrücken mit Hanteln'],
-      examples: ['Schulterdrücken (Maschine)', 'Schulterdrücken mit Hanteln'],
+      exercises: ['Schulterdrücken (Maschine)', 'Schulterdrücken mit Hanteln', 'Lateral Raises (Maschine sitzend)', 'Seitheben mit Hanteln'],
+      examples: ['Schulterdrücken (Maschine/Hanteln)', 'Lateral Raises (Maschine sitzend)', 'Seitheben mit Hanteln'],
       defaultSets: 3,
       repsHint: '3 × 10–12 Wdh.'
     },
-    {
-      key: 'sideShouldersB',
-      name: 'Schulter – Seite',
-      category: 'Schulter',
-      exercises: ['Lateral Raises (Maschine sitzend)', 'Seitheben mit Hanteln'],
-      examples: ['Lateral Raises (Maschine sitzend)', 'Seitheben mit Hanteln'],
-      defaultSets: 3,
-      repsHint: '3 × 12–15 Wdh.'
-    },
-    {
-      key: 'coreB',
-      name: 'Rumpf',
-      category: 'Rumpf',
-      exercises: ['Crunch (Maschine)', 'Crunch (Boden)', 'Reverse Crunch'],
-      examples: ['Crunch (Maschine oder Boden)', 'Reverse Crunch'],
-      defaultSets: 3,
-      repsHint: '2–3 × 12–15 Wdh.'
-    }
+
   ]
 };
 
@@ -350,7 +313,8 @@ const KEYS = {
   CUSTOM: 'workoutCustomExercises',
   LAST_DAY: 'workoutLastDay',
   LAST_WEIGHTS: 'workoutLastWeights',
-  LAST_EXERCISES: 'workoutLastExercises'
+  LAST_EXERCISES: 'workoutLastExercises',
+  NOTES: 'workoutExerciseNotes'
 };
 
 function loadSession() { return lsGet(KEYS.SESSION, null); }
@@ -372,13 +336,16 @@ function saveLastWeights(w) { lsSet(KEYS.LAST_WEIGHTS, w); }
 function loadLastExercises() { return lsGet(KEYS.LAST_EXERCISES, {}); }
 function saveLastExercises(e) { lsSet(KEYS.LAST_EXERCISES, e); }
 
+function loadNotes() { return lsGet(KEYS.NOTES, {}); }
+function saveNotes(n) { lsSet(KEYS.NOTES, n); }
+
 // ===================== STATE =====================
 
 const S = {
   selectedDay: null,
   sessionData: null,
   viewingHistory: false,
-  infoGroupKey: null
+  expandedNotes: {}
 };
 
 function getSuggestedDay() {
@@ -422,7 +389,6 @@ function render() {
     }
   }
   renderTaskbar();
-  renderInfoModal();
 }
 
 function renderTaskbar() {
@@ -520,12 +486,17 @@ function renderTraining() {
     return '<div class="group-card" style="border-left-color:' + color + '">' +
       '<div class="group-header">' +
       '<span class="group-name">' + escHtml(g.name) + '</span>' +
-      '<button class="btn-info" data-action="show-info" data-group-key="' + g.key + '">ⓘ</button>' +
       '</div>' +
       '<div class="group-body">' +
+      '<div class="exercise-row">' +
       '<select class="exercise-select" data-action="change-exercise" data-group-index="' + i + '">' +
       exList.map(ex => '<option value="' + escHtml(ex) + '"' + (sg.selectedExercise === ex ? ' selected' : '') + '>' + escHtml(ex) + '</option>').join('') +
       '</select>' +
+      '<button class="btn-note' + ((loadNotes()[sg.selectedExercise] || '').trim() ? ' has-note' : '') + '" data-action="toggle-note" data-group-index="' + i + '" title="Notizen">📝</button>' +
+      '</div>' +
+      '<div class="note-area" id="noteArea_' + i + '"' + (S.expandedNotes[i] ? '' : ' style="display:none"') + '>' +
+      '<textarea class="note-textarea" data-group-index="' + i + '" placeholder="Notizen zur Ausführung …">' + escHtml(loadNotes()[sg.selectedExercise] || '') + '</textarea>' +
+      '</div>' +
       '<div class="sets-header"><span>Sätze</span></div>' +
       setsHtml +
       '<button class="btn-add-set" data-action="add-set" data-group-index="' + i + '">+ Satz hinzufügen</button>' +
@@ -592,30 +563,6 @@ function renderHistory() {
   }
 
   el.innerHTML = html;
-}
-
-function renderInfoModal() {
-  const el = document.getElementById('infoModal');
-  if (!S.infoGroupKey) {
-    el.innerHTML = '';
-    return;
-  }
-
-  const allGroups = [...DAY_A.groups, ...DAY_B.groups];
-  const g = allGroups.find(x => x.key === S.infoGroupKey);
-  if (!g) { el.innerHTML = ''; return; }
-
-  const color = CATEGORY_COLORS[g.category] || '#64748b';
-  el.innerHTML =
-    '<div class="info-overlay" id="infoOverlay">' +
-    '<div class="info-modal" style="background:var(--card);border-radius:var(--radius);max-width:360px;width:100%;padding:24px;box-shadow:0 20px 60px rgba(0,0,0,.15)">' +
-    '<h3 style="font-size:1.0625rem;margin-bottom:12px;color:' + color + '">' + escHtml(g.name) + '</h3>' +
-    '<ul>' +
-    g.examples.map(ex => '<li>' + escHtml(ex) + '</li>').join('') +
-    '</ul>' +
-    '<div class="info-reps">' + escHtml(g.repsHint) + '</div>' +
-    '<button class="btn-close-info" id="infoCloseBtn">Schließen</button>' +
-    '</div></div>';
 }
 
 function escHtml(s) {
@@ -701,8 +648,14 @@ document.getElementById('app').addEventListener('click', function(e) {
       render();
       break;
     }
-    case 'show-info': {
-      S.infoGroupKey = target.dataset.groupKey;
+    case 'toggle-note': {
+      const gi = parseInt(target.dataset.groupIndex);
+      if (isNaN(gi)) return;
+      if (S.expandedNotes[gi]) {
+        delete S.expandedNotes[gi];
+      } else {
+        S.expandedNotes[gi] = true;
+      }
       render();
       break;
     }
@@ -809,6 +762,20 @@ document.getElementById('app').addEventListener('input', function(e) {
       persistSession();
     }
   }
+  if (e.target.classList.contains('note-textarea')) {
+    const gi = parseInt(e.target.dataset.groupIndex);
+    if (!isNaN(gi) && S.sessionData && S.sessionData.groups[gi]) {
+      const ex = S.sessionData.groups[gi].selectedExercise;
+      const notes = loadNotes();
+      const val = e.target.value;
+      if (val.trim()) {
+        notes[ex] = val;
+      } else {
+        delete notes[ex];
+      }
+      saveNotes(notes);
+    }
+  }
 });
 
 // Change handling for exercise dropdown (re-render needed)
@@ -832,18 +799,6 @@ document.getElementById('app').addEventListener('change', function(e) {
       persistSession();
       render();
     }
-  }
-});
-
-// ===================== INFO MODAL DISMISS =====================
-
-document.addEventListener('click', function(e) {
-  if (!S.infoGroupKey) return;
-  const overlay = document.getElementById('infoOverlay');
-  if (!overlay) return;
-  if (e.target === overlay || e.target.closest('#infoCloseBtn')) {
-    S.infoGroupKey = null;
-    render();
   }
 });
 
