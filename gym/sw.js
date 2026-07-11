@@ -1,8 +1,8 @@
-const CACHE_NAME = 'workout-tracker-v1';
+const CACHE_NAME = 'adaptive-trainer-v2';
 const ASSETS = [
-  '/',
-  '/index.html',
-  '/manifest.json'
+  './',
+  './index.html',
+  './manifest.json'
 ];
 
 self.addEventListener('install', (e) => {
@@ -27,22 +27,38 @@ self.addEventListener('activate', (e) => {
 
 self.addEventListener('fetch', (e) => {
   if (e.request.method !== 'GET') return;
+
+  // Navigation requests: cache-first with network fallback
+  if (e.request.mode === 'navigate') {
+    e.respondWith(
+      caches.match(e.request)
+        .then(cached => cached || fetch(e.request)
+          .then(response => {
+            const clone = response.clone();
+            caches.open(CACHE_NAME).then(c => c.put(e.request, clone));
+            return response;
+          })
+          .catch(() => caches.match('./index.html'))
+        )
+    );
+    return;
+  }
+
+  // All other requests: stale-while-revalidate
   e.respondWith(
     caches.match(e.request)
       .then(cached => {
-        if (cached) return cached;
-        return fetch(e.request)
+        const networkFetch = fetch(e.request)
           .then(response => {
-            const clone = response.clone();
-            if (response.type === 'basic' || response.type === 'cors') {
-              caches.open(CACHE_NAME)
-                .then(cache => cache.put(e.request, clone));
+            if (response.ok) {
+              const clone = response.clone();
+              caches.open(CACHE_NAME).then(c => c.put(e.request, clone));
             }
             return response;
           })
-          .catch(() => {
-            return caches.match(e.request);
-          });
+          .catch(() => cached);
+
+        return cached || networkFetch;
       })
   );
 });
