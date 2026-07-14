@@ -227,100 +227,93 @@ var MUSCLE_GROUPS = {
   quads: {
     name: 'Quadrizeps', category: 'lower',
     setsRange: [3,4], repsRange: [6,12], targetRIR: [0,2],
-    recoveryHours: 48, recommendedWeeklySets: 14,
+    recoveryHours: 48,
     color: '#3b82f6',
     exercises: ['Hack Squat','Beinpresse','Bulgarian Split Squat','Leg Extension','Pendulum Squat','Squat']
   },
   hamstrings_hinge: {
     name: 'Hamstrings (Hip Hinge)', category: 'lower',
     setsRange: [3,4], repsRange: [6,10], targetRIR: [0,2],
-    recoveryHours: 48, recommendedWeeklySets: 12,
+    recoveryHours: 48,
     color: '#6366f1',
     exercises: ['Romanian Deadlift','Good Morning','Back Extension','Cable Pull Through']
   },
   hamstrings_flex: {
     name: 'Hamstrings (Knee Flexion)', category: 'lower',
     setsRange: [3,3], repsRange: [8,12], targetRIR: [0,2],
-    recoveryHours: 48, recommendedWeeklySets: 10,
+    recoveryHours: 48,
     color: '#818cf8',
     exercises: ['Leg Curl (sitzend)','Leg Curl (liegend)']
   },
   glutes: {
     name: 'Gluteus', category: 'lower',
     setsRange: [2,3], repsRange: [8,12], targetRIR: [0,2],
-    recoveryHours: 48, recommendedWeeklySets: 10,
+    recoveryHours: 48,
     color: '#a78bfa',
     exercises: ['Hip Thrust','Cable Pull Through','Glute Kickback','Bulgarian Split Squat']
   },
   chest: {
     name: 'Brust', category: 'push',
     setsRange: [3,4], repsRange: [6,12], targetRIR: [0,2],
-    recoveryHours: 48, recommendedWeeklySets: 14,
+    recoveryHours: 48,
     color: '#ef4444',
     exercises: ['Bankdrücken','Schrägbankdrücken','Dips','Cable Fly','Butterfly','Push-up']
   },
   back_horizontal: {
     name: 'Rücken horizontal', category: 'pull',
     setsRange: [3,4], repsRange: [6,12], targetRIR: [0,2],
-    recoveryHours: 48, recommendedWeeklySets: 14,
+    recoveryHours: 48,
     color: '#10b981',
     exercises: ['Chest Supported Row','Kabelrudern','T-Bar Row','Seal Row','Low Row']
   },
   back_vertical: {
     name: 'Rücken vertikal', category: 'pull',
     setsRange: [3,4], repsRange: [6,12], targetRIR: [0,2],
-    recoveryHours: 48, recommendedWeeklySets: 12,
+    recoveryHours: 48,
     color: '#059669',
     exercises: ['Lat Pulldown','Klimmzug','Chin-up']
   },
   shoulder_front: {
     name: 'Schulter vorne', category: 'push',
     setsRange: [2,3], repsRange: [8,12], targetRIR: [1,2],
-    recoveryHours: 48, recommendedWeeklySets: 8,
+    recoveryHours: 48,
     color: '#f59e0b',
     exercises: ['Schulterdrücken','Arnold Press','Front Raises']
   },
   shoulder_side: {
     name: 'Schulter seitlich', category: 'push',
     setsRange: [3,4], repsRange: [12,20], targetRIR: [1,2],
-    recoveryHours: 36, recommendedWeeklySets: 16,
+    recoveryHours: 36,
     color: '#eab308',
     exercises: ['Seitheben (Hanteln)','Seitheben (Kabel)','Lateral Raises Maschine']
   },
   shoulder_rear: {
     name: 'Schulter hinten', category: 'pull',
     setsRange: [3,4], repsRange: [12,20], targetRIR: [1,2],
-    recoveryHours: 36, recommendedWeeklySets: 12,
+    recoveryHours: 36,
     color: '#84cc16',
     exercises: ['Face Pull','Rear Delt Fly','Reverse Pec Deck']
   },
   biceps: {
     name: 'Bizeps', category: 'pull',
     setsRange: [2,3], repsRange: [8,12], targetRIR: [0,2],
-    recoveryHours: 48, recommendedWeeklySets: 10,
+    recoveryHours: 48,
     color: '#ec4899',
     exercises: ['Bizepscurl (Hanteln)','Bizepscurl (Kabel)','Preacher Curl','Hammer Curl']
   },
   triceps: {
     name: 'Trizeps', category: 'push',
     setsRange: [2,3], repsRange: [8,12], targetRIR: [0,2],
-    recoveryHours: 48, recommendedWeeklySets: 10,
+    recoveryHours: 48,
     color: '#f472b6',
     exercises: ['Trizepsdrücken (Kabel)','Overhead Extension','Dips','Trizeps-Kickback']
   },
   calves: {
     name: 'Waden', category: 'lower',
     setsRange: [3,4], repsRange: [8,15], targetRIR: [1,2],
-    recoveryHours: 36, recommendedWeeklySets: 12,
+    recoveryHours: 36,
     color: '#14b8a6',
     exercises: ['Wadenheben (stehend)','Wadenheben (sitzend)','Donkey Calf Raise']
-  },
-  core: {
-    name: 'Core', category: 'core',
-    setsRange: [3,4], repsRange: [10,15], targetRIR: [1,2],
-    recoveryHours: 24, recommendedWeeklySets: 12,
-    color: '#f97316',
-    exercises: ['Plank','Side Plank','Dead Bug','Bird Dog','Pallof Press','Hanging Knee Raise','Cable Crunch']
   }
 };
 
@@ -328,9 +321,6 @@ var LOWER = ['quads','hamstrings_hinge','hamstrings_flex','glutes','calves'];
 var UPPER = ['chest','back_horizontal','back_vertical','shoulder_front','shoulder_side','shoulder_rear','biceps','triceps'];
 var PUSH = ['chest','shoulder_front','shoulder_side','triceps'];
 var PULL = ['back_horizontal','back_vertical','biceps','shoulder_rear'];
-
-var CARDIO_TYPES = ['Ergometer','Laufband','Laufen','Schwimmen','Spaziergang','Rudern'];
-var CORE_EXERCISES = MUSCLE_GROUPS.core.exercises;
 
 // ==================== STORAGE ====================
 
@@ -343,8 +333,6 @@ var SK={
   workout:'at_workout',
   custom:'at_custom',
   bw:'at_bw',
-  cardio:'at_cardio',
-  core:'at_core',
   prs:'at_prs'
 };
 
@@ -358,11 +346,7 @@ var Store={
     clear:function(){try{localStorage.removeItem(SK.workout)}catch(e){}}},
   custom:{get:function(){return lsGet(SK.custom,{})},set:function(v){lsSet(SK.custom,v)}},
   bw:{get:function(){return lsGet(SK.bw,[])},set:function(v){lsSet(SK.bw,v)},
-    add:function(e){var l=Store.bw.get();l.unshift(e);Store.bw.set(l)}},
-  cardio:{get:function(){return lsGet(SK.cardio,[])},set:function(v){lsSet(SK.cardio,v)},
-    add:function(e){var l=Store.cardio.get();l.unshift(e);Store.cardio.set(l)}},
-  core:{get:function(){return lsGet(SK.core,[])},set:function(v){lsSet(SK.core,v)},
-    add:function(e){var l=Store.core.get();l.unshift(e);Store.core.set(l)}}
+    add:function(e){var l=Store.bw.get();l.unshift(e);Store.bw.set(l)}}
 };
 
 // ==================== STATE ====================
@@ -414,35 +398,16 @@ function findLastTrainedDate(groupId,sessions){
   return last;
 }
 
-function getWeeklySetsForGroup(groupId,sessions){
-  var now=new Date();
-  var weekAgo=new Date(now-7*86400000);
-  var total=0;
-  sessions.forEach(function(s){
-    var d=new Date(s.date);
-    if(d>=weekAgo){
-      s.groups.forEach(function(g){
-        if(g.muscleGroup===groupId){
-          total+=g.sets.filter(function(x){return x.reps!==''}).length;
-        }
-      });
-    }
-  });
-  return total;
-}
-
 function getMuscleGroupStatus(groupId,sessions){
   var last=findLastTrainedDate(groupId,sessions);
   var daysSince=last?daysBetween(last,new Date()):999;
   var group=MUSCLE_GROUPS[groupId];
   var recoveryDays=group.recoveryHours/24;
   var recoveryPct=clamp(daysSince/recoveryDays,0,2);
-  var weeklySets=getWeeklySetsForGroup(groupId,sessions);
-  var deficit=Math.max(0,group.recommendedWeeklySets-weeklySets);
   return{
     groupId:groupId,daysSince:daysSince,
     recovered:recoveryPct>=0.7,fullyRecovered:recoveryPct>=1,
-    recoveryPct:recoveryPct,weeklySets:weeklySets,deficit:deficit
+    recoveryPct:recoveryPct
   };
 }
 
@@ -499,7 +464,7 @@ function suggestWorkout(checkin,sessions){
     var status=getMuscleGroupStatus(gid,sessions);
     return{id:gid,status:status};
   }).filter(function(c){
-    return c.status.recovered&&c.status.deficit>0;
+    return c.status.recovered;
   });
 
   if(upperSore>5){
@@ -509,7 +474,7 @@ function suggestWorkout(checkin,sessions){
   }
 
   candidates.sort(function(a,b){
-    return(b.status.deficit*b.status.recoveryPct)-(a.status.deficit*a.status.recoveryPct);
+    return b.status.daysSince-a.status.daysSince;
   });
 
   var selected=candidates.slice(0,6).map(function(c){return c.id});
@@ -634,8 +599,6 @@ function render(){
     history:renderHistory,
     stats:renderStats,
     more:renderMore,
-    cardio:renderCardio,
-    core:renderCore,
     bodyweight:renderBodyWeight,
     prs:renderPRs,
     settings:renderSettings
@@ -657,7 +620,6 @@ function renderNav(){
   var navTabs=['dashboard','history','stats','more'];
   var activeTab=S.tab;
   if(['checkin','recommendation'].indexOf(S.tab)>=0)activeTab='dashboard';
-  if(['workout','cardio','core'].indexOf(S.tab)>=0)activeTab='workout';
   if(['bodyweight','prs','settings'].indexOf(S.tab)>=0)activeTab='more';
 
   document.getElementById('nav').innerHTML=tabs.map(function(t){
@@ -728,14 +690,8 @@ function renderDashboard(){
   }
 
   h+='<div class="section-title">Schnellstart</div>';
-  var lastCore2=Store.core.get()[0];
-  var coreDaysAgo=lastCore2?daysBetween(new Date(lastCore2.date),new Date()):99;
-  var weekCardio2=0;
-  Store.cardio.get().forEach(function(c){if(daysBetween(new Date(c.date),new Date())<=7)weekCardio2+=c.duration||0});
   h+='<div class="qa-grid">';
   h+='<div class="qa-btn" data-action="start-checkin"><span class="qa-btn-icon">&#127947;</span><span class="qa-btn-label">Krafttraining</span><span class="qa-btn-sub">Check-in starten</span></div>';
-  h+='<div class="qa-btn" data-action="go-quick-core"><span class="qa-btn-icon">&#129516;</span><span class="qa-btn-label">Core</span><span class="qa-btn-sub">'+(coreDaysAgo<99?coreDaysAgo+'d her':'Noch kein Eintrag')+'</span></div>';
-  h+='<div class="qa-btn" data-action="go-quick-cardio"><span class="qa-btn-icon">&#127939;</span><span class="qa-btn-label">Cardio</span><span class="qa-btn-sub">'+weekCardio2+' Min. diese Woche</span></div>';
   h+='<div class="qa-btn" data-action="go-quick-bw"><span class="qa-btn-icon">&#9878;</span><span class="qa-btn-label">Gewicht</span><span class="qa-btn-sub">'+(Store.bw.get().length>0?Store.bw.get()[0].weight+' kg':'Eintragen')+'</span></div>';
   h+='</div>';
 
@@ -747,19 +703,6 @@ function renderDashboard(){
   h+='<div class="card card-sm score-box" style="flex:1"><div class="card-value">'+weekSessions.length+'</div><div class="text-sm text-muted">Einheiten</div></div>';
   h+='<div class="card card-sm score-box" style="flex:1"><div class="card-value">'+weekVolume+'</div><div class="text-sm text-muted">Sätze</div></div>';
   h+='</div>';
-
-  var groupsNeedingVolume=Object.keys(MUSCLE_GROUPS).filter(function(gid){
-    return getMuscleGroupStatus(gid,sessions).deficit>3;
-  }).slice(0,4);
-  if(groupsNeedingVolume.length>0){
-    h+='<div class="section-title">Nächstes Fokus</div>';
-    h+='<div style="display:flex;flex-wrap:wrap;gap:6px">';
-    groupsNeedingVolume.forEach(function(gid){
-      var status=getMuscleGroupStatus(gid,sessions);
-      h+='<span class="tag">'+esc(MUSCLE_GROUPS[gid].name)+' <span style="opacity:.6">+'+status.deficit+' Sätze</span></span>';
-    });
-    h+='</div>';
-  }
 
   var bwData=Store.bw.get();
   if(bwData.length>0){
@@ -860,7 +803,6 @@ function renderRecommendation(){
       h+='<div class="flex-between"><span style="font-weight:600;font-size:.875rem">'+esc(g.name)+'</span>';
       h+='<span class="text-sm text-muted">'+status.daysSince+'d her</span></div>';
       h+='<div class="text-sm text-muted">'+g.setsRange[0]+'-'+g.setsRange[1]+' Sätze × '+g.repsRange[0]+'-'+g.repsRange[1]+' Wdh., RIR '+g.targetRIR[0]+'-'+g.targetRIR[1]+'</div>';
-      h+='<div class="text-sm text-muted">Wochenvolumen: '+status.weeklySets+'/'+g.recommendedWeeklySets+' Sätze</div>';
       h+='</div>';
     });
     h+='</div>';
@@ -1067,7 +1009,7 @@ function renderStats(){
     h+='<div class="hbar-row">';
     h+='<div class="hbar-label">'+esc(g.name)+'</div>';
     h+='<div class="hbar-track"><div class="hbar-fill" style="width:'+pct+'%;background:'+g.color+'"></div></div>';
-    h+='<div class="hbar-val">'+v+'/'+g.recommendedWeeklySets+'</div>';
+    h+='<div class="hbar-val">'+v+'</div>';
     h+='</div>';
   });
   h+='</div>';
@@ -1109,112 +1051,20 @@ function renderStats(){
   });
   h+='</div></div>';
 
-  var cardio=Store.cardio.get();
-  var weekCardio=0;
-  cardio.forEach(function(c){if(daysBetween(new Date(c.date),new Date())<=7)weekCardio+=c.duration||0});
-  h+='<div class="section-title">Cardio &amp; Core</div>';
-  h+='<div class="score-row">';
-  h+='<div class="card card-sm score-box"><div class="card-value">'+weekCardio+'</div><div class="text-sm text-muted">Cardio Min./Woche</div></div>';
-  var coreCount=Store.core.get().filter(function(c){return daysBetween(new Date(c.date),new Date())<=7}).length;
-  h+='<div class="card card-sm score-box"><div class="card-value">'+coreCount+'</div><div class="text-sm text-muted">Core Einheiten/Woche</div></div>';
-  h+='</div>';
-
   return h;
 }
 
 function renderMore(){
   var h='<div class="page-header"><h1>Mehr</h1></div>';
   h+='<div class="more-list">';
-  h+='<div class="more-item" data-action="go-cardio"><div class="more-item-left"><span class="more-icon">&#127939;</span><span class="more-label">Cardio</span></div><span class="more-arrow">&#9654;</span></div>';
-  h+='<div class="more-item" data-action="go-core"><div class="more-item-left"><span class="more-icon">&#129516;</span><span class="more-label">Core</span></div><span class="more-arrow">&#9654;</span></div>';
   h+='<div class="more-item" data-action="go-bodyweight"><div class="more-item-left"><span class="more-icon">&#9878;</span><span class="more-label">Körpergewicht</span></div><span class="more-arrow">&#9654;</span></div>';
   h+='<div class="more-item" data-action="go-prs"><div class="more-item-left"><span class="more-icon">&#127942;</span><span class="more-label">Persönliche Rekorde</span></div><span class="more-arrow">&#9654;</span></div>';
   h+='</div>';
-
-  h+='<div class="section-title">Letzte Aktivitäten</div>';
-  var cardio=Store.cardio.get().slice(0,3);
-  var core=Store.core.get().slice(0,3);
-  if(cardio.length>0){
-    cardio.forEach(function(c){
-      var d=new Date(c.date);
-      h+='<div class="card card-sm"><div class="flex-between"><span class="text-sm" style="font-weight:500">'+esc(c.type)+' – '+c.duration+' Min.</span>';
-      h+='<span class="text-sm text-muted">'+d.toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit'})+'</span></div></div>';
-    });
-  }
-  if(core.length>0){
-    core.forEach(function(c){
-      var d=new Date(c.date);
-      h+='<div class="card card-sm"><div class="flex-between"><span class="text-sm" style="font-weight:500">Core – '+c.duration+' Min.</span>';
-      h+='<span class="text-sm text-muted">'+d.toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit'})+'</span></div></div>';
-    });
-  }
-  if(cardio.length===0&&core.length===0){
-    h+='<div class="card card-sm text-sm text-muted">Noch keine Einträge</div>';
-  }
 
   h+='<div class="more-list mt-16">';
   h+='<div class="more-item" data-action="go-settings"><div class="more-item-left"><span class="more-icon">&#9881;</span><span class="more-label">Einstellungen</span></div><span class="more-arrow">&#9654;</span></div>';
   h+='</div>';
 
-  return h;
-}
-
-function renderCardio(){
-  var h='<div class="page-header"><button class="back-btn" data-action="go-more">&#8592; Zurück</button><h1>Cardio</h1></div>';
-  h+='<div class="card">';
-  h+='<div class="form-group"><label class="form-label">Aktivität</label>';
-  h+='<select class="form-input" id="cardio-type">';
-  CARDIO_TYPES.forEach(function(t){h+='<option value="'+t+'">'+t+'</option>'});
-  h+='</select></div>';
-  h+='<div class="form-row">';
-  h+='<div class="form-group"><label class="form-label">Dauer (Min.)</label><input type="number" class="form-input" id="cardio-duration" placeholder="30" inputmode="numeric"></div>';
-  h+='<div class="form-group"><label class="form-label">Beine (1-10)</label><input type="number" class="form-input" id="cardio-legs" placeholder="8" min="1" max="10" inputmode="numeric"></div>';
-  h+='</div>';
-  h+='<div class="form-group"><label class="form-label">Notizen</label><textarea class="form-input" id="cardio-notes" rows="2" placeholder="Optional…"></textarea></div>';
-  h+='<button class="btn btn-primary btn-full" data-action="save-cardio">Speichern</button>';
-  h+='</div>';
-
-  var sessions=Store.cardio.get().slice(0,20);
-  if(sessions.length>0){
-    h+='<div class="section-title">Verlauf</div>';
-    sessions.forEach(function(c){
-      var d=new Date(c.date);
-      h+='<div class="card card-sm"><div class="flex-between"><span class="text-sm" style="font-weight:500">'+esc(c.type)+' – '+c.duration+' Min.</span>';
-      h+='<span class="text-sm text-muted">'+d.toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric'})+'</span></div>';
-      if(c.legs)h+='<div class="text-sm text-muted">Beine-Erholung: '+c.legs+'/10</div>';
-      if(c.notes)h+='<div class="text-sm text-muted mt-4">'+esc(c.notes)+'</div>';
-      h+='</div>';
-    });
-  }
-  return h;
-}
-
-function renderCore(){
-  var h='<div class="page-header"><button class="back-btn" data-action="go-more">&#8592; Zurück</button><h1>Core</h1></div>';
-  h+='<div class="card">';
-  h+='<div class="form-group"><label class="form-label">Übung</label>';
-  h+='<select class="form-input" id="core-exercise">';
-  CORE_EXERCISES.forEach(function(e){h+='<option value="'+e+'">'+e+'</option>'});
-  h+='</select></div>';
-  h+='<div class="form-row">';
-  h+='<div class="form-group"><label class="form-label">Dauer (Min.)</label><input type="number" class="form-input" id="core-duration" placeholder="12" inputmode="numeric"></div>';
-  h+='<div class="form-group"><label class="form-label">Sätze</label><input type="number" class="form-input" id="core-sets" placeholder="3" inputmode="numeric"></div>';
-  h+='</div>';
-  h+='<div class="form-group"><label class="form-label">Notizen</label><textarea class="form-input" id="core-notes" rows="2" placeholder="Optional…"></textarea></div>';
-  h+='<button class="btn btn-primary btn-full" data-action="save-core">Speichern</button>';
-  h+='</div>';
-
-  var sessions=Store.core.get().slice(0,20);
-  if(sessions.length>0){
-    h+='<div class="section-title">Verlauf</div>';
-    sessions.forEach(function(c){
-      var d=new Date(c.date);
-      h+='<div class="card card-sm"><div class="flex-between"><span class="text-sm" style="font-weight:500">'+esc(c.exercise)+' – '+c.duration+' Min.</span>';
-      h+='<span class="text-sm text-muted">'+d.toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric'})+'</span></div>';
-      if(c.sets)h+='<div class="text-sm text-muted">'+c.sets+' Sätze</div>';
-      h+='</div>';
-    });
-  }
   return h;
 }
 
@@ -1275,8 +1125,6 @@ function renderSettings(){
   h+='<div class="card">';
   h+='<div class="stat-row"><span class="stat-label">Trainings</span><span class="stat-value">'+Store.sessions.get().length+'</span></div>';
   h+='<div class="stat-row"><span class="stat-label">Check-ins</span><span class="stat-value">'+Store.checkins.get().length+'</span></div>';
-  h+='<div class="stat-row"><span class="stat-label">Cardio-Einträge</span><span class="stat-value">'+Store.cardio.get().length+'</span></div>';
-  h+='<div class="stat-row"><span class="stat-label">Core-Einträge</span><span class="stat-value">'+Store.core.get().length+'</span></div>';
   h+='<div class="stat-row"><span class="stat-label">Gewichtseinträge</span><span class="stat-value">'+Store.bw.get().length+'</span></div>';
   h+='</div>';
 
@@ -1396,13 +1244,9 @@ function bindEvents(){
       case 'go-dashboard':S.tab='dashboard';S.sub=null;render();break;
       case 'go-checkin':S.tab='checkin';render();break;
       case 'go-more':S.tab='more';render();break;
-      case 'go-cardio':S.tab='cardio';render();break;
-      case 'go-core':S.tab='core';render();break;
       case 'go-bodyweight':S.tab='bodyweight';render();break;
       case 'go-prs':S.tab='prs';render();break;
       case 'go-settings':S.tab='settings';render();break;
-      case 'go-quick-core':S.tab='core';render();break;
-      case 'go-quick-cardio':S.tab='cardio';render();break;
       case 'go-quick-bw':S.tab='bodyweight';render();break;
       case 'calculate-recommendation':{
         var todayC2=getTodayCheckin();
@@ -1510,28 +1354,6 @@ function bindEvents(){
         Store.workout.clear();S.tab='dashboard';S.addGroupMode=false;render();
         break;
       }
-      case 'save-cardio':{
-        var type=document.getElementById('cardio-type');
-        var dur=document.getElementById('cardio-duration');
-        var legs=document.getElementById('cardio-legs');
-        var notes=document.getElementById('cardio-notes');
-        if(!dur.value||isNaN(parseInt(dur.value))){alert('Bitte Dauer eingeben.');break}
-        Store.cardio.add({date:isoNow(),type:type.value,duration:parseInt(dur.value),
-          legs:legs.value?parseInt(legs.value):null,notes:notes.value});
-        render();
-        break;
-      }
-      case 'save-core':{
-        var ex=document.getElementById('core-exercise');
-        var dur2=document.getElementById('core-duration');
-        var sets=document.getElementById('core-sets');
-        var notes2=document.getElementById('core-notes');
-        if(!dur2.value||isNaN(parseInt(dur2.value))){alert('Bitte Dauer eingeben.');break}
-        Store.core.add({date:isoNow(),exercise:ex.value,duration:parseInt(dur2.value),
-          sets:sets.value?parseInt(sets.value):null,notes:notes2.value});
-        render();
-        break;
-      }
       case 'save-bw':{
         var val=document.getElementById('bw-value');
         var date=document.getElementById('bw-date');
@@ -1544,8 +1366,6 @@ function bindEvents(){
         var data={
           sessions:Store.sessions.get(),
           checkins:Store.checkins.get(),
-          cardio:Store.cardio.get(),
-          core:Store.core.get(),
           bodyWeight:Store.bw.get(),
           custom:Store.custom.get(),
           exportedAt:isoNow()
