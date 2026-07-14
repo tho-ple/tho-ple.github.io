@@ -1,7 +1,7 @@
 {
-  "name": "Adaptive Trainer",
-  "short_name": "Trainer",
-  "description": "Adaptiver Trainingsbegleiter für evidenzorientiertes Krafttraining",
+  "name": "Trainings-Logger",
+  "short_name": "Logger",
+  "description": "Smart Full Body Trainings-Logger mit Exercise Cooldown",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

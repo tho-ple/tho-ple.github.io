@@ -1,4 +1,4 @@
-const CACHE_NAME = 'adaptive-trainer-v2';
+const CACHE_NAME = 'trainings-logger-v3';
 const ASSETS = [
   './',
   './index.html',
