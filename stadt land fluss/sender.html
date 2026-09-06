@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stadt Land Fluss – Steuerung</title>
+<link rel="stylesheet" href="styles.css">
+<script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1"></script>
+<style>
+  body { min-height: 100vh; }
+  .app { max-width: 480px; margin: 0 auto; padding: 24px 20px 80px; }
+
+  header.topbar {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+  header.topbar h1 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 26px;
+    margin: 0;
+  }
+  .cast-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .cast-btn {
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    line-height: 1;
+    padding: 4px;
+    color: var(--paper-dim);
+  }
+  .cast-btn.connected { color: var(--amber); }
+  .cast-status {
+    font-size: 13px;
+    color: var(--paper-dim);
+  }
+
+  .view { display: none; }
+  .view.active { display: block; }
+
+  /* ----- list view ----- */
+  .set-card {
+    background: var(--ink-soft);
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-bottom: 12px;
+  }
+  .set-card h2 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 19px;
+    margin: 0 0 4px;
+  }
+  .set-card .meta {
+    color: var(--paper-dim);
+    font-size: 13px;
+    margin-bottom: 12px;
+  }
+  .set-card .row { display: flex; gap: 8px; }
+
+  button.btn {
+    border: none;
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  button.btn-primary { background: var(--amber); color: var(--ink); }
+  button.btn-secondary { background: transparent; color: var(--paper); border: 1px solid var(--ink-softer); }
+  button.btn-ghost { background: transparent; color: var(--paper-dim); }
+  button.btn-danger { background: transparent; color: var(--ember); }
+  button.btn-block { width: 100%; }
+  button.btn-large { padding: 16px; font-size: 16px; }
+
+  .add-set-btn {
+    width: 100%;
+    padding: 14px;
+    border: 1px dashed var(--ink-softer);
+    background: transparent;
+    color: var(--paper-dim);
+    border-radius: 10px;
+    font-size: 15px;
+  }
+
+  /* ----- editor view ----- */
+  label {
+    display: block;
+    font-size: 13px;
+    color: var(--paper-dim);
+    margin: 18px 0 6px;
+  }
+  input[type=text], input[type=number] {
+    width: 100%;
+    background: var(--ink-soft);
+    border: 1px solid var(--ink-softer);
+    color: var(--paper);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 15px;
+    font-family: var(--font-body);
+  }
+  .cat-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+    align-items: center;
+  }
+  .cat-row input { flex: 1; }
+  .cat-row button { flex-shrink: 0; }
+  .editor-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 28px;
+  }
+  .editor-actions .btn { flex: 1; }
+
+  /* ----- control view ----- */
+  .control-state {
+    font-family: var(--font-display);
+    font-size: 22px;
+    margin: 0 0 4px;
+  }
+  .control-sub {
+    color: var(--paper-dim);
+    font-size: 14px;
+    margin-bottom: 28px;
+  }
+  .control-actions { display: flex; flex-direction: column; gap: 12px; }
+
+  .backlink {
+    display: inline-block;
+    color: var(--paper-dim);
+    font-size: 13px;
+    margin-bottom: 16px;
+    text-decoration: none;
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <header class="topbar">
+    <h1>Stadt Land Fluss</h1>
+    <div class="cast-controls">
+      <button id="btn-cast" class="cast-btn" title="Mit Fernseher verbinden">📺</button>
+      <span class="cast-status" id="cast-status">nicht verbunden</span>
+    </div>
+  </header>
+
+  <!-- LIST VIEW -->
+  <div class="view active" id="view-list">
+    <div id="set-list"></div>
+    <button class="add-set-btn" id="btn-new-set">+ Neues Spielset</button>
+  </div>
+
+  <!-- EDITOR VIEW -->
+  <div class="view" id="view-editor">
+    <a href="#" class="backlink" id="editor-back">← Zurück</a>
+    <label for="ed-name">Name des Spielsets</label>
+    <input type="text" id="ed-name" placeholder="z. B. Klassisch">
+
+    <label for="ed-timer">Timer (Sekunden)</label>
+    <input type="number" id="ed-timer" min="10" step="5" value="60">
+
+    <label>Kategorien</label>
+    <div id="ed-categories"></div>
+    <button class="btn btn-secondary btn-block" id="btn-add-cat">+ Kategorie</button>
+
+    <div class="editor-actions">
+      <button class="btn btn-danger" id="btn-delete-set">Löschen</button>
+      <button class="btn btn-primary" id="btn-save-set">Speichern</button>
+    </div>
+  </div>
+
+  <!-- CONTROL VIEW -->
+  <div class="view" id="view-control">
+    <a href="#" class="backlink" id="control-back">← Zur Auswahl</a>
+    <p class="control-state" id="control-state">Übersicht wird angezeigt</p>
+    <p class="control-sub" id="control-sub"></p>
+    <div class="control-actions">
+      <button class="btn btn-primary btn-large" id="btn-round-action">Runde 1 starten</button>
+      <button class="btn btn-secondary" id="btn-mute">🔊 Ton auf TV stummschalten</button>
+      <button class="btn btn-ghost" id="btn-reset">Spiel beenden</button>
+    </div>
+  </div>
+
+</div>
+
+<script src="shared.js"></script>
+<script>
+  const CAST_NAMESPACE = 'urn:x-cast:com.stadtlandfluss.app';
+
+  // ⚠️ Replace with the App ID you get from the Google Cast Developer
+  // Console after registering your custom receiver (see setup notes).
+  const CAST_APP_ID = 'YOUR_APP_ID_HERE';
+
+  const TEST_MODE = ['localhost', '127.0.0.1', ''].includes(location.hostname);
+
+  class CastSenderBus {
+    constructor(namespace, appId) {
+      this.namespace = namespace;
+      this.appId = appId;
+      this.handlers = {};
+      this.context = null;
+      this.onStatusChange = null;
+      window['__onGCastApiAvailable'] = (isAvailable) => {
+        if (isAvailable) this._init();
+      };
+    }
+    _init() {
+      this.context = cast.framework.CastContext.getInstance();
+      this.context.setOptions({
+        receiverApplicationId: this.appId,
+        autoJoinPolicy: chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED,
+      });
+      this.context.addEventListener(
+        cast.framework.CastContextEventType.SESSION_STATE_CHANGED,
+        (e) => {
+          const session = this.context.getCurrentSession();
+          if (session) {
+            session.addMessageListener(this.namespace, (ns, msgStr) => {
+              const data = JSON.parse(msgStr);
+              (this.handlers[data.type] || []).forEach((cb) => cb(data.payload));
+            });
+          }
+          if (this.onStatusChange) {
+            this.onStatusChange(e.sessionState, session ? session.getCastDevice().friendlyName : null);
+          }
+        }
+      );
+    }
+    isConnected() {
+      return !!(this.context && this.context.getCurrentSession());
+    }
+    on(type, cb) { (this.handlers[type] = this.handlers[type] || []).push(cb); }
+    send(type, payload) {
+      const session = this.context && this.context.getCurrentSession();
+      if (!session) { console.warn('Kein aktiver Cast-Session.'); return; }
+      session.sendMessage(this.namespace, JSON.stringify({ type, payload }));
+    }
+    requestSession() {
+      if (this.context) this.context.requestSession();
+    }
+    endSession() {
+      if (this.context && this.context.getCurrentSession()) {
+        this.context.endCurrentSession(true);
+      }
+    }
+  }
+
+  const bus = TEST_MODE ? new Bus() : new CastSenderBus(CAST_NAMESPACE, CAST_APP_ID);
+
+  const castStatusEl = document.getElementById('cast-status');
+  const castBtnEl = document.getElementById('btn-cast');
+
+  if (TEST_MODE) {
+    castStatusEl.textContent = 'Testmodus (lokal)';
+    castBtnEl.style.display = 'none';
+  } else {
+    bus.onStatusChange = (state, deviceName) => {
+      const connected = state === 'CONNECTED';
+      castBtnEl.classList.toggle('connected', connected);
+      castStatusEl.textContent = connected ? `verbunden: ${deviceName}` : 'nicht verbunden';
+    };
+    castBtnEl.onclick = () => {
+      if (bus.isConnected()) bus.endSession();
+      else bus.requestSession();
+    };
+  }
+
+  function requireCastConnection() {
+    if (TEST_MODE) return true;
+    if (bus.isConnected()) return true;
+    alert('Bitte zuerst über das 📺-Symbol mit dem Fernseher verbinden.');
+    return false;
+  }
+
+  let gameSets = loadGameSets();
+  let editingId = null;
+
+  // ---- view switching ----
+  const views = {
+    list: document.getElementById('view-list'),
+    editor: document.getElementById('view-editor'),
+    control: document.getElementById('view-control'),
+  };
+  function showView(name) {
+    Object.values(views).forEach((v) => v.classList.remove('active'));
+    views[name].classList.add('active');
+  }
+
+  // ---- LIST VIEW ----
+  function renderList() {
+    const container = document.getElementById('set-list');
+    container.innerHTML = '';
+    gameSets.forEach((set) => {
+      const card = document.createElement('div');
+      card.className = 'set-card';
+      card.innerHTML = `
+        <h2>${escapeHtml(set.name)}</h2>
+        <div class="meta">${set.categories.length} Kategorien · ${set.timerSeconds}s</div>
+        <div class="row">
+          <button class="btn btn-primary" data-action="start">Starten</button>
+          <button class="btn btn-secondary" data-action="edit">Bearbeiten</button>
+        </div>
+      `;
+      card.querySelector('[data-action="start"]').onclick = () => startGame(set);
+      card.querySelector('[data-action="edit"]').onclick = () => openEditor(set.id);
+      container.appendChild(card);
+    });
+  }
+
+  function escapeHtml(s) {
+    const div = document.createElement('div');
+    div.textContent = s;
+    return div.innerHTML;
+  }
+
+  document.getElementById('btn-new-set').onclick = () => openEditor(null);
+
+  // ---- EDITOR VIEW ----
+  function openEditor(id) {
+    editingId = id;
+    const set = id ? gameSets.find((s) => s.id === id) : null;
+    document.getElementById('ed-name').value = set ? set.name : '';
+    document.getElementById('ed-timer').value = set ? set.timerSeconds : 60;
+    renderCatEditor(set ? [...set.categories] : ['Stadt', 'Land', 'Fluss']);
+    document.getElementById('btn-delete-set').style.display = set ? 'block' : 'none';
+    showView('editor');
+  }
+
+  function renderCatEditor(categories) {
+    const container = document.getElementById('ed-categories');
+    container.innerHTML = '';
+    categories.forEach((cat, i) => {
+      const row = document.createElement('div');
+      row.className = 'cat-row';
+      row.innerHTML = `
+        <input type="text" value="${escapeHtml(cat)}" data-idx="${i}">
+        <button class="btn btn-ghost" data-remove="${i}">✕</button>
+      `;
+      row.querySelector('[data-remove]').onclick = () => {
+        categories.splice(i, 1);
+        renderCatEditor(categories);
+      };
+      container.appendChild(row);
+    });
+    container.dataset.count = categories.length;
+    container._categories = categories;
+  }
+
+  document.getElementById('btn-add-cat').onclick = () => {
+    const container = document.getElementById('ed-categories');
+    const cats = container._categories || [];
+    cats.push('');
+    renderCatEditor(cats);
+    const inputs = container.querySelectorAll('input');
+    inputs[inputs.length - 1].focus();
+  };
+
+  document.getElementById('editor-back').onclick = (e) => { e.preventDefault(); showView('list'); };
+
+  document.getElementById('btn-save-set').onclick = () => {
+    const container = document.getElementById('ed-categories');
+    const inputs = [...container.querySelectorAll('input')];
+    const categories = inputs.map((i) => i.value.trim()).filter(Boolean);
+    const name = document.getElementById('ed-name').value.trim() || 'Ohne Namen';
+    const timerSeconds = Math.max(10, parseInt(document.getElementById('ed-timer').value, 10) || 60);
+
+    if (categories.length === 0) {
+      alert('Bitte mindestens eine Kategorie hinzufügen.');
+      return;
+    }
+
+    if (editingId) {
+      const set = gameSets.find((s) => s.id === editingId);
+      Object.assign(set, { name, timerSeconds, categories });
+    } else {
+      gameSets.push({
+        id: uid(),
+        name, timerSeconds, categories,
+        excludedLetters: DEFAULT_EXCLUDED_LETTERS,
+      });
+    }
+    saveGameSets(gameSets);
+    renderList();
+    showView('list');
+  };
+
+  document.getElementById('btn-delete-set').onclick = () => {
+    if (!editingId) return;
+    if (!confirm('Dieses Spielset wirklich löschen?')) return;
+    gameSets = gameSets.filter((s) => s.id !== editingId);
+    saveGameSets(gameSets);
+    renderList();
+    showView('list');
+  };
+
+  // ---- CONTROL VIEW ----
+  let activeSet = null;
+  let roundNumber = 0;
+  let usedLetters = [];
+  let roundInProgress = false;
+
+  function startGame(set) {
+    if (!requireCastConnection()) return;
+    activeSet = set;
+    roundNumber = 0;
+    usedLetters = [];
+    bus.send('LOAD_GAMESET', set);
+    document.getElementById('control-state').textContent = 'Übersicht wird angezeigt';
+    document.getElementById('control-sub').textContent = set.name;
+    document.getElementById('btn-round-action').textContent = 'Runde 1 starten';
+    document.getElementById('btn-round-action').disabled = false;
+    roundInProgress = false;
+    muted = false;
+    document.getElementById('btn-mute').textContent = '🔊 Ton auf TV stummschalten';
+    showView('control');
+  }
+
+  document.getElementById('btn-round-action').onclick = () => {
+    if (!activeSet || roundInProgress) return;
+    roundNumber += 1;
+    const letter = pickLetter(usedLetters, activeSet.excludedLetters);
+    usedLetters.push(letter);
+    bus.send('START_ROUND', { round: roundNumber, letter });
+    roundInProgress = true;
+    document.getElementById('control-state').textContent = `Runde ${roundNumber} läuft`;
+    document.getElementById('control-sub').textContent = `Buchstabe: ${letter}`;
+    document.getElementById('btn-round-action').disabled = true;
+    document.getElementById('btn-round-action').textContent = 'Runde läuft …';
+  };
+
+  let muted = false;
+  document.getElementById('btn-mute').onclick = () => {
+    muted = !muted;
+    bus.send('SET_MUTED', { muted });
+    document.getElementById('btn-mute').textContent = muted
+      ? '🔇 Ton auf TV wieder an'
+      : '🔊 Ton auf TV stummschalten';
+  };
+
+  bus.on('TIME_UP', () => {
+    if (!activeSet) return;
+    roundInProgress = false;
+    document.getElementById('control-state').textContent = `Runde ${roundNumber} beendet`;
+    document.getElementById('control-sub').textContent = 'Zeit ist um';
+    document.getElementById('btn-round-action').disabled = false;
+    document.getElementById('btn-round-action').textContent = `Runde ${roundNumber + 1} starten`;
+  });
+
+  document.getElementById('control-back').onclick = (e) => {
+    e.preventDefault();
+    endGame();
+  };
+  document.getElementById('btn-reset').onclick = endGame;
+
+  function endGame() {
+    bus.send('RESET', {});
+    activeSet = null;
+    showView('list');
+  }
+
+  renderList();
+</script>
+</body>
+</html>

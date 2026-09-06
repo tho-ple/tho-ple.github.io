@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Stadt Land Fluss – Anzeige</title>
+<link rel="stylesheet" href="styles.css">
+<script src="//www.gstatic.com/cast/sdk/libs/caf_receiver/v3/cast_receiver_framework.js"></script>
+<style>
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .screen {
+    width: 100%;
+    height: 100vh;
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+  .screen.active { display: flex; }
+
+  /* ---------- Idle ---------- */
+  #screen-idle .idle-inner { text-align: center; }
+  #screen-idle h1 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 4.5vw;
+    margin: 0 0 0.3em;
+    letter-spacing: 0.01em;
+  }
+  #screen-idle p {
+    color: var(--paper-dim);
+    font-size: 1.4vw;
+    margin: 0 0 1.5em;
+  }
+  .enable-sound-btn {
+    background: var(--ink-soft);
+    color: var(--paper);
+    border: 1px solid var(--ink-softer);
+    border-radius: 999px;
+    padding: 0.6em 1.4em;
+    font-size: 1vw;
+    font-family: var(--font-body);
+  }
+  .enable-sound-btn.done {
+    border-color: var(--moss);
+    color: var(--moss);
+  }
+
+  /* ---------- Overview ---------- */
+  #screen-overview .overview-inner {
+    width: 60vw;
+  }
+  .overview-eyebrow {
+    color: var(--amber);
+    font-size: 1.3vw;
+    margin: 0 0 0.5em;
+  }
+  #screen-overview h1 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 3.5vw;
+    margin: 0 0 0.8em;
+  }
+  .category-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .category-list li {
+    font-family: var(--font-display);
+    font-size: 2.4vw;
+    padding: 0.5em 0;
+    border-bottom: 1px solid var(--ink-softer);
+  }
+  .category-list li:first-child { border-top: 1px solid var(--ink-softer); }
+  .overview-hint {
+    margin-top: 1em;
+    color: var(--paper-dim);
+    font-size: 1.2vw;
+  }
+
+  /* ---------- Round ---------- */
+  #screen-round .round-inner {
+    display: flex;
+    align-items: center;
+    gap: 6vw;
+    width: 82vw;
+  }
+  .letter-wrap {
+    position: relative;
+    width: 26vw;
+    height: 26vw;
+    flex-shrink: 0;
+  }
+  .letter-wrap svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+  .letter-track { fill: none; stroke: var(--ink-softer); stroke-width: 6; }
+  .letter-progress {
+    fill: none;
+    stroke: var(--amber);
+    stroke-width: 6;
+    stroke-linecap: round;
+    transition: stroke 0.4s ease;
+  }
+  .letter-progress.urgent { stroke: var(--ember); }
+  .letter-char {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 11vw;
+    color: var(--paper);
+  }
+  .round-right { flex: 1; }
+  .round-meta {
+    color: var(--paper-dim);
+    font-size: 1.3vw;
+    margin: 0 0 0.6em;
+  }
+  .round-categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6vw;
+  }
+  .round-categories span {
+    font-size: 1.5vw;
+    padding: 0.35em 0.9em;
+    border-radius: 999px;
+    border: 1px solid var(--moss);
+    color: var(--paper);
+  }
+  .timeup-banner {
+    margin-top: 1em;
+    font-family: var(--font-display);
+    font-size: 2.2vw;
+    color: var(--ember);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .timeup-banner.show { opacity: 1; }
+</style>
+</head>
+<body>
+
+  <div id="screen-idle" class="screen active">
+    <div class="idle-inner">
+      <h1>Stadt Land Fluss</h1>
+      <p id="idle-hint">Wähle ein Spielset auf deinem Gerät aus, um zu starten.</p>
+      <button id="btn-enable-sound" class="enable-sound-btn">🔊 Ton aktivieren</button>
+    </div>
+  </div>
+
+  <div id="screen-overview" class="screen">
+    <div class="overview-inner">
+      <p class="overview-eyebrow" id="ov-timer-label"></p>
+      <h1 id="ov-title"></h1>
+      <ul class="category-list" id="ov-categories"></ul>
+      <p class="overview-hint">Runde 1 startet gleich …</p>
+    </div>
+  </div>
+
+  <div id="screen-round" class="screen">
+    <div class="round-inner">
+      <div class="letter-wrap">
+        <svg viewBox="0 0 200 200">
+          <circle class="letter-track" cx="100" cy="100" r="90"></circle>
+          <circle class="letter-progress" id="letter-progress" cx="100" cy="100" r="90"
+                  stroke-dasharray="565.5" stroke-dashoffset="0"></circle>
+        </svg>
+        <div class="letter-char" id="round-letter">A</div>
+      </div>
+      <div class="round-right">
+        <p class="round-meta" id="round-meta">Runde 1</p>
+        <div class="round-categories" id="round-categories"></div>
+        <p class="timeup-banner" id="timeup-banner">Zeit!</p>
+      </div>
+    </div>
+  </div>
+
+<script src="shared.js"></script>
+<script>
+  const CAST_NAMESPACE = 'urn:x-cast:com.stadtlandfluss.app';
+
+  // Local BroadcastChannel testing (open via http://localhost:PORT/...)
+  // vs. real Chromecast (opened by an actual Cast device once registered
+  // in the Google Cast Developer Console).
+  const TEST_MODE = ['localhost', '127.0.0.1', ''].includes(location.hostname);
+
+  class CastReceiverBus {
+    constructor(namespace) {
+      this.namespace = namespace;
+      this.handlers = {};
+      this.senderId = null;
+      this.context = cast.framework.CastReceiverContext.getInstance();
+      this.context.addCustomMessageListener(namespace, (event) => {
+        this.senderId = event.senderId;
+        const { type, payload } = event.data || {};
+        (this.handlers[type] || []).forEach((cb) => cb(payload));
+      });
+      const options = new cast.framework.CastReceiverOptions();
+      // We're not a media-streaming app, so don't let the platform auto-quit
+      // us for having no active media session.
+      options.disableIdleTimeout = true;
+      this.context.start(options);
+    }
+    on(type, cb) { (this.handlers[type] = this.handlers[type] || []).push(cb); }
+    send(type, payload) {
+      if (!this.senderId) return; // no sender connected (yet)
+      this.context.sendCustomMessage(this.namespace, this.senderId, { type, payload });
+    }
+  }
+
+  const bus = TEST_MODE ? new Bus() : new CastReceiverBus(CAST_NAMESPACE);
+  const sound = new SoundEngine();
+
+  document.getElementById('btn-enable-sound').style.display = TEST_MODE ? 'inline-block' : 'none';
+  if (!TEST_MODE) {
+    // Real Cast receivers are allowed to autoplay audio; no gesture needed.
+    sound.ensureContext();
+  }
+
+  document.getElementById('btn-enable-sound').onclick = (e) => {
+    sound.ensureContext();
+    // tiny confirmation blip so it's obvious sound is working
+    sound.playTick(0);
+    e.target.textContent = '🔊 Ton aktiv';
+    e.target.classList.add('done');
+  };
+
+  bus.on('SET_MUTED', (payload) => sound.setMuted(!!payload.muted));
+
+  const screens = {
+    idle: document.getElementById('screen-idle'),
+    overview: document.getElementById('screen-overview'),
+    round: document.getElementById('screen-round'),
+  };
+  function showScreen(name) {
+    Object.values(screens).forEach((s) => s.classList.remove('active'));
+    screens[name].classList.add('active');
+  }
+
+  let currentSet = null;
+  let timerHandle = null;
+  const CIRC = 2 * Math.PI * 90; // matches r=90
+
+  function stopTimer() {
+    if (timerHandle) { cancelAnimationFrame(timerHandle); timerHandle = null; }
+  }
+
+  function runTimer(totalSeconds) {
+    stopTimer();
+    const progressEl = document.getElementById('letter-progress');
+    const banner = document.getElementById('timeup-banner');
+    banner.classList.remove('show');
+    progressEl.classList.remove('urgent');
+    progressEl.setAttribute('stroke-dasharray', CIRC);
+    progressEl.setAttribute('stroke-dashoffset', 0);
+
+    const start = performance.now();
+    const totalMs = totalSeconds * 1000;
+    let lastTickSecond = null;
+
+    function tick(now) {
+      const elapsed = now - start;
+      const remaining = Math.max(0, totalMs - elapsed);
+      const fraction = remaining / totalMs;
+      progressEl.setAttribute('stroke-dashoffset', CIRC * (1 - fraction));
+
+      const remainingSeconds = Math.ceil(remaining / 1000);
+      if (remaining <= 10000) {
+        progressEl.classList.add('urgent');
+        if (remainingSeconds !== lastTickSecond && remainingSeconds > 0) {
+          lastTickSecond = remainingSeconds;
+          sound.playTick((10 - remainingSeconds) / 10);
+        }
+      }
+
+      if (remaining <= 0) {
+        banner.classList.add('show');
+        sound.stopMusic();
+        sound.playBuzzer();
+        bus.send('TIME_UP', {});
+        timerHandle = null;
+        return;
+      }
+      timerHandle = requestAnimationFrame(tick);
+    }
+    sound.startMusic();
+    timerHandle = requestAnimationFrame(tick);
+  }
+
+  bus.on('LOAD_GAMESET', (payload) => {
+    currentSet = payload;
+    document.getElementById('ov-title').textContent = payload.name;
+    document.getElementById('ov-timer-label').textContent =
+      `${payload.timerSeconds}s pro Runde`;
+    const list = document.getElementById('ov-categories');
+    list.innerHTML = '';
+    payload.categories.forEach((c) => {
+      const li = document.createElement('li');
+      li.textContent = c;
+      list.appendChild(li);
+    });
+    showScreen('overview');
+  });
+
+  bus.on('START_ROUND', (payload) => {
+    if (!currentSet) return;
+    document.getElementById('round-letter').textContent = payload.letter;
+    document.getElementById('round-meta').textContent = `Runde ${payload.round}`;
+    const wrap = document.getElementById('round-categories');
+    wrap.innerHTML = '';
+    currentSet.categories.forEach((c) => {
+      const span = document.createElement('span');
+      span.textContent = c;
+      wrap.appendChild(span);
+    });
+    showScreen('round');
+    runTimer(currentSet.timerSeconds);
+  });
+
+  bus.on('RESET', () => {
+    stopTimer();
+    sound.stopMusic();
+    currentSet = null;
+    showScreen('idle');
+  });
+</script>
+</body>
+</html>
