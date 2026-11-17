@@ -219,7 +219,8 @@ function result() {
   const pct = Math.round((score / MAX) * 100);
   const r = [...RANKS].reverse().find(r => pct >= r.min);
   const date = new Date().toLocaleDateString("de-DE", { year: "numeric", month: "long", day: "numeric" });
-  const num = Math.floor(1000 + Math.random() * 9000);
+  const n = new Date(), p = v => String(v).padStart(2, "0");
+  const num = `${n.getFullYear()}${p(n.getMonth() + 1)}${p(n.getDate())}-${p(n.getHours())}${p(n.getMinutes())}${p(n.getSeconds())}`;
   // Führerschein schon jetzt als Bild erzeugen, damit "Teilen" sofort reagiert (wichtig für iPhone)
   licenseFile = null;
   makeLicense({ num, emoji: r.emoji, name: DAD, title: r.title, pct, text: r.text, date, from: FROM })
