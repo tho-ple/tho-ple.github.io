@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Die offizielle Papa-Prüfung</title>
+<meta property="og:title" content="Die offizielle Papa-Prüfung 🍼">
+<meta property="og:description" content="12 Fragen. 2 Minuten. Am Ende gibt's den offiziellen Papa-Führerschein.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍼</text></svg>">
+<style>
+  :root {
+    --bg: #fdf6ec; --card: #ffffff; --ink: #2b2118; --muted: #7a6a5c;
+    --accent: #e8743b; --accent-ink: #fff; --line: #eadfce; --good: #3f9b5f; --bad: #c9483b;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #1d1814; --card: #2a231d; --ink: #f5ece2; --muted: #b3a291; --line: #3d332a; --good: #5cc07e; --bad: #e0675a; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh; background: var(--bg); color: var(--ink);
+    font: 17px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    display: flex; align-items: center; justify-content: center; padding: 16px;
+  }
+  .card {
+    width: 100%; max-width: 560px; background: var(--card); border: 1px solid var(--line);
+    border-radius: 20px; padding: 28px 24px; box-shadow: 0 10px 30px rgba(0,0,0,.06);
+  }
+  h1 { font-size: 1.8rem; margin: 0 0 8px; line-height: 1.2; }
+  h2 { font-size: 1.3rem; margin: 0 0 18px; line-height: 1.3; }
+  p { margin: 0 0 14px; }
+  .muted { color: var(--muted); font-size: .95rem; }
+  .big-emoji { font-size: 3.5rem; line-height: 1; margin-bottom: 10px; }
+  button {
+    font: inherit; cursor: pointer; border: none; border-radius: 12px;
+    padding: 14px 18px; background: var(--accent); color: var(--accent-ink); font-weight: 600;
+  }
+  button:active { transform: scale(.98); }
+  .options { display: grid; gap: 10px; }
+  .opt {
+    text-align: left; background: transparent; color: var(--ink); font-weight: 500;
+    border: 2px solid var(--line); transition: border-color .15s, background .15s;
+  }
+  .opt:hover:not(:disabled) { border-color: var(--accent); }
+  .opt:disabled { cursor: default; }
+  .opt.picked { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, transparent); }
+  .progress { height: 8px; background: var(--line); border-radius: 99px; overflow: hidden; margin-bottom: 18px; }
+  .bar { height: 100%; background: var(--accent); transition: width .3s; }
+  .meta { display: flex; justify-content: space-between; font-size: .85rem; color: var(--muted); margin-bottom: 6px; }
+  .quip { margin-top: 16px; padding: 12px 14px; border-radius: 12px; background: var(--bg); display: none; }
+  .next { margin-top: 16px; width: 100%; display: none; }
+  .cert { border: 3px double var(--accent); border-radius: 14px; padding: 22px 18px; text-align: center; margin-bottom: 18px; }
+  .cert .title { font-size: 1.5rem; font-weight: 800; color: var(--accent); margin: 6px 0; }
+  .cert .score { font-size: 2.6rem; font-weight: 800; }
+  .joke { background: var(--bg); border-radius: 12px; padding: 14px; margin-bottom: 18px; }
+  .joke .label { font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); margin-bottom: 4px; }
+  .joke button { margin-top: 10px; padding: 8px 12px; font-size: .9rem; }
+  .row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .row button { flex: 1; }
+  .ghost { background: transparent; color: var(--ink); border: 2px solid var(--line); }
+  .confetti { position: fixed; top: -20px; font-size: 22px; pointer-events: none; animation: fall linear forwards; }
+  @keyframes fall { to { transform: translateY(110vh) rotate(720deg); } }
+</style>
+</head>
+<body>
+<main class="card" id="app"></main>
+
+<script>
+// ---------- EINSTELLUNGEN ----------
+// Personalisieren per Link: ?name=Max&from=Thomas
+const params = new URLSearchParams(location.search);
+const DAD = params.get("name") || "frischgebackener Papa";
+const FROM = params.get("from") || "deiner Familie";
+// Jede Antwort: [Text, Punkte 0-3]. Nach der Antwort erscheint der Spruch (quip) – meist ein Witz aus dadjokes.txt.
+const QUESTIONS = [
+  { q: "3:14 Uhr nachts. Das Baby weint. Du…",
+    o: [["…bist schon wach, bevor es überhaupt losgeht", 3],
+        ["…wiegst es und summst Rockballaden aus den 90ern", 3],
+        ["…erklärst ihm ganz ruhig die Vorteile von Schlaf. Mit Folien.", 2],
+        ["…führst eine Tabelle über alle Schlafphasen seit der Geburt", 3]],
+    quip: "Sie: “Heute Nacht werden die Uhren vorgestellt.” Er: “Ok! Darf ich vorstellen: Wecker! Wecker, das ist meine Frau!”" },
+  { q: "Vervollständige den Papa-Witz: „Ich lese keine Bücher mehr über Nashörner…“",
+    o: [["…die haben zu wenig Bilder.", 1],
+        ["…die sind ziemlich schwer.", 3],
+        ["…ich warte auf den Film.", 1],
+        ["…die gehen immer gleich auf mich los.", 2]],
+    quip: "Wenn du gerade gestöhnt hast: Es wirkt." },
+  { q: "Dein Kind sagt: „Vater, ich bin hungrig.“ Du antwortest:",
+    o: [["„Im Kühlschrank ist noch was.“", 0],
+        ["„Hallo Hungrig, ich bin Vater.“", 3],
+        ["„Ich auch.“", 1],
+        ["„Dann mach ich uns was Schönes.“", 2]],
+    quip: "Kind: “Papa, was ist das Beste an der Schweiz?” Vater: “Ich weiß es nicht, aber die Flagge ist ein großes Plus.”" },
+  { q: "Windel-Explosion. Unterwegs. Kein Wickeltisch weit und breit. Du…",
+    o: [["…wickelst auf dem Knie wie beim Boxenstopp in der Formel 1", 3],
+        ["…hast natürlich Ersatzbody, Ersatzwindel und Ersatz-Ersatzbody dabei", 3],
+        ["…verbrauchst 47 Feuchttücher, aber das Ergebnis kann sich sehen lassen", 2],
+        ["…erklärst den Body offiziell zum Totalschaden", 2]],
+    quip: "Profi-Tipp: Immer ein Ersatz-Outfit einpacken. Fürs Baby – und für dich." },
+  { q: "Welches Geräusch machst du inzwischen beim Hinsetzen?",
+    o: [["Keins, ich bin jung und gelenkig", 1],
+        ["Ein dezentes „Uff“", 2],
+        ["Ein langes „Ahhhhh“ wie eine Luftmatratze, die Luft verliert", 3],
+        ["Hinsetzen? Dafür ist keine Zeit.", 2]],
+    quip: "Vater: “Ich würde gerne ein paar Kilos verlieren. Aber ich verliere nie. Ich bin ein Gewinner!”" },
+  { q: "Wie viele Babyfotos sind auf deinem Handy?",
+    o: [["So… 20?", 0],
+        ["Ein paar hundert", 1],
+        ["Mein Handy sagt „Speicher voll“ und ich bereue nichts", 3],
+        ["Ich habe mir extra ein zweites Handy gekauft", 3]],
+    quip: "Was macht ein Fotograf im Gefängnis? Er entwickelt sich weiter." },
+  { q: "Jemand hat die Heizung aufgedreht. Deine Reaktion:",
+    o: [["Ist mir gar nicht aufgefallen", 1],
+        ["Leichter Verdacht", 2],
+        ["Volle Spurensicherung", 3],
+        ["„Heizen wir jetzt die ganze Nachbarschaft mit?!“", 3]],
+    quip: "Wohin soll man gehen, wenn einem kalt ist? In die Ecke, da sind 90 Grad." },
+  { q: "Papa-Witz-Check: Was kommt aus einer defekten Kaffeemaschine?",
+    o: [["Lauwarmes Wasser", 1],
+        ["Ein Kaputtcino", 3],
+        ["Nur noch Tränen", 2],
+        ["Ein Anruf beim Kundendienst", 1]],
+    quip: "Was trinken Führungskräfte? Leitungswasser." },
+  { q: "Kinderwagen, Bettchen, Wickelkommode aufbauen. Und die Anleitung?",
+    o: [["Zweimal gelesen, Schritt für Schritt befolgt", 2],
+        ["Anleitung? Brauche ich nicht.", 2],
+        ["Fertig aufgebaut. 6 Schrauben übrig. Passt schon.", 3],
+        ["Aufgebaut, dreimal nachgezogen und mit einem Sack Kartoffeln probegefahren", 3]],
+    quip: "Wisst ihr was der Hammer ist? – Ein Werkzeug." },
+  { q: "Das Baby schläft endlich. Was machst du?",
+    o: [["Auch schlafen, wie ein vernünftiger Mensch", 2],
+        ["Danebenstehen und kontrollieren, ob es atmet", 3],
+        ["Endlich den kalten Kaffee von heute Morgen trinken", 3],
+        ["Wäsche. So. Viel. Wäsche.", 2]],
+    quip: "Egal, wie gut du schläfst: Albert schläft wie Einstein." },
+  { q: "Wie beruhigst du das Baby am schnellsten?",
+    o: [["Schaukeln, bis mir selbst schwindelig ist", 3],
+        ["Föhn an – wirkt Wunder", 2],
+        ["Leise singen, notfalls ohne Text", 3],
+        ["Papa-Witze erzählen, bis es aus Protest einschläft", 3]],
+    quip: "Warum summen Bienen? Weil sie den Text nicht kennen." },
+  { q: "Letzte Frage: Wie geht's dir, Papa?",
+    o: [["Müde", 1],
+        ["Sehr müde", 2],
+        ["Was ist Schlaf?", 3],
+        ["Ehrlich? So glücklich wie noch nie 🥹", 3]],
+    quip: "Alle Antworten sind richtig. Du machst das großartig. (Und jetzt trink mal ein Glas Wasser.)" },
+];
+
+const MAX = QUESTIONS.reduce((s, q) => s + Math.max(...q.o.map(o => o[1])), 0);
+
+const RANKS = [
+  { min: 0,  emoji: "🐣", title: "Papa mit Lernerlaubnis",   text: "Das Herz ist schon voll dabei – an den Papa-Witzen arbeiten wir noch." },
+  { min: 40, emoji: "🧢", title: "Zertifizierter Papa",      text: "Solide Grundlage. Papa-Witze erkannt. Heizungs-Sinn in Entwicklung." },
+  { min: 65, emoji: "🩴", title: "Socken-in-Sandalen-Profi", text: "Du stöhnst beim Hinsetzen, du schaukelst, du witzelst. Die Verwandlung ist fast abgeschlossen." },
+  { min: 85, emoji: "👑", title: "Großmeister aller Papas",  text: "Legendär. Dein Kind hat großes Glück – und keine Chance gegen deine Witze." },
+];
+
+// ---------- WITZE AUS dadjokes.txt ----------
+function parseJokes(t) {
+  const out = [], seen = new Set();
+  for (let l of t.split(/\r?\n/).map(l => l.trim()).filter(Boolean)) {
+    // Zeile, die klein oder mit Gedankenstrich beginnt = Fortsetzung des vorherigen Witzes
+    if (out.length && /^[a-zäöüß]/.test(l)) { out[out.length - 1] += l; continue; }
+    if (out.length && /^[—–]/.test(l)) { out[out.length - 1] += " " + l; continue; }
+    out.push(l.replace(/^[.\s]+/, ""));
+  }
+  return out.filter(l => /[?!.:“”"]/.test(l))          // Überschriften ohne Satzzeichen raus
+    .filter(l => { const k = l.toLowerCase().replace(/[^a-zäöüß]/g, ""); return !seen.has(k) && seen.add(k); });
+}
+
+// Bonus-Witze am Ende: aus dadjokes.txt. Falls die Datei nicht lädt (z. B. lokal geöffnet), diese hier:
+let JOKES = [
+  "Was ist orange und läuft durch den Wald? Eine Wanderine.",
+  "Geht ein Cowboy zum Friseur. Kommt wieder raus. Pony weg.",
+  "Wie heißt ein Ritter ohne Helm? – Willhelm.",
+];
+fetch("dadjokes.txt").then(r => r.ok ? r.text() : "").then(t => {
+  const lines = parseJokes(t);
+  if (lines.length) JOKES = lines;
+}).catch(() => {});
+
+// ---------- APP ----------
+const app = document.getElementById("app");
+let i = 0, score = 0;
+
+function start() {
+  app.innerHTML = `
+    <div class="big-emoji">🍼</div>
+    <h1>Die offizielle Papa-Prüfung</h1>
+    <p>Herzlichen Glückwunsch, <b>${esc(DAD)}</b>! Bevor wir dir deinen offiziellen
+       Papa-Führerschein ausstellen können, musst du noch eine kurze, absolut wissenschaftliche Prüfung bestehen.</p>
+    <p class="muted">12 Fragen · ca. 2 Minuten · kein Schlaf erforderlich</p>
+    <button id="go" style="width:100%">Prüfung starten 🎓</button>`;
+  document.getElementById("go").onclick = () => { i = 0; score = 0; show(); };
+}
+
+function show() {
+  const q = QUESTIONS[i];
+  app.innerHTML = `
+    <div class="meta"><span>Frage ${i + 1} / ${QUESTIONS.length}</span><span>Papa-Punkte: ${score}</span></div>
+    <div class="progress"><div class="bar" style="width:${(i / QUESTIONS.length) * 100}%"></div></div>
+    <h2>${esc(q.q)}</h2>
+    <div class="options">${q.o.map((o, k) => `<button class="opt" data-k="${k}">${esc(o[0])}</button>`).join("")}</div>
+    <div class="quip" id="quip">${esc(q.quip)}</div>
+    <button class="next" id="next">${i < QUESTIONS.length - 1 ? "Nächste Frage →" : "Papa-Führerschein abholen 🏆"}</button>`;
+  app.querySelectorAll(".opt").forEach(b => b.onclick = () => pick(b));
+  document.getElementById("next").onclick = () => (++i < QUESTIONS.length ? show() : result());
+}
+
+function pick(btn) {
+  score += QUESTIONS[i].o[+btn.dataset.k][1];
+  btn.classList.add("picked");
+  app.querySelectorAll(".opt").forEach(b => b.disabled = true);
+  document.getElementById("quip").style.display = "block";
+  document.getElementById("next").style.display = "block";
+}
+
+function result() {
+  const pct = Math.round((score / MAX) * 100);
+  const r = [...RANKS].reverse().find(r => pct >= r.min);
+  const date = new Date().toLocaleDateString("de-DE", { year: "numeric", month: "long", day: "numeric" });
+  const num = Math.floor(1000 + Math.random() * 9000);
+  // Führerschein schon jetzt als Bild erzeugen, damit "Teilen" sofort reagiert (wichtig für iPhone)
+  licenseFile = null;
+  makeLicense({ num, emoji: r.emoji, name: DAD, title: r.title, pct, text: r.text, date, from: FROM })
+    .then(b => { if (b) licenseFile = new File([b], "papa-fuehrerschein.png", { type: "image/png" }); })
+    .catch(() => {});
+  app.innerHTML = `
+    <div class="cert">
+      <div class="muted">Offizieller Papa-Führerschein · Nr. ${num}</div>
+      <div class="big-emoji" style="margin-top:10px">${r.emoji}</div>
+      <div><b>${esc(DAD)}</b> ist hiermit offiziell anerkannt als</div>
+      <div class="title">${esc(r.title)}</div>
+      <div class="score">${pct}%</div>
+      <p class="muted">${esc(r.text)}</p>
+      <p class="muted" style="margin:0">Ausgestellt am ${date} von ${esc(FROM)} ❤️</p>
+    </div>
+    <div class="joke">
+      <div class="label">Dein Bonus-Papa-Witz</div>
+      <div id="jokeText"></div>
+      <button class="ghost" id="moreJoke">Noch einer 🔁</button>
+    </div>
+    <div class="row">
+      <button id="shareBtn">Führerschein teilen 📲</button>
+      <button class="ghost" id="retry">Nochmal</button>
+    </div>`;
+  let last = -1;
+  const nextJoke = () => {
+    let k; do { k = Math.floor(Math.random() * JOKES.length); } while (JOKES.length > 1 && k === last);
+    last = k; document.getElementById("jokeText").textContent = JOKES[k];
+  };
+  nextJoke();
+  document.getElementById("moreJoke").onclick = nextJoke;
+  document.getElementById("shareBtn").onclick = () => share(pct, r.title);
+  document.getElementById("retry").onclick = start;
+  confetti();
+}
+
+let licenseFile = null;
+
+async function share(pct, title) {
+  const text = `Ich habe ${pct}% in der offiziellen Papa-Prüfung geschafft und bin jetzt offiziell „${title}“ 🍼`;
+  const file = licenseFile;
+  try {
+    if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
+      // Handy: Bild + Text direkt an WhatsApp & Co.
+      await navigator.share({ files: [file], title: "Mein Papa-Führerschein", text });
+    } else if (file) {
+      // Computer: Bild herunterladen
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(file); a.download = file.name;
+      document.body.appendChild(a); a.click(); a.remove();
+      try { await navigator.clipboard.writeText(text); } catch {}
+      alert("Dein Führerschein wurde als Bild gespeichert – jetzt kannst du ihn verschicken!");
+    } else if (navigator.share) {
+      await navigator.share({ title: "Die offizielle Papa-Prüfung", text, url: location.href });
+    }
+  } catch {}
+}
+
+// Zeichnet den Führerschein als Bild (1080×1350, passt gut für WhatsApp/Instagram)
+function makeLicense(d) {
+  const W = 1080, H = 1350, c = document.createElement("canvas");
+  c.width = W; c.height = H;
+  const x = c.getContext("2d");
+  const F = 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif';
+  const box = (px, py, w, h, rad) => { x.beginPath(); x.roundRect ? x.roundRect(px, py, w, h, rad) : x.rect(px, py, w, h); };
+
+  x.fillStyle = "#fdf6ec"; x.fillRect(0, 0, W, H);
+  box(60, 60, W - 120, H - 120, 40); x.fillStyle = "#fff"; x.fill();
+  x.strokeStyle = "#e8743b"; x.lineWidth = 10; x.stroke();
+  box(88, 88, W - 176, H - 176, 28); x.lineWidth = 3; x.stroke();
+
+  x.textAlign = "center"; x.textBaseline = "alphabetic";
+  // Text zentriert; wird kleiner, falls er zu breit ist
+  const line = (s, y, size, color, weight = 400) => {
+    do { x.font = `${weight} ${size}px ${F}`; size -= 2; } while (x.measureText(s).width > 860 && size > 20);
+    x.fillStyle = color; x.fillText(s, W / 2, y);
+  };
+  // Mehrzeiliger Text
+  const para = (s, y, size, color, lh) => {
+    x.font = `400 ${size}px ${F}`; x.fillStyle = color;
+    let cur = "";
+    for (const w of s.split(" ")) {
+      if (x.measureText(cur + w).width > 820 && cur) { x.fillText(cur.trim(), W / 2, y); y += lh; cur = ""; }
+      cur += w + " ";
+    }
+    x.fillText(cur.trim(), W / 2, y);
+  };
+
+  line(`Offizieller Papa-Führerschein · Nr. ${d.num}`, 190, 36, "#7a6a5c");
+  line(d.emoji, 380, 170, "#2b2118");
+  line(d.name, 510, 64, "#2b2118", 700);
+  line("ist hiermit offiziell anerkannt als", 580, 38, "#7a6a5c");
+  line(d.title, 690, 78, "#e8743b", 800);
+  line(`${d.pct}%`, 880, 160, "#2b2118", 800);
+  para(d.text, 980, 36, "#7a6a5c", 50);
+  line(`Ausgestellt am ${d.date}`, 1170, 34, "#7a6a5c");
+  line(`von ${d.from} ❤️`, 1220, 34, "#7a6a5c");
+
+  return new Promise(res => c.toBlob(res, "image/png"));
+}
+
+function confetti() {
+  const bits = ["🍼", "🎉", "👶", "🧦", "⭐", "🎊"];
+  for (let n = 0; n < 40; n++) {
+    const s = document.createElement("span");
+    s.className = "confetti";
+    s.textContent = bits[n % bits.length];
+    s.style.left = Math.random() * 100 + "vw";
+    s.style.animationDuration = 2 + Math.random() * 2 + "s";
+    s.style.animationDelay = Math.random() * .8 + "s";
+    document.body.appendChild(s);
+    setTimeout(() => s.remove(), 5000);
+  }
+}
+
+function esc(s) { return String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
+
+start();
+</script>
+</body>
+</html>
