@@ -1,0 +1,3043 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="artifact-type" content="tool">
+  <meta name="design-style" content="handbook">
+  <title>Schularbeits-Trainer Mathematik · 3./4. Klasse MS &amp; AHS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+
+      /* Page and surfaces (Handbook) */
+      --background: #ffffff;
+      --surface-container-low: #f3f2f1;
+      --surface-container: #e8e7e5;
+      --surface-container-high: #dbdad9;
+
+      /* Ink */
+      --on-surface: #0b0c0c;
+      --on-surface-variant: #505a5f;
+
+      /* Rules */
+      --outline: #0b0c0c;
+      --outline-variant: #b1b4b6;
+
+      /* Accents */
+      --primary: #162e51;
+      --on-primary: #ffffff;
+      --primary-container: #d2e2f1;
+      --on-primary-container: #0c2d4a;
+      --secondary: #4c2c92;
+      --tertiary: #1a569e;
+      --error: #d4351c;
+      --on-error: #ffffff;
+
+      /* Semantic */
+      --positive: #00703c;
+      --positive-container: #e6f4ea;
+      --on-positive-container: #004d29;
+      --warning: #9a4a00;
+      --warning-container: #fef3e2;
+      --on-warning-container: #6b3100;
+      --error-container: #fdecea;
+      --on-error-container: #8a1c0c;
+      --focus: #ffdd00;
+
+      /* Difficulty badges */
+      --badge-basis-bg: #e6f4ea;
+      --badge-basis-fg: #004d29;
+      --badge-std-bg: #d2e2f1;
+      --badge-std-fg: #0c2d4a;
+      --badge-pro-bg: #fdecea;
+      --badge-pro-fg: #8a1c0c;
+
+      /* Data series */
+      --data-1: #1a569e;
+      --data-2: #c75a0a;
+      --data-3: #28a197;
+      --data-4: #4c2c92;
+      --data-context: #b1b4b6;
+
+      /* SVG fills (tinted surfaces for geometric proofs) */
+      --svg-a2-fill: #d2e2f1;
+      --svg-ab-fill: #fef3e2;
+      --svg-b2-fill: #e6f4ea;
+      --svg-tri-fill: #f3f2f1;
+
+      /* Fonts */
+      --font-headline: 'Public Sans', sans-serif;
+      --font-body: 'Public Sans', sans-serif;
+      --font-label: 'Public Sans', sans-serif;
+
+      /* Shape */
+      --rounded: 0;
+      --rounded-lg: 0;
+      --rounded-full: 0;
+
+      /* Style effects */
+      --top-index-rule: 6px solid var(--primary);
+      --inset-rule: 5px solid var(--tertiary);
+      --inset-rule-positive: 5px solid var(--positive);
+      --inset-rule-warning: 5px solid var(--warning);
+      --inset-rule-error: 5px solid var(--error);
+      --button-ground: 0 2px 0 var(--on-surface);
+      --button-ground-secondary: 0 2px 0 var(--outline-variant);
+      --focus-yellow: #ffdd00;
+      --focus-ring: 3px solid var(--focus-yellow);
+      --focus-bar: inset 0 0 0 2px var(--on-surface);
+      --focus-underline: 0 -2px var(--focus-yellow), 0 4px var(--on-surface);
+
+      /* Type scale (Tool / Dashboard) */
+      --display-size: clamp(1.75rem, 1.4rem + 1.2vw, 2.35rem);
+      --headline-size: clamp(1.25rem, 1.1rem + 0.5vw, 1.55rem);
+      --subhead-size: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+      --body-size: clamp(0.95rem, 0.92rem + 0.15vw, 1.05rem);
+      --label-size: 0.75rem;
+
+      /* Spacing scale */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2.5rem;
+      --space-2xl: 4rem;
+
+      /* Motion */
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+      --dur-micro: 120ms;
+      --dur-short: 220ms;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body {
+      overflow-x: clip;
+      margin: 0;
+      padding: 0;
+      background: var(--background);
+      color: var(--on-surface);
+      font-family: var(--font-body);
+      font-size: var(--body-size);
+      line-height: 1.5;
+    }
+    header { position: static !important; }
+
+    .page-grid {
+      display: grid;
+      gap: var(--space-xl);
+      padding: var(--space-lg);
+      padding-bottom: 6.5rem;
+      max-width: 1120px;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+    .page-grid * { min-width: 0; }
+
+    /* Typography */
+    h1, h2, h3, h4 {
+      font-family: var(--font-headline);
+      color: var(--on-surface);
+      margin: 0;
+      line-height: 1.12;
+      letter-spacing: -0.015em;
+    }
+    h1 { font-size: var(--display-size); font-weight: 800; }
+    h2 { font-size: var(--headline-size); font-weight: 800; }
+    h3 { font-size: var(--subhead-size); font-weight: 700; }
+    p { margin: 0 0 var(--space-sm) 0; max-width: 68ch; }
+    .muted { color: var(--on-surface-variant); }
+    .tabular { font-variant-numeric: tabular-nums; }
+
+    /* Top Index Bar (Handbook Treatment 1) */
+    .index-header {
+      border-top: var(--top-index-rule);
+      border-bottom: 1px solid var(--on-surface);
+      padding: var(--space-sm) 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-sm);
+      font-family: var(--font-label);
+      font-weight: 700;
+      font-size: var(--label-size);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .index-status {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-md);
+      align-items: center;
+      font-variant-numeric: tabular-nums;
+    }
+    .step-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 28px;
+      height: 28px;
+      padding: 0 var(--space-xs);
+      background: var(--primary);
+      color: var(--on-primary);
+      font-weight: 800;
+      font-size: 0.8125rem;
+      flex-shrink: 0;
+    }
+    .step-badge--optional {
+      background: var(--on-surface-variant);
+    }
+
+    /* Hero header block */
+    .hero-block {
+      display: grid;
+      gap: var(--space-md);
+      border-bottom: 1px solid var(--outline-variant);
+      padding-bottom: var(--space-lg);
+    }
+    .hero-lede {
+      font-size: var(--subhead-size);
+      color: var(--on-surface-variant);
+      max-width: 65ch;
+      margin: 0;
+    }
+
+    /* KPI Strip (Inset rule panels) */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(210px, 100%), 1fr));
+      gap: var(--space-md);
+    }
+    .kpi-panel {
+      border-left: var(--inset-rule);
+      background: var(--surface-container-low);
+      padding: var(--space-md);
+      display: grid;
+      gap: var(--space-xs);
+    }
+    .kpi-panel--positive { border-left: var(--inset-rule-positive); }
+    .kpi-panel--warning { border-left: var(--inset-rule-warning); }
+    .kpi-label {
+      font-size: var(--label-size);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--on-surface-variant);
+    }
+    .kpi-value {
+      font-size: var(--headline-size);
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      line-height: 1.1;
+    }
+    .kpi-sub {
+      font-size: 0.875rem;
+      color: var(--on-surface-variant);
+    }
+
+    /* Jump navigation */
+    .jump-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      align-items: center;
+      padding: var(--space-sm) 0;
+      border-bottom: 1px solid var(--outline-variant);
+    }
+    .jump-link {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      min-height: 44px;
+      padding: var(--space-xs) var(--space-sm);
+      background: var(--surface-container-low);
+      color: var(--on-surface);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.875rem;
+      border: 1px solid var(--outline-variant);
+      transition: background-color var(--dur-micro) var(--ease-out);
+    }
+    .jump-link:hover { background: var(--surface-container); }
+    .jump-link:focus-visible {
+      outline: var(--focus-ring);
+      background: var(--focus-yellow);
+      color: var(--on-surface);
+      box-shadow: var(--focus-underline);
+    }
+
+    /* Buttons (Handbook Treatment 3) */
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-xs);
+      min-height: 44px;
+      font: 700 0.9375rem/1.2 var(--font-label);
+      background: var(--primary);
+      color: var(--on-primary);
+      border: 0;
+      border-radius: var(--rounded);
+      padding: var(--space-sm) var(--space-md);
+      box-shadow: var(--button-ground);
+      cursor: pointer;
+      text-align: left;
+      transition: transform var(--dur-micro) var(--ease-out), background-color var(--dur-micro) var(--ease-out);
+    }
+    .button:hover { background: var(--tertiary); }
+    .button:active { transform: translateY(2px); box-shadow: none; }
+    .button--secondary {
+      background: var(--surface-container-low);
+      color: var(--on-surface);
+      box-shadow: var(--button-ground-secondary);
+    }
+    .button--secondary:hover { background: var(--surface-container); }
+    .button--positive {
+      background: var(--positive);
+      color: var(--on-primary);
+      box-shadow: var(--button-ground);
+    }
+    .button--positive:hover { background: var(--on-positive-container); }
+    .button--danger {
+      background: var(--error);
+      color: var(--on-error);
+      box-shadow: var(--button-ground);
+    }
+    .button--small {
+      min-height: 44px;
+      padding: var(--space-xs) var(--space-sm);
+      font-size: 0.875rem;
+    }
+    .button:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .button:focus-visible,
+    input:focus-visible,
+    select:focus-visible,
+    summary:focus-visible {
+      outline: var(--focus-ring);
+      outline-offset: 0;
+      box-shadow: var(--focus-bar);
+    }
+
+    /* Callouts (Handbook Treatment 2) */
+    .inset {
+      border-left: var(--inset-rule);
+      background: var(--surface-container-low);
+      padding: var(--space-md) var(--space-lg);
+      display: grid;
+      gap: var(--space-xs);
+    }
+    .inset--warning {
+      border-left: var(--inset-rule-warning);
+      background: var(--warning-container);
+      color: var(--on-warning-container);
+    }
+    .inset--positive {
+      border-left: var(--inset-rule-positive);
+      background: var(--positive-container);
+      color: var(--on-positive-container);
+    }
+
+    /* Section framing */
+    .module-section {
+      display: grid;
+      gap: var(--space-lg);
+      padding-top: var(--space-lg);
+      border-top: 2px solid var(--on-surface);
+    }
+    .section-head {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: var(--space-md);
+    }
+    .section-title-group {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-sm);
+    }
+
+    /* Status & difficulty badges */
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      padding: var(--space-xs) var(--space-sm);
+      font-size: var(--label-size);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      border-radius: var(--rounded-full);
+      white-space: nowrap;
+    }
+    .tag--info { background: var(--primary-container); color: var(--on-primary-container); }
+    .tag--basis { background: var(--badge-basis-bg); color: var(--badge-basis-fg); }
+    .tag--standard { background: var(--badge-std-bg); color: var(--badge-std-fg); }
+    .tag--knifflig { background: var(--badge-pro-bg); color: var(--badge-pro-fg); }
+
+    /* Print & Study Dashboard */
+    .print-dashboard {
+      border: 2px solid var(--primary);
+      background: var(--surface-container-low);
+      padding: var(--space-lg);
+      display: grid;
+      gap: var(--space-md);
+    }
+    .print-options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+      gap: var(--space-sm);
+    }
+    .print-option-label {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-sm);
+      padding: var(--space-sm) var(--space-md);
+      background: var(--background);
+      border: 2px solid var(--outline-variant);
+      cursor: pointer;
+      min-height: 44px;
+      font-weight: 600;
+      font-size: 0.9375rem;
+    }
+    .print-option-label input[type="radio"] {
+      width: 20px;
+      height: 20px;
+      margin: 2px 0 0 0;
+      accent-color: var(--primary);
+      flex-shrink: 0;
+    }
+    .print-option-label.is-selected {
+      border-color: var(--primary);
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+    }
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      align-items: center;
+    }
+    .paper-preview-box {
+      border: 2px solid var(--on-surface);
+      background: var(--background);
+      padding: var(--space-xl);
+      display: grid;
+      gap: var(--space-lg);
+    }
+    .paper-preview-box.is-hidden { display: none; }
+
+    /* Math Typography */
+    .math {
+      font-family: var(--font-body);
+      font-weight: 600;
+      letter-spacing: 0.01em;
+    }
+    .frac {
+      display: inline-flex;
+      flex-direction: column;
+      vertical-align: middle;
+      text-align: center;
+      font-size: 0.92em;
+      line-height: 1.15;
+      margin: 0 0.15em;
+    }
+    .frac > span:first-child {
+      border-bottom: 1.5px solid var(--on-surface);
+      padding: 0 0.25em 0.1em 0.25em;
+    }
+    .frac > span:last-child {
+      padding: 0.1em 0.25em 0 0.25em;
+    }
+
+    /* Exercise Cards (Clean ruled layout, Handbook style) */
+    .exercise-list {
+      display: grid;
+      gap: var(--space-md);
+    }
+    .exercise-item {
+      border-top: 1px solid var(--outline-variant);
+      border-bottom: 1px solid var(--outline-variant);
+      border-left: 4px solid var(--outline-variant);
+      padding: var(--space-md);
+      background: var(--background);
+      display: grid;
+      gap: var(--space-sm);
+    }
+    .exercise-item.is-solved {
+      border-left-color: var(--positive);
+    }
+    .exercise-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+    .exercise-id {
+      font-size: var(--label-size);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--on-surface-variant);
+    }
+    .exercise-prompt {
+      font-size: 1.0625rem;
+      font-weight: 600;
+    }
+
+    /* Inputs & labels (always visible above input) */
+    .input-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      align-items: flex-end;
+    }
+    .field-group {
+      display: grid;
+      gap: var(--space-xs);
+      flex: 1 1 260px;
+    }
+    .field-group label {
+      font-weight: 700;
+      font-size: 0.875rem;
+      color: var(--on-surface);
+    }
+    .field-hint {
+      font-size: 0.8125rem;
+      color: var(--on-surface-variant);
+    }
+    .math-input, .select-input {
+      width: 100%;
+      min-height: 44px;
+      padding: var(--space-sm) var(--space-md);
+      border: 2px solid var(--outline);
+      border-radius: var(--rounded);
+      background: var(--background);
+      color: var(--on-surface);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    .select-input {
+      padding-right: var(--space-xl);
+    }
+    .math-input.is-active-target {
+      box-shadow: 0 0 0 2px var(--tertiary);
+    }
+
+    /* Feedback messages */
+    .feedback-box {
+      padding: var(--space-sm) var(--space-md);
+      font-size: 0.9375rem;
+      font-weight: 600;
+      display: none;
+    }
+    .feedback-box.is-visible { display: block; }
+    .feedback-box--ok {
+      border-left: var(--inset-rule-positive);
+      background: var(--positive-container);
+      color: var(--on-positive-container);
+    }
+    .feedback-box--warn {
+      border-left: var(--inset-rule-warning);
+      background: var(--warning-container);
+      color: var(--on-warning-container);
+    }
+    .feedback-box--err {
+      border-left: var(--inset-rule-error);
+      background: var(--error-container);
+      color: var(--on-error-container);
+    }
+
+    /* Line-by-line solution drawer */
+    .solution-panel {
+      border-left: var(--inset-rule);
+      background: var(--surface-container-low);
+      padding: var(--space-sm) var(--space-md);
+      display: none;
+    }
+    .solution-panel.is-visible { display: grid; gap: var(--space-xs); }
+    .solution-step-list {
+      margin: 0;
+      padding-left: var(--space-lg);
+      display: grid;
+      gap: var(--space-xs);
+      font-variant-numeric: tabular-nums;
+    }
+    .solution-line {
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      padding: var(--space-xs) 0;
+      border-bottom: 1px solid var(--outline-variant);
+    }
+    .solution-line:last-child { border-bottom: none; font-weight: 700; }
+
+    /* Interactive Geometry Visuals (SVG) */
+    .visual-explorer {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: var(--space-lg);
+      align-items: start;
+      background: var(--surface-container-low);
+      border-left: var(--inset-rule);
+      padding: var(--space-lg);
+    }
+    .svg-frame {
+      background: var(--background);
+      border: 1px solid var(--outline-variant);
+      padding: var(--space-md);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .svg-frame svg {
+      width: 100%;
+      max-width: 360px;
+      height: auto;
+      display: block;
+    }
+    .controls-stack {
+      display: grid;
+      gap: var(--space-md);
+    }
+    .slider-group {
+      display: grid;
+      gap: var(--space-xs);
+    }
+    .slider-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 700;
+      font-size: 0.9375rem;
+    }
+    .slider-pair {
+      display: flex;
+      gap: var(--space-sm);
+      align-items: center;
+    }
+    .slider-pair input[type="range"] {
+      flex: 1;
+      accent-color: var(--primary);
+      min-height: 44px;
+    }
+    .slider-num {
+      width: 76px;
+      min-height: 44px;
+      padding: var(--space-xs) var(--space-sm);
+      border: 2px solid var(--outline);
+      font-weight: 700;
+      font-size: 0.95rem;
+      text-align: center;
+    }
+
+    /* Tables (Handbook style: no vertical rules, hairline horizontal) */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-variant-numeric: tabular-nums;
+    }
+    .data-table th {
+      text-align: left;
+      padding: var(--space-sm);
+      border-bottom: 2px solid var(--on-surface);
+      font-weight: 800;
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .data-table td {
+      padding: var(--space-sm);
+      border-bottom: 1px solid var(--outline-variant);
+      vertical-align: top;
+    }
+    .data-table td.num, .data-table th.num {
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    /* Exam Mode Bar & Timer */
+    .exam-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-md);
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+      padding: var(--space-md);
+      border-left: 5px solid var(--primary);
+    }
+    .timer-readout {
+      font-size: var(--headline-size);
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+    }
+    .timer-readout.is-urgent { color: var(--error); }
+
+    /* Checklist */
+    .checklist-grid {
+      display: grid;
+      gap: var(--space-xs);
+    }
+    .check-row {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-sm);
+      padding: var(--space-sm);
+      border-bottom: 1px solid var(--outline-variant);
+      cursor: pointer;
+      min-height: 44px;
+    }
+    .check-row:hover { background: var(--surface-container-low); }
+    .check-row input[type="checkbox"] {
+      width: 22px;
+      height: 22px;
+      margin: 2px 0 0 0;
+      accent-color: var(--primary);
+      flex-shrink: 0;
+    }
+    .progress-track {
+      height: 12px;
+      background: var(--surface-container);
+      border: 1px solid var(--outline-variant);
+      width: 100%;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--positive);
+      width: 0%;
+      transition: width var(--dur-short) var(--ease-out);
+    }
+
+    /* Sticky Phone-Friendly Math Keyboard */
+    .math-keyboard-dock {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--primary);
+      color: var(--on-primary);
+      border-top: 3px solid var(--on-surface);
+      padding: var(--space-xs) var(--space-md);
+      z-index: 40;
+      display: grid;
+      gap: var(--space-xs);
+    }
+    .math-keyboard-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-sm);
+      font-size: var(--label-size);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .math-keyboard-keys {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+      align-items: center;
+    }
+    .math-keyboard-dock.is-collapsed .math-keyboard-keys {
+      display: none;
+    }
+    .key-btn {
+      min-width: 44px;
+      min-height: 44px;
+      padding: 0 var(--space-sm);
+      background: var(--background);
+      color: var(--on-surface);
+      border: 0;
+      box-shadow: var(--button-ground);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .key-btn:active { transform: translateY(2px); box-shadow: none; }
+    .key-btn--accent {
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+    }
+    .key-btn--toggle {
+      min-height: 44px;
+      padding: var(--space-xs) var(--space-sm);
+      background: var(--surface-container-low);
+      color: var(--on-surface);
+      border: 0;
+      font-weight: 700;
+      font-size: 0.8125rem;
+      cursor: pointer;
+    }
+
+    /* Collapsible Optional Module 0 */
+    .module-body.is-collapsed { display: none; }
+
+    /* Print sheet specific layout */
+    .print-only-sheet { display: none; }
+    .print-sheet-item {
+      padding: var(--space-sm) 0;
+      border-bottom: 1px solid var(--outline-variant);
+      break-inside: avoid;
+    }
+    .print-work-space {
+      height: 3.5rem;
+      border-bottom: 1px dashed var(--outline-variant);
+      margin-top: var(--space-xs);
+    }
+
+    @media (max-width: 780px) {
+      .visual-explorer {
+        grid-template-columns: 1fr;
+      }
+    }
+    @media (max-width: 640px) {
+      .page-grid { padding: var(--space-md); padding-bottom: 8.5rem; }
+      .input-row { flex-direction: column; align-items: stretch; }
+      .btn-row { flex-direction: column; align-items: stretch; }
+      .btn-row .button { width: 100%; justify-content: center; }
+    }
+
+    @media print {
+      body {
+        background: var(--background);
+        color: var(--on-surface);
+        font-size: 11pt;
+      }
+      .no-print,
+      .math-keyboard-dock,
+      .jump-nav,
+      .print-dashboard,
+      .kpi-grid,
+      .module-section,
+      .hero-block {
+        display: none !important;
+      }
+      .page-grid {
+        max-width: 100%;
+        padding: 0;
+        margin: 0;
+      }
+      .print-only-sheet {
+        display: block !important;
+      }
+      .paper-preview-box {
+        border: none;
+        padding: 0;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-grid">
+
+    <!-- TOP INDEX RULE -->
+    <header class="index-header no-print">
+      <span>Mathematik · 3./4. Klasse MS &amp; AHS (Österreich)</span>
+      <div class="index-status">
+        <span>Serie: <strong id="hdr-streak">0</strong></span>
+        <span>Gelöst: <strong id="hdr-solved">0 / 15</strong></span>
+        <span>Checkliste: <strong id="hdr-check">0 %</strong></span>
+      </div>
+    </header>
+
+    <!-- HERO BLOCK -->
+    <section class="hero-block no-print">
+      <h1>Schularbeits-Trainer: Terme, Binome, Bruchterme &amp; Pythagoras</h1>
+      <p class="hero-lede">
+        Trainiere genau die Aufgabentypen der österreichischen Unterstufen-Schularbeit — mit intelligenter Fehlerdiagnose (Vorzeichen, unvollständige Faktorisierung, ungekürzte Brüche), zeilenweisen Musterlösungen, visuellen Beweisen und einer Druckzentrale für das Lernen auf Papier.
+      </p>
+
+      <!-- KPI STRIP -->
+      <div class="kpi-grid">
+        <div class="kpi-panel">
+          <span class="kpi-label">Aktuelle Serie (Streak)</span>
+          <span class="kpi-value" id="kpi-streak">0</span>
+          <span class="kpi-sub">Rekord: <strong id="kpi-best-streak">0</strong> richtige in Folge</span>
+        </div>
+        <div class="kpi-panel kpi-panel--positive">
+          <span class="kpi-label">Kernaufgaben gelöst</span>
+          <span class="kpi-value" id="kpi-solved">0 / 15</span>
+          <span class="kpi-sub">Endlos-Modus gelöst: <strong id="kpi-endless">0</strong></span>
+        </div>
+        <div class="kpi-panel">
+          <span class="kpi-label">Letzte Probeschularbeit</span>
+          <span class="kpi-value" id="kpi-exam-grade">Noch offen</span>
+          <span class="kpi-sub" id="kpi-exam-points">Wähle Schularbeit A oder B</span>
+        </div>
+        <div class="kpi-panel kpi-panel--warning">
+          <span class="kpi-label">Checkliste</span>
+          <span class="kpi-value" id="kpi-check-pct">0 %</span>
+          <span class="kpi-sub"><strong id="kpi-check-count">0 von 12</strong> Kompetenzen sicher</span>
+        </div>
+      </div>
+
+      <!-- NAVIGATION -->
+      <nav class="jump-nav" aria-label="Themenbereiche">
+        <a class="jump-link" href="#druck-zentrale">Druck- &amp; Lernzentrale</a>
+        <a class="jump-link" href="#modul-0">0. Grundlagen (Optional)</a>
+        <a class="jump-link" href="#modul-1">1. Binomische Formeln</a>
+        <a class="jump-link" href="#modul-2">2. Bruchterme &amp; Definitionsmenge</a>
+        <a class="jump-link" href="#modul-3">3. Satz des Pythagoras</a>
+        <a class="jump-link" href="#modul-4">4. Endlos-Trainer</a>
+        <a class="jump-link" href="#modul-5">5. Probeschularbeiten</a>
+        <a class="jump-link" href="#modul-6">6. Dolmetscher &amp; Checkliste</a>
+      </nav>
+    </section>
+
+    <!-- PRINT & STUDY DASHBOARD -->
+    <section id="druck-zentrale" class="print-dashboard no-print" aria-labelledby="print-title">
+      <div class="section-head">
+        <div>
+          <span class="tag tag--info">Papier- &amp; Lernmodus</span>
+          <h2 id="print-title" style="margin-top: var(--space-xs);">Druck- &amp; Studienzentrale (ohne Bildschirm lernen)</h2>
+          <p class="muted">Wähle aus, was du auf Papier ausdrucken oder als PDF speichern möchtest. Der Druck blendet alle Buttons und Navigationselemente automatisch aus.</p>
+        </div>
+      </div>
+
+      <div class="print-options-grid" role="radiogroup" aria-label="Druckumfang wählen">
+        <label class="print-option-label is-selected" id="lbl-print-exercises">
+          <input type="radio" name="printMode" value="exercises" checked onchange="setPrintMode('exercises')">
+          <span><strong>Übungsblatt (Aufgaben)</strong><br><span class="field-hint">Alle 15 Kernaufgaben mit Rechenzeilen zum handschriftlichen Lösen</span></span>
+        </label>
+        <label class="print-option-label" id="lbl-print-solutions">
+          <input type="radio" name="printMode" value="solutions" onchange="setPrintMode('solutions')">
+          <span><strong>Musterlösungen (zeilenweise)</strong><br><span class="field-hint">Jeder Rechenschritt sauber untereinander zum Abgleichen</span></span>
+        </label>
+        <label class="print-option-label" id="lbl-print-examA">
+          <input type="radio" name="printMode" value="examA" onchange="setPrintMode('examA')">
+          <span><strong>Probeschularbeit A</strong><br><span class="field-hint">Fokus Terme, Binome &amp; Bruchterme (24 Punkte + Notenschlüssel)</span></span>
+        </label>
+        <label class="print-option-label" id="lbl-print-examB">
+          <input type="radio" name="printMode" value="examB" onchange="setPrintMode('examB')">
+          <span><strong>Probeschularbeit B</strong><br><span class="field-hint">Gemischte 4.-Klasse-Schularbeit inkl. Pythagoras (24 Punkte)</span></span>
+        </label>
+        <label class="print-option-label" id="lbl-print-bundle">
+          <input type="radio" name="printMode" value="bundle" onchange="setPrintMode('bundle')">
+          <span><strong>Komplettpaket</strong><br><span class="field-hint">Alle Übungsaufgaben + zeilenweise Lösungen</span></span>
+        </label>
+      </div>
+
+      <div class="btn-row">
+        <button type="button" class="button" onclick="triggerPaperPrint()">Drucken / Als PDF speichern</button>
+        <button type="button" class="button button--secondary" id="btn-toggle-paper" onclick="togglePaperPreview()">Papier-Vorschau einblenden</button>
+        <button type="button" class="button button--secondary" onclick="downloadPaperTxt()">Als Textdatei (.txt) herunterladen</button>
+        <button type="button" class="button button--secondary" id="btn-reset-all" onclick="handleResetProgress(this)">Fortschritt zurücksetzen</button>
+      </div>
+
+      <div id="paper-preview-box" class="paper-preview-box is-hidden" aria-live="polite"></div>
+    </section>
+
+    <!-- DEDICATED PRINT OUTPUT TARGET -->
+    <div id="print-only-sheet" class="print-only-sheet" aria-hidden="true"></div>
+
+    <!-- MODUL 0: OPTIONAL FOUNDATION -->
+    <section id="modul-0" class="module-section no-print">
+      <div class="section-head">
+        <div class="section-title-group">
+          <span class="step-badge step-badge--optional">0</span>
+          <div>
+            <h2>KLAPUSTRI &amp; Terme Grundlagen <span class="tag tag--info">Optionales Fundament</span></h2>
+            <p class="muted">Überspring das, wenn du dich schon sicher fühlst — sonst frische hier die 3 häufigsten Fehlerquellen auf.</p>
+          </div>
+        </div>
+        <button type="button" class="button button--secondary button--small" id="btn-toggle-mod0" onclick="toggleModule0()">Überspringen &amp; einklappen</button>
+      </div>
+
+      <div id="mod0-body" class="module-body" style="display: grid; gap: var(--space-md);">
+        <div class="inset">
+          <strong>Die 3 Grundregeln vor der Schularbeit:</strong>
+          <ul style="margin: var(--space-xs) 0 0 0; padding-left: var(--space-lg);">
+            <li><strong>KLAPUSTRI:</strong> Zuerst <strong>Kla</strong>mmer, dann <strong>Po</strong>tenz, dann <strong>Pu</strong>nkt (·, :), zuletzt <strong>Stri</strong>ch (+, −).</li>
+            <li><strong>Minusklammer:</strong> Steht ein Minus vor der Klammer, drehen sich <em>alle</em> Vorzeichen darin um: <span class="math">−(4x − 7) = −4x + 7</span>.</li>
+            <li><strong>Potenz eines Produkts:</strong> Jeder Faktor wird quadriert: <span class="math">(3a)² = 3² · a² = 9a²</span> (häufiger Fehler: 3a²!).</li>
+          </ul>
+        </div>
+        <div class="exercise-list" id="exercises-mod0"></div>
+      </div>
+    </section>
+
+    <!-- MODUL 1: BINOMISCHE FORMELN -->
+    <section id="modul-1" class="module-section no-print">
+      <div class="section-head">
+        <div class="section-title-group">
+          <span class="step-badge">1</span>
+          <div>
+            <h2>Binomische Formeln &amp; Höhere Potenzen</h2>
+            <p class="muted">Ausmultiplizieren, Rückwärts-Faktorisieren (auch mit a⁴ und a²) und geometrischer Beweis.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="inset">
+        <strong>Die drei binomischen Formeln:</strong>
+        <div style="display: grid; gap: var(--space-xs); margin-top: var(--space-xs);">
+          <div><strong>1. Formel:</strong> <span class="math">(a + b)² = a² + 2ab + b²</span></div>
+          <div><strong>2. Formel:</strong> <span class="math">(a − b)² = a² − 2ab + b²</span></div>
+          <div><strong>3. Formel:</strong> <span class="math">(a + b)(a − b) = a² − b²</span></div>
+          <div class="muted"><strong>Tipp für höhere Potenzen:</strong> Bei <span class="math">9a⁴ − 12a² + 4</span> steckt <span class="math">3a²</span> vorne und <span class="math">2</span> hinten: <span class="math">(3a² − 2)²</span>.</div>
+        </div>
+      </div>
+
+      <!-- INTERACTIVE SVG GEOMETRIC PROOF -->
+      <div class="visual-explorer" aria-label="Geometrischer Beweis der 1. binomischen Formel">
+        <div class="svg-frame">
+          <svg id="binom-svg" viewBox="0 0 320 320" role="img" aria-label="Quadrat der Seitenlänge a plus b, unterteilt in a Quadrat, b Quadrat und zwei Rechtecke a mal b">
+            <!-- Rendered dynamically by JS -->
+          </svg>
+        </div>
+        <div class="controls-stack">
+          <div>
+            <span class="tag tag--info">Geometrischer Beweis</span>
+            <h3 style="margin-top: var(--space-xs);">Warum darf man <span class="math">2ab</span> niemals vergessen?</h3>
+            <p class="muted">Verändere die Seitenlängen <strong>a</strong> und <strong>b</strong>. Du siehst sofort, dass <span class="math">a² + b²</span> nur zwei Ecken abdeckt — die beiden bunten Rechtecke <span class="math">a·b</span> fehlen sonst!</p>
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-header">
+              <label for="slider-a">Länge a (cm)</label>
+              <span id="readout-a" class="tabular">5 cm</span>
+            </div>
+            <div class="slider-pair">
+              <input type="range" id="slider-a" min="2" max="8" step="1" value="5" oninput="syncBinomAFromSlider(this.value)">
+              <input type="number" id="input-a" class="slider-num" min="2" max="8" step="1" value="5" aria-label="Länge a numerisch" oninput="syncBinomAFromNumber(this.value)">
+            </div>
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-header">
+              <label for="slider-b">Länge b (cm)</label>
+              <span id="readout-b" class="tabular">3 cm</span>
+            </div>
+            <div class="slider-pair">
+              <input type="range" id="slider-b" min="1" max="5" step="1" value="3" oninput="syncBinomBFromSlider(this.value)">
+              <input type="number" id="input-b" class="slider-num" min="1" max="5" step="1" value="3" aria-label="Länge b numerisch" oninput="syncBinomBFromNumber(this.value)">
+            </div>
+          </div>
+
+          <div class="inset inset--positive" id="binom-proof-readout">
+            <!-- Updated live -->
+          </div>
+        </div>
+      </div>
+
+      <div class="exercise-list" id="exercises-mod1"></div>
+    </section>
+
+    <!-- MODUL 2: BRUCHTERME & DEFINITIONSMENGE -->
+    <section id="modul-2" class="module-section no-print">
+      <div class="section-head">
+        <div class="section-title-group">
+          <span class="step-badge">2</span>
+          <div>
+            <h2>Bruchterme &amp; Definitionsmenge</h2>
+            <p class="muted">Produkt-Nenner mit mehreren ausgeschlossenen Zahlen richtig bestimmen und Bruchterme vollständig kürzen.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="inset">
+        <strong>Wann wird ein Bruchterm ungültig? (Produktsatz im Nenner)</strong>
+        <p style="margin-top: var(--space-xs);">Man darf niemals durch 0 dividieren. Steht im Nenner ein Produkt, etwa <span class="math">x · (x − 3)</span>, dann wird der Nenner 0, sobald <strong>mindestens ein Faktor</strong> 0 ist:</p>
+        <ol style="margin: var(--space-xs) 0 0 0; padding-left: var(--space-lg);">
+          <li>Erster Faktor = 0 setzen: <span class="math">x = 0</span> → erster Ausschluss: <span class="math">x ≠ 0</span></li>
+          <li>Zweiter Faktor = 0 setzen: <span class="math">x − 3 = 0</span> → zweiter Ausschluss: <span class="math">x ≠ 3</span></li>
+          <li>Definitionsmenge: <span class="math">D = ℝ \ {0; 3}</span></li>
+        </ol>
+        <p class="muted" style="margin-top: var(--space-xs);"><strong>Kürzungsregel:</strong> „Aus Differenzen und Summen kürzen nur die Dummen!“ Immer zuerst Zähler und Nenner faktorisieren (herausheben oder binomische Formel), erst dann gleiche Faktoren kürzen.</p>
+      </div>
+
+      <div class="exercise-list" id="exercises-mod2"></div>
+    </section>
+
+    <!-- MODUL 3: SATZ DES PYTHAGORAS -->
+    <section id="modul-3" class="module-section no-print">
+      <div class="section-head">
+        <div class="section-title-group">
+          <span class="step-badge">3</span>
+          <div>
+            <h2>Satz des Pythagoras, Höhen- &amp; Kathetensatz</h2>
+            <p class="muted">Rechtwinklige Dreiecke, Textaufgaben aus der Geometrie sowie Höhensatz und Kathetensatz.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- INTERACTIVE SVG PYTHAGORAS EXPLORER -->
+      <div class="visual-explorer" aria-label="Interaktives rechtwinkliges Dreieck mit Höhe h und Abschnitten p und q">
+        <div class="svg-frame">
+          <svg id="pyth-svg" viewBox="0 0 340 230" role="img" aria-label="Rechtwinkliges Dreieck ABC mit Hypotenuse c, Katheten a und b, Höhe h sowie Hypotenusenabschnitten p und q">
+            <!-- Rendered dynamically -->
+          </svg>
+        </div>
+        <div class="controls-stack">
+          <div>
+            <span class="tag tag--info">Interaktive Satzgruppe</span>
+            <h3 style="margin-top: var(--space-xs);">Pythagoras, Höhensatz &amp; Kathetensatz im Überblick</h3>
+            <p class="muted">Wähle ein Beispiel-Dreieck mit glatten Zahlen, um die Zusammenhänge zwischen <span class="math">a, b, c, h, p, q</span> direkt zu überprüfen:</p>
+          </div>
+          <div class="btn-row">
+            <button type="button" class="button button--secondary button--small" onclick="setPythPreset(9, 16)">p = 9, q = 16 (Standard)</button>
+            <button type="button" class="button button--secondary button--small" onclick="setPythPreset(4, 9)">p = 4, q = 9</button>
+            <button type="button" class="button button--secondary button--small" onclick="setPythPreset(3.6, 6.4)">p = 3,6, q = 6,4</button>
+          </div>
+          <div class="inset" id="pyth-readout">
+            <!-- Updated by JS -->
+          </div>
+        </div>
+      </div>
+
+      <div class="exercise-list" id="exercises-mod3"></div>
+    </section>
+
+    <!-- MODUL 4: ENDLOS-ÜBUNGSMODUS -->
+    <section id="modul-4" class="module-section no-print">
+      <div class="section-head">
+        <div class="section-title-group">
+          <span class="step-badge">4</span>
+          <div>
+            <h2>Endlos-Übungsmodus &amp; Serien-Zähler</h2>
+            <p class="muted">Trainiere zufällig erzeugte Schularbeitsaufgaben bis jeder Handgriff sitzt — deine Serie zählt mit.</p>
+          </div>
+        </div>
+        <div class="tag tag--info">Aktuelle Serie: <span id="endless-streak-badge" style="margin-left: 4px;">0</span></div>
+      </div>
+
+      <div class="inset">
+        <div class="input-row">
+          <div class="field-group">
+            <label for="endless-topic">Thema auswählen</label>
+            <select id="endless-topic" class="select-input" onchange="generateEndlessProblem()">
+              <option value="all">Gemischt (alle Themen)</option>
+              <option value="binom">Binomische Formeln</option>
+              <option value="bruch">Bruchterme &amp; Definitionsmenge</option>
+              <option value="pyth">Satz des Pythagoras &amp; Höhensatz</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label for="endless-diff">Schwierigkeit</label>
+            <select id="endless-diff" class="select-input" onchange="generateEndlessProblem()">
+              <option value="all">Alle Stufen</option>
+              <option value="basis">🟢 Basis</option>
+              <option value="standard">🔵 Standard-Schularbeit</option>
+              <option value="knifflig">🔴 Knifflig / 1er-Niveau</option>
+            </select>
+          </div>
+          <button type="button" class="button" onclick="generateEndlessProblem()">Neue Zufallsaufgabe</button>
+        </div>
+      </div>
+
+      <div id="endless-container" class="exercise-list"></div>
+    </section>
+
+    <!-- MODUL 5: PROBESCHULARBEITEN -->
+    <section id="modul-5" class="module-section no-print">
+      <div class="section-head">
+        <div class="section-title-group">
+          <span class="step-badge">5</span>
+          <div>
+            <h2>Probeschularbeiten (Prüfungsmodus mit Timer &amp; Notenschlüssel)</h2>
+            <p class="muted">Simuliere echte 50-Minuten-Bedingungen: Im Prüfungsmodus bleiben alle Lösungen gesperrt, bis du abgibst.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button type="button" class="button" id="btn-select-examA" onclick="selectExam('A')">Probeschularbeit A (Terme, Binome, Bruchterme · 24 P.)</button>
+        <button type="button" class="button button--secondary" id="btn-select-examB" onclick="selectExam('B')">Probeschularbeit B (Gemischt inkl. Pythagoras · 24 P.)</button>
+      </div>
+
+      <div class="exam-bar">
+        <div>
+          <div style="font-size: var(--label-size); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">Schularbeits-Timer (50 Min.)</div>
+          <div class="timer-readout" id="exam-timer-display">50:00</div>
+        </div>
+        <div class="btn-row">
+          <button type="button" class="button button--small" id="btn-timer-start" onclick="toggleExamTimer()">Timer starten</button>
+          <button type="button" class="button button--secondary button--small" onclick="resetExamTimer()">Timer auf 50:00</button>
+          <button type="button" class="button button--positive button--small" onclick="submitExam()">Schularbeit abgeben &amp; auswerten</button>
+          <button type="button" class="button button--secondary button--small" id="btn-unlock-exam" onclick="toggleExamLock(this)">Lösungen entsperren</button>
+        </div>
+      </div>
+
+      <div id="exam-result-banner" class="feedback-box" aria-live="polite"></div>
+
+      <div id="exam-questions-container" class="exercise-list"></div>
+
+      <!-- Notenschlüssel -->
+      <div>
+        <h3>Österreichischer Notenschlüssel (24 Punkte)</h3>
+        <table class="data-table" style="margin-top: var(--space-sm);">
+          <thead>
+            <tr>
+              <th>Note</th>
+              <th>Bezeichnung</th>
+              <th class="num">Prozent</th>
+              <th class="num">Punktebereich</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>1</strong></td><td>Sehr gut</td><td class="num">87,5 % – 100 %</td><td class="num">21 – 24 Punkte</td></tr>
+            <tr><td><strong>2</strong></td><td>Gut</td><td class="num">75,0 % – 87,0 %</td><td class="num">18 – 20,5 Punkte</td></tr>
+            <tr><td><strong>3</strong></td><td>Befriedigend</td><td class="num">62,5 % – 74,5 %</td><td class="num">15 – 17,5 Punkte</td></tr>
+            <tr><td><strong>4</strong></td><td>Genügend</td><td class="num">50,0 % – 62,0 %</td><td class="num">12 – 14,5 Punkte</td></tr>
+            <tr><td><strong>5</strong></td><td>Nicht genügend</td><td class="num">&lt; 50,0 %</td><td class="num">0 – 11,5 Punkte</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- MODUL 6: SCHÜLER-DOLMETSCHER & CHECKLISTE -->
+    <section id="modul-6" class="module-section no-print">
+      <div class="section-head">
+        <div class="section-title-group">
+          <span class="step-badge">6</span>
+          <div>
+            <h2>Schüler-Dolmetscher &amp; Schularbeits-Checkliste</h2>
+            <p class="muted">Was bedeuten die strengen Formulierungen auf dem Angabenzettel — und bist du bereit für die Arbeit?</p>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h3>Schüler-Dolmetscher: Angabe → Konkreter Rechenschritt</h3>
+        <table class="data-table" style="margin-top: var(--space-sm);">
+          <thead>
+            <tr>
+              <th>So steht es auf der Schularbeit</th>
+              <th>Das heißt es übersetzt (Schritt für Schritt)</th>
+              <th>Typisches Beispiel</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>„Vereinfache den Term so weit wie möglich.“</strong></td>
+              <td>Klammern von innen nach außen auflösen, Potenzen ausrechnen und dann alle gleichen Buchstaben-Pakete (z. B. x² mit x²) zusammenzählen.</td>
+              <td><span class="math">3x(x − 2) − x² = 2x² − 6x</span></td>
+            </tr>
+            <tr>
+              <td><strong>„Zerlege in ein Produkt / Faktorisiere vollständig.“</strong></td>
+              <td>Genau umgekehrt zum Ausmultiplizieren! Schritt 1: Gemeinsames herausheben. Schritt 2: Prüfen, ob eine binomische Formel passt.</td>
+              <td><span class="math">9a⁴ − 12a² + 4 = (3a² − 2)²</span></td>
+            </tr>
+            <tr>
+              <td><strong>„Bestimme die Definitionsmenge D.“</strong></td>
+              <td>Schau <em>nur</em> auf den Nenner (unten). Setze jeden Faktor = 0. Alle Zahlen, die dabei herauskommen, sind verboten (≠).</td>
+              <td><span class="math">x(x − 3) ≠ 0 → x ≠ 0, x ≠ 3</span></td>
+            </tr>
+            <tr>
+              <td><strong>„Kürze den Bruchterm vollständig.“</strong></td>
+              <td>Niemals einzelne Glieder aus einer Summe streichen! Erst oben und unten faktorisieren, dann gleiche Klammern/Faktoren wegstreichen.</td>
+              <td><span class="math">(x² − 9)/(x + 3) = x − 3</span></td>
+            </tr>
+            <tr>
+              <td><strong>„Berechne die fehlende Bestimmungsgröße.“</strong></td>
+              <td>Skizze zeichnen, rechten Winkel markieren. Liegt die gesuchte Seite gegenüber vom 90°-Winkel? Dann plus (<span class="math">a² + b²</span>). Sonst minus (<span class="math">c² − a²</span>)!</td>
+              <td>Kathete: <span class="math">b = √(c² − a²)</span></td>
+            </tr>
+            <tr>
+              <td><strong>„Überprüfe, ob das Dreieck rechtwinklig ist.“</strong></td>
+              <td>Die längste Seite allein quadrieren und vergleichen mit der Summe der anderen beiden Quadrate. Stimmt beides überein → rechtwinklig.</td>
+              <td><span class="math">6² + 8² = 100 = 10² → Ja</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="inset" style="gap: var(--space-md);">
+        <div>
+          <h3>Selbsttest: Wenn du das kannst, sollte die Schularbeit kein Problem sein</h3>
+          <p class="muted" id="checklist-status-text">Hake ab, was du bereits sicher ohne Spickzettel beherrschst.</p>
+          <div class="progress-track" aria-label="Fortschritt der Checkliste">
+            <div class="progress-fill" id="checklist-progress-bar"></div>
+          </div>
+        </div>
+        <div class="checklist-grid" id="checklist-container"></div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- STICKY PHONE-FRIENDLY MATH KEYBOARD -->
+  <div class="math-keyboard-dock no-print" id="math-keyboard-dock" role="region" aria-label="Mathe-Schnelltastatur für Mobilgeräte">
+    <div class="math-keyboard-top">
+      <span id="keyboard-target-label">Mathe-Tasten · Tippe in ein Eingabefeld</span>
+      <button type="button" class="key-btn--toggle" id="btn-toggle-kb" onclick="toggleKeyboardDock()">Tastatur ausblenden</button>
+    </div>
+    <div class="math-keyboard-keys" id="math-keyboard-keys">
+      <button type="button" class="key-btn key-btn--accent" onmousedown="event.preventDefault()" onclick="insertMathSymbol('²')" aria-label="Hoch 2 einfügen">²</button>
+      <button type="button" class="key-btn key-btn--accent" onmousedown="event.preventDefault()" onclick="insertMathSymbol('⁴')" aria-label="Hoch 4 einfügen">⁴</button>
+      <button type="button" class="key-btn key-btn--accent" onmousedown="event.preventDefault()" onclick="insertMathSymbol('(')" aria-label="Klammer auf einfügen">(</button>
+      <button type="button" class="key-btn key-btn--accent" onmousedown="event.preventDefault()" onclick="insertMathSymbol(')')" aria-label="Klammer zu einfügen">)</button>
+      <button type="button" class="key-btn key-btn--accent" onmousedown="event.preventDefault()" onclick="insertMathSymbol('/')" aria-label="Bruchstrich einfügen">/</button>
+      <button type="button" class="key-btn" onmousedown="event.preventDefault()" onclick="insertMathSymbol('x')">x</button>
+      <button type="button" class="key-btn" onmousedown="event.preventDefault()" onclick="insertMathSymbol('y')">y</button>
+      <button type="button" class="key-btn" onmousedown="event.preventDefault()" onclick="insertMathSymbol('a')">a</button>
+      <button type="button" class="key-btn" onmousedown="event.preventDefault()" onclick="insertMathSymbol('b')">b</button>
+      <button type="button" class="key-btn" onmousedown="event.preventDefault()" onclick="insertMathSymbol('+')">+</button>
+      <button type="button" class="key-btn" onmousedown="event.preventDefault()" onclick="insertMathSymbol('-')">−</button>
+      <button type="button" class="key-btn" onmousedown="event.preventDefault()" onclick="insertMathSymbol(',')">,</button>
+      <button type="button" class="key-btn" onmousedown="event.preventDefault()" onclick="backspaceMathSymbol()" aria-label="Letztes Zeichen löschen">⌫</button>
+    </div>
+  </div>
+
+  <api-shim></api-shim>
+
+  <script>
+    /* ========================================================================
+       1. CORE DATA: EXERCISES, EXAMS, CHECKLIST (backtick strings throughout)
+       ======================================================================== */
+    const CORE_EXERCISES = [
+      // MODUL 0 (Optional KLAPUSTRI & Terme)
+      {
+        id: `m0-1`,
+        module: `0`,
+        moduleLabel: `KLAPUSTRI & Terme`,
+        diff: `basis`,
+        label: `Vereinfache den Term: 5 · (2x − 3) − (4x − 7)`,
+        promptHtml: `Vereinfache so weit wie möglich: <span class="math">5 · (2x − 3) − (4x − 7)</span>`,
+        inputLabel: `Deine Lösung (vereinfachter Term)`,
+        hint: `Löse zuerst die Klammer mit 5 auf und achte beim zweiten Teil auf die Minusklammer!`,
+        accepted: [`6x-8`, `-8+6x`],
+        steps: [
+          `Angabe: 5 · (2x − 3) − (4x − 7)`,
+          `Klammern auflösen: 10x − 15 − 4x + 7`,
+          `Gleichartige Glieder zusammenfassen: (10x − 4x) + (−15 + 7)`,
+          `Endergebnis: 6x − 8`
+        ],
+        diagnose: function(norm) {
+          if (norm === `6x-22` || norm === `-22+6x`) {
+            return { type: `warn`, msg: `Vorzeichenfehler erkannt! Bei −(4x − 7) dreht sich auch das Vorzeichen von −7 um → +7 (nicht −7).` };
+          }
+          if (norm === `10x-15-4x+7`) {
+            return { type: `warn`, msg: `Die Klammern sind richtig aufgelöst, aber du musst noch zusammenfassen (x mit x und Zahlen mit Zahlen).` };
+          }
+          return null;
+        }
+      },
+      {
+        id: `m0-2`,
+        module: `0`,
+        moduleLabel: `KLAPUSTRI & Terme`,
+        diff: `basis`,
+        label: `Vereinfache den Term: (3a)² + 2a · 4a`,
+        promptHtml: `Beachte KLAPUSTRI (Potenz vor Punkt vor Strich): <span class="math">(3a)² + 2a · 4a</span>`,
+        inputLabel: `Deine Lösung`,
+        hint: `Bei (3a)² muss sowohl 3 als auch a quadriert werden.`,
+        accepted: [`17a^2`],
+        steps: [
+          `Angabe: (3a)² + 2a · 4a`,
+          `Potenz & Produkt berechnen: 9a² + 8a²`,
+          `Zusammenfassen: 17a²`
+        ],
+        diagnose: function(norm) {
+          if (norm === `11a^2`) {
+            return { type: `warn`, msg: `Potenzfehler: (3a)² ist 3² · a² = 9a², nicht 3a²!` };
+          }
+          if (norm === `9a^2+8a^2`) {
+            return { type: `warn`, msg: `Fast fertig! 9a² und 8a² sind gleichartige Glieder — zähle sie noch zusammen.` };
+          }
+          return null;
+        }
+      },
+      {
+        id: `m0-3`,
+        module: `0`,
+        moduleLabel: `KLAPUSTRI & Terme`,
+        diff: `standard`,
+        label: `Hebe vollständig heraus: 12x²y − 18xy²`,
+        promptHtml: `Hebe den größtmöglichen gemeinsamen Faktor heraus: <span class="math">12x²y − 18xy²</span>`,
+        inputLabel: `Faktorisierter Term`,
+        hint: `Suche den größten gemeinsamen Teiler von 12 und 18 sowie die kleinsten vorkommenden Potenzen von x und y.`,
+        accepted: [`6xy(2x-3y)`, `(2x-3y)6xy`],
+        steps: [
+          `Angabe: 12x²y − 18xy²`,
+          `Größter gemeinsamer Zahlenteiler von 12 und 18 ist 6.`,
+          `Gemeinsame Variablen: einmal x und einmal y → 6xy.`,
+          `Endergebnis: 6xy(2x − 3y)`
+        ],
+        diagnose: function(norm) {
+          if (norm === `6(2x^2y-3xy^2)` || norm === `3xy(4x-6y)` || norm === `2xy(6x-9y)` || norm === `xy(12x-18y)` || norm === `x(12xy-18y^2)` || norm === `y(12x^2-18xy)`) {
+            return { type: `warn`, msg: `Noch nicht vollständig faktorisiert! Du hast schon etwas herausgehoben, aber in der Klammer stecken noch gemeinsame Faktoren (6xy geht vor die Klammer).` };
+          }
+          if (norm === `6xy(2x+3y)`) {
+            return { type: `warn`, msg: `Vorzeichenfehler in der Klammer! In der Angabe steht ein Minus: −18xy² → −3y.` };
+          }
+          return null;
+        }
+      },
+
+      // MODUL 1 (Binomische Formeln)
+      {
+        id: `m1-1`,
+        module: `1`,
+        moduleLabel: `Binomische Formeln`,
+        diff: `basis`,
+        label: `Wende die 1. binomische Formel an: (2x + 5)²`,
+        promptHtml: `Multipliziere mit der 1. binomischen Formel aus: <span class="math">(2x + 5)²</span>`,
+        inputLabel: `Ausmultiplizierter Term`,
+        hint: `Formel: (a + b)² = a² + 2ab + b² mit a = 2x und b = 5.`,
+        accepted: [`4x^2+20x+25`, `25+20x+4x^2`, `4x^2+25+20x`],
+        steps: [
+          `Angabe: (2x + 5)²`,
+          `1. Glied quadrieren: (2x)² = 4x²`,
+          `Doppeltes Produkt (2·a·b): 2 · 2x · 5 = 20x`,
+          `2. Glied quadrieren: 5² = 25`,
+          `Endergebnis: 4x² + 20x + 25`
+        ],
+        diagnose: function(norm) {
+          if (norm === `4x^2+25` || norm === `25+4x^2`) {
+            return { type: `warn`, msg: `Mittleres Glied 2ab vergessen! (2x + 5)² hat immer drei Teile: 4x² + 20x + 25.` };
+          }
+          if (norm === `2x^2+20x+25` || norm === `2x^2+10x+25`) {
+            return { type: `warn`, msg: `Koeffizient nicht quadriert! (2x)² ergibt 4x², nicht 2x².` };
+          }
+          if (norm === `4x^2-20x+25`) {
+            return { type: `warn`, msg: `Vorzeichenfehler! In (2x + 5)² steht ein Plus, daher +20x.` };
+          }
+          return null;
+        }
+      },
+      {
+        id: `m1-2`,
+        module: `1`,
+        moduleLabel: `Binomische Formeln`,
+        diff: `standard`,
+        label: `Wende die 3. binomische Formel an: (4x − 3y)(4x + 3y)`,
+        promptHtml: `Vereinfache mit der 3. binomischen Formel: <span class="math">(4x − 3y)(4x + 3y)</span>`,
+        inputLabel: `Vereinfachter Term`,
+        hint: `(a − b)(a + b) = a² − b²`,
+        accepted: [`16x^2-9y^2`, `-9y^2+16x^2`],
+        steps: [
+          `Angabe: (4x − 3y)(4x + 3y)`,
+          `3. Binomische Formel anwenden: (4x)² − (3y)²`,
+          `Potenzen ausrechnen: 16x² − 9y²`
+        ],
+        diagnose: function(norm) {
+          if (norm === `16x^2+9y^2`) {
+            return { type: `warn`, msg: `Vorzeichenfehler! Bei der 3. binomischen Formel steht zwischen den Quadraten immer ein Minus: a² − b².` };
+          }
+          if (norm === `4x^2-3y^2`) {
+            return { type: `warn`, msg: `Du hast die Zahlen 4 und 3 vergessen zu quadrieren (4² = 16, 3² = 9).` };
+          }
+          return null;
+        }
+      },
+      {
+        id: `m1-3`,
+        module: `1`,
+        moduleLabel: `Binomische Formeln`,
+        diff: `standard`,
+        label: `Faktorisiere rückwärts: 25x² − 30x + 9`,
+        promptHtml: `Schreibe als Quadrat eines Binoms (faktorisieren): <span class="math">25x² − 30x + 9</span>`,
+        inputLabel: `Faktorisierter Term`,
+        hint: `Ziehe die Wurzel aus 25x² und aus 9. Welches Vorzeichen hat das Mittelglied −30x?`,
+        accepted: [`(5x-3)^2`, `(-5x+3)^2`, `(3-5x)^2`],
+        steps: [
+          `Angabe: 25x² − 30x + 9`,
+          `Vorne: √(25x²) = 5x, Hinten: √9 = 3`,
+          `Probe für Mittelglied: 2 · 5x · 3 = 30x (stimmt, mit Minus!)`,
+          `Endergebnis: (5x − 3)²`
+        ],
+        diagnose: function(norm) {
+          if (norm === `(5x-3)(5x-3)`) {
+            return { type: `warn`, msg: `Inhaltlich richtig, aber noch nicht vollständig zusammengefasst: Schreibe (5x − 3)(5x − 3) kürzer als Potenz (5x − 3)².` };
+          }
+          if (norm === `(5x+3)^2`) {
+            return { type: `warn`, msg: `Vorzeichenfehler! Das Mittelglied lautet −30x, also muss in die Klammer ein Minus: (5x − 3)².` };
+          }
+          if (norm === `25x^2-30x+9`) {
+            return { type: `warn`, msg: `Das ist noch die ausmultiplizierte Form. Forme sie rückwärts in ein Klammerquadrat (a − b)² um.` };
+          }
+          return null;
+        }
+      },
+      {
+        id: `m1-4`,
+        module: `1`,
+        moduleLabel: `Binomische Formeln (Höhere Potenzen)`,
+        diff: `knifflig`,
+        label: `Faktorisiere mit höheren Potenzen: 9a⁴ − 12a² + 4`,
+        promptHtml: `Faktorisiere vollständig (1er-Niveau mit höheren Potenzen): <span class="math">9a⁴ − 12a² + 4</span>`,
+        inputLabel: `Faktorisierter Term`,
+        hint: `Welche Zahl/Potenz ergibt quadriert 9a⁴? Antwort: (3a²)² = 9a⁴!`,
+        accepted: [`(3a^2-2)^2`, `(2-3a^2)^2`],
+        steps: [
+          `Angabe: 9a⁴ − 12a² + 4`,
+          `Erstes Glied als Quadrat: 9a⁴ = (3a²)²`,
+          `Letztes Glied als Quadrat: 4 = 2²`,
+          `Mittelglied prüfen: 2 · (3a²) · 2 = 12a² (passt mit Minus!)`,
+          `Endergebnis: (3a² − 2)²`
+        ],
+        diagnose: function(norm) {
+          if (norm === `(3a^2-2)(3a^2-2)`) {
+            return { type: `warn`, msg: `Fast! Fasse die beiden gleichen Klammern als Quadrat zusammen: (3a² − 2)².` };
+          }
+          if (norm === `(3a^2+2)^2`) {
+            return { type: `warn`, msg: `Vorzeichenfehler! Da −12a² negativ ist, gilt die 2. binomische Formel: (3a² − 2)².` };
+          }
+          if (norm === `(3a-2)^2`) {
+            return { type: `warn`, msg: `Potenz-Check: (3a)² ergibt nur 9a², wir brauchen aber 9a⁴! Du brauchst 3a² in der Klammer.` };
+          }
+          return null;
+        }
+      },
+
+      // MODUL 2 (Bruchterme & Definitionsmenge)
+      {
+        id: `m2-1`,
+        module: `2`,
+        moduleLabel: `Bruchterme & Definitionsmenge`,
+        diff: `basis`,
+        label: `Definitionsmenge: (5x + 1) / (x(x − 3))`,
+        promptHtml: `Welche Zahlen müssen aus ℝ ausgeschlossen werden? <span class="frac"><span>5x + 1</span><span>x · (x − 3)</span></span>`,
+        inputLabel: `Ausgeschlossene Werte für x (mit Beistrich trennen, z. B. 0, 3)`,
+        hint: `Setze jeden Faktor des Nenners einzeln gleich 0: x = 0 und x − 3 = 0.`,
+        isSetAnswer: true,
+        acceptedSet: [`0`, `3`],
+        steps: [
+          `Nenner gleich 0 setzen: x · (x − 3) = 0`,
+          `Faktor 1: x = 0 → x ≠ 0`,
+          `Faktor 2: x − 3 = 0 → x = 3 → x ≠ 3`,
+          `Endergebnis (Definitionsmenge): D = ℝ \\ {0; 3} (Ausgeschlossen: 0, 3)`
+        ],
+        diagnoseSet: function(vals) {
+          if (vals.length === 1 && (vals[0] === `3` || vals[0] === `0`)) {
+            return { type: `warn`, msg: `Nur einen Faktor geprüft! Ein Produkt x·(x − 3) wird auch bei ${vals[0] === `3` ? `x = 0` : `x = 3`} null. Gib beide Zahlen an!` };
+          }
+          if (vals.includes(`-3`)) {
+            return { type: `warn`, msg: `Vorzeichenfehler beim Lösen von x − 3 = 0: Rechne +3 auf beiden Seiten → x = +3 (nicht −3).` };
+          }
+          return null;
+        }
+      },
+      {
+        id: `m2-2`,
+        module: `2`,
+        moduleLabel: `Bruchterme & Definitionsmenge`,
+        diff: `standard`,
+        label: `Definitionsmenge: 7 / (x² − 16)`,
+        promptHtml: `Welche Werte muss man bei <span class="frac"><span>7</span><span>x² − 16</span></span> ausschließen?`,
+        inputLabel: `Ausgeschlossene Werte für x (z. B. 4, -4)`,
+        hint: `Zerlege den Nenner mit der 3. binomischen Formel: x² − 16 = (x − 4)(x + 4).`,
+        isSetAnswer: true,
+        acceptedSet: [`4`, `-4`],
+        steps: [
+          `Nenner faktorisieren (3. binomische Formel): x² − 16 = (x − 4)(x + 4)`,
+          `Faktor 1 = 0: x − 4 = 0 → x ≠ 4`,
+          `Faktor 2 = 0: x + 4 = 0 → x ≠ −4`,
+          `Endergebnis: D = ℝ \\ {−4; 4} (Ausgeschlossen: 4, −4)`
+        ],
+        diagnoseSet: function(vals) {
+          if (vals.length === 1 && vals[0] === `4`) {
+            return { type: `warn`, msg: `Achtung: Auch (−4)² ergibt 16! Deshalb wird der Nenner sowohl bei +4 als auch bei −4 null.` };
+          }
+          if (vals.includes(`16`)) {
+            return { type: `warn`, msg: `Du hast vergessen, die Wurzel aus 16 zu ziehen: x² = 16 liefert ±4.` };
+          }
+          return null;
+        }
+      },
+      {
+        id: `m2-3`,
+        module: `2`,
+        moduleLabel: `Bruchterme & Definitionsmenge`,
+        diff: `standard`,
+        label: `Bruchterm kürzen: (6x²y) / (9xy²)`,
+        promptHtml: `Kürze den Bruchterm vollständig (für x, y ≠ 0): <span class="frac"><span>6x²y</span><span>9xy²</span></span>`,
+        inputLabel: `Gekürzter Bruchterm (Schreibweise z. B. (2x)/(3y))`,
+        hint: `Kürze zuerst die Zahlen (6 und 9 durch 3), dann x² gegen x und y gegen y².`,
+        accepted: [`(2x)/(3y)`, `2x/(3y)`],
+        steps: [
+          `Angabe: (6x²y) / (9xy²)`,
+          `Zahlen durch 3 kürzen: 6 : 3 = 2, 9 : 3 = 3`,
+          `Variablen kürzen: x² : x = x (bleibt oben), y : y² = 1/y (y bleibt unten)`,
+          `Endergebnis: (2x) / (3y)`
+        ],
+        diagnose: function(norm) {
+          if (norm === `(6x)/(9y)` || norm === `6x/(9y)` || norm === `(2x^2)/(3xy)` || norm === `(2xy)/(3y^2)`) {
+            return { type: `warn`, msg: `Noch nicht vollständig gekürzt! Prüfe, ob sich Zähler und Nenner noch durch 3, x oder y teilen lassen.` };
+          }
+          if (norm === `2x/3y`) {
+            return { type: `warn`, msg: `Tipp zur Eingabe: Setze den Nenner in Klammern, also (2x)/(3y), damit klar ist, dass y im Nenner steht.` };
+          }
+          return null;
+        }
+      },
+      {
+        id: `m2-4`,
+        module: `2`,
+        moduleLabel: `Bruchterme & Definitionsmenge`,
+        diff: `knifflig`,
+        label: `Bruchterm mit Binomen kürzen: (x² − 9) / (x² + 6x + 9)`,
+        promptHtml: `Faktorisiere Zähler und Nenner und kürze vollständig (x ≠ −3): <span class="frac"><span>x² − 9</span><span>x² + 6x + 9</span></span>`,
+        inputLabel: `Gekürzter Bruchterm (z. B. (x-3)/(x+3))`,
+        hint: `Zähler: 3. binomische Formel. Nenner: 1. binomische Formel. Danach den gemeinsamen Faktor (x + 3) kürzen.`,
+        accepted: [`(x-3)/(x+3)`],
+        steps: [
+          `Zähler faktorisieren (3. Binom): x² − 9 = (x − 3)(x + 3)`,
+          `Nenner faktorisieren (1. Binom): x² + 6x + 9 = (x + 3)² = (x + 3)(x + 3)`,
+          `Gemeinsamen Faktor (x + 3) kürzen`,
+          `Endergebnis: (x − 3) / (x + 3)`
+        ],
+        diagnose: function(norm) {
+          if (norm === `(x+3)/(x-3)`) {
+            return { type: `warn`, msg: `Vorzeichen vertauscht! Im Zähler bleibt (x − 3) stehen, im Nenner (x + 3).` };
+          }
+          if (norm === `((x-3)(x+3))/((x+3)^2)` || norm === `(x-3)(x+3)/((x+3)^2)`) {
+            return { type: `warn`, msg: `Richtig faktorisiert, aber du musst den Bruch noch vollständig kürzen! Streiche (x + 3) einmal oben und unten.` };
+          }
+          return null;
+        }
+      },
+
+      // MODUL 3 (Satz des Pythagoras)
+      {
+        id: `m3-1`,
+        module: `3`,
+        moduleLabel: `Satz des Pythagoras`,
+        diff: `basis`,
+        label: `Hypotenuse berechnen: a = 6 cm, b = 8 cm`,
+        promptHtml: `In einem rechtwinkligen Dreieck sind die Katheten <span class="math">a = 6 cm</span> und <span class="math">b = 8 cm</span> gegeben. Berechne die Hypotenuse <span class="math">c</span> (nur Zahl in cm).`,
+        inputLabel: `Hypotenuse c (in cm)`,
+        hint: `c = √(a² + b²)`,
+        isNumeric: true,
+        acceptedNumeric: 10,
+        tolerance: 0.05,
+        steps: [
+          `Formel: c² = a² + b²`,
+          `Einsetzen: c² = 6² + 8² = 36 + 64 = 100`,
+          `Wurzel ziehen: c = √100 = 10 cm`
+        ],
+        diagnoseNum: function(val) {
+          if (Math.abs(val - 100) < 0.01) {
+            return { type: `warn`, msg: `Das ist c² = 100! Vergiss am Schluss nicht, die Quadratwurzel √100 zu ziehen.` };
+          }
+          if (Math.abs(val - 14) < 0.01) {
+            return { type: `warn`, msg: `Achtung: Bei Pythagoras werden die Quadrate addiert (6² + 8²), nicht einfach 6 + 8!` };
+          }
+          return null;
+        }
+      },
+      {
+        id: `m3-2`,
+        module: `3`,
+        moduleLabel: `Satz des Pythagoras`,
+        diff: `standard`,
+        label: `Leiter an der Wand: Länge 5 m, Abstand 1,4 m`,
+        promptHtml: `Eine <span class="math">5 m</span> lange Leiter lehnt an einer senkrechten Hauswand. Ihr Fußpunkt ist <span class="math">1,4 m</span> von der Wand entfernt. Wie hoch (in m) reicht die Leiter hinauf?`,
+        inputLabel: `Höhe an der Wand (in m)`,
+        hint: `Die Leiter (5 m) ist die schräge Hypotenuse! Gesucht ist eine Kathete (Wandhöhe h).`,
+        isNumeric: true,
+        acceptedNumeric: 4.8,
+        tolerance: 0.05,
+        steps: [
+          `Skizze: Leiter = Hypotenuse c = 5 m, Abstand = Kathete a = 1,4 m`,
+          `Nach gesuchter Kathete h umformen: h² = c² − a²`,
+          `Rechnen: h² = 5² − 1,4² = 25 − 1,96 = 23,04`,
+          `Wurzel ziehen: h = √23,04 = 4,8 m`
+        ],
+        diagnoseNum: function(val) {
+          if (val > 5.05 && val < 5.35) {
+            return { type: `warn`, msg: `Kathete vs. Hypotenuse verwechselt! Du hast addiert (√(5² + 1,4²) ≈ 5,19 m). Eine senkrechte Höhe kann nicht länger sein als die Leiter (5 m) — hier musst du c² − a² rechnen!` };
+          }
+          if (Math.abs(val - 23.04) < 0.05) {
+            return { type: `warn`, msg: `Fast! 23,04 ist h². Ziehe noch die Wurzel: √23,04 = 4,8 m.` };
+          }
+          return null;
+        }
+      },
+      {
+        id: `m3-3`,
+        module: `3`,
+        moduleLabel: `Satz des Pythagoras`,
+        diff: `standard`,
+        label: `Rechtecksdiagonale: a = 9 cm, b = 12 cm`,
+        promptHtml: `Ein Rechteck hat die Seiten <span class="math">a = 9 cm</span> und <span class="math">b = 12 cm</span>. Berechne die Länge der Diagonale <span class="math">d</span> (in cm).`,
+        inputLabel: `Diagonale d (in cm)`,
+        hint: `Die Diagonale teilt das Rechteck in zwei rechtwinklige Dreiecke mit den Katheten a und b.`,
+        isNumeric: true,
+        acceptedNumeric: 15,
+        tolerance: 0.05,
+        steps: [
+          `Formel für Rechtecksdiagonale: d² = a² + b²`,
+          `Einsetzen: d² = 9² + 12² = 81 + 144 = 225`,
+          `Wurzel ziehen: d = √225 = 15 cm`
+        ],
+        diagnoseNum: function(val) {
+          if (Math.abs(val - 225) < 0.05) {
+            return { type: `warn`, msg: `Vergiss nicht die Quadratwurzel aus 225 zu ziehen!` };
+          }
+          return null;
+        }
+      },
+      {
+        id: `m3-4`,
+        module: `3`,
+        moduleLabel: `Höhen- & Kathetensatz`,
+        diff: `knifflig`,
+        label: `Höhensatz: p = 9 cm, q = 16 cm`,
+        promptHtml: `In einem rechtwinkligen Dreieck sind die Hypotenusenabschnitte <span class="math">p = 9 cm</span> und <span class="math">q = 16 cm</span> gegeben. Berechne zuerst die Höhe <span class="math">h</span> und dann über den Kathetensatz die Kathete <span class="math">a</span> (Format: <span class="math">h, a</span> — z. B. <span class="math">12, 15</span>).`,
+        inputLabel: `Höhe h und Kathete a (in cm, mit Beistrich trennen)`,
+        hint: `Höhensatz: h² = p · q. Kathetensatz: c = p + q = 25, dann a² = c · p.`,
+        isSetAnswer: true,
+        orderedPair: true,
+        acceptedSet: [`12`, `15`],
+        steps: [
+          `1. Höhensatz: h² = p · q = 9 · 16 = 144 → h = √144 = 12 cm`,
+          `2. Gesamte Hypotenuse: c = p + q = 9 + 16 = 25 cm`,
+          `3. Kathetensatz: a² = c · p = 25 · 9 = 225 → a = √225 = 15 cm`,
+          `Endergebnis: h = 12 cm, a = 15 cm (Eingabe: 12, 15)`
+        ],
+        diagnoseSet: function(vals) {
+          if (vals.length === 1) {
+            return { type: `warn`, msg: `Gib beide Zahlen getrennt durch ein Leerzeichen oder einen Beistrich an: zuerst h, dann a.` };
+          }
+          if (vals[0] === `144` || vals[1] === `225`) {
+            return { type: `warn`, msg: `Du hast h² bzw. a² eingetragen — ziehe noch die Wurzel!` };
+          }
+          return null;
+        }
+      }
+    ];
+
+    const EXAMS = {
+      A: {
+        title: `Probeschularbeit A: Terme, Binomische Formeln & Bruchterme`,
+        maxPoints: 24,
+        questions: [
+          {
+            id: `exA-1`,
+            points: 4,
+            diff: `basis`,
+            promptHtml: `<strong>Aufgabe 1 (4 P.):</strong> Vereinfache den Term: <span class="math">4(3x − 2) − (5x − 9)</span>`,
+            inputLabel: `Ergebnis Aufgabe 1`,
+            accepted: [`7x+1`, `1+7x`],
+            steps: [
+              `4(3x − 2) − (5x − 9)`,
+              `= 12x − 8 − 5x + 9`,
+              `= 7x + 1`
+            ],
+            diagnose: function(norm) {
+              if (norm === `7x-17`) return { type: `warn`, msg: `Vorzeichenfehler bei −(5x − 9): −(−9) wird zu +9!` };
+              return null;
+            }
+          },
+          {
+            id: `exA-2`,
+            points: 4,
+            diff: `standard`,
+            promptHtml: `<strong>Aufgabe 2 (4 P.):</strong> Multipliziere mithilfe der binomischen Formeln aus und fasse zusammen: <span class="math">(3x − 4)² − (x + 2)(x − 2)</span>`,
+            inputLabel: `Ergebnis Aufgabe 2`,
+            accepted: [`8x^2-24x+20`],
+            steps: [
+              `(3x − 4)² = 9x² − 24x + 16`,
+              `(x + 2)(x − 2) = x² − 4`,
+              `Minusklammer beachten: 9x² − 24x + 16 − (x² − 4)`,
+              `= 9x² − 24x + 16 − x² + 4 = 8x² − 24x + 20`
+            ],
+            diagnose: function(norm) {
+              if (norm === `8x^2-24x+12`) return { type: `warn`, msg: `Vorzeichenfehler bei −(x² − 4)! Aus −(−4) wird +4, also 16 + 4 = 20.` };
+              return null;
+            }
+          },
+          {
+            id: `exA-3`,
+            points: 4,
+            diff: `knifflig`,
+            promptHtml: `<strong>Aufgabe 3 (4 P.):</strong> Faktorisiere vollständig (höhere Potenzen): <span class="math">16a⁴ − 24a² + 9</span>`,
+            inputLabel: `Ergebnis Aufgabe 3`,
+            accepted: [`(4a^2-3)^2`, `(3-4a^2)^2`],
+            steps: [
+              `16a⁴ = (4a²)², 9 = 3²`,
+              `Mittelglied-Check: 2 · 4a² · 3 = 24a² (passt mit Minus)`,
+              `= (4a² − 3)²`
+            ],
+            diagnose: function(norm) {
+              if (norm === `(4a^2+3)^2`) return { type: `warn`, msg: `Vorzeichenfehler: Das Mittelglied ist negativ (−24a²).` };
+              return null;
+            }
+          },
+          {
+            id: `exA-4`,
+            points: 6,
+            diff: `standard`,
+            promptHtml: `<strong>Aufgabe 4 (6 P.):</strong> Bestimme die ausgeschlossenen Werte der Definitionsmenge von <span class="frac"><span>3x + 5</span><span>x(x + 7)</span></span> (mit Beistrich trennen).`,
+            inputLabel: `Ausgeschlossene Werte (z. B. 0, -7)`,
+            isSetAnswer: true,
+            acceptedSet: [`0`, `-7`],
+            steps: [
+              `Nenner = 0 setzen: x(x + 7) = 0`,
+              `Faktor 1: x = 0 → x ≠ 0`,
+              `Faktor 2: x + 7 = 0 → x ≠ −7`,
+              `D = ℝ \\ {−7; 0}`
+            ]
+          },
+          {
+            id: `exA-5`,
+            points: 6,
+            diff: `knifflig`,
+            promptHtml: `<strong>Aufgabe 5 (6 P.):</strong> Kürze den Bruchterm vollständig (für x ≠ 5, x ≠ −5): <span class="frac"><span>x² − 25</span><span>x² − 10x + 25</span></span>`,
+            inputLabel: `Gekürzter Bruchterm`,
+            accepted: [`(x+5)/(x-5)`],
+            steps: [
+              `Zähler (3. Binom): x² − 25 = (x + 5)(x − 5)`,
+              `Nenner (2. Binom): x² − 10x + 25 = (x − 5)²`,
+              `Gemeinsamen Faktor (x − 5) kürzen → (x + 5)/(x − 5)`
+            ]
+          }
+        ]
+      },
+      B: {
+        title: `Probeschularbeit B: Gemischte 4.-Klasse-Schularbeit (inkl. Pythagoras)`,
+        maxPoints: 24,
+        questions: [
+          {
+            id: `exB-1`,
+            points: 4,
+            diff: `basis`,
+            promptHtml: `<strong>Aufgabe 1 (4 P.):</strong> Wende die binomische Formel an: <span class="math">(5x + 2y)²</span>`,
+            inputLabel: `Ergebnis Aufgabe 1`,
+            accepted: [`25x^2+20xy+4y^2`, `4y^2+20xy+25x^2`],
+            steps: [
+              `(5x)² + 2 · 5x · 2y + (2y)²`,
+              `= 25x² + 20xy + 4y²`
+            ],
+            diagnose: function(norm) {
+              if (norm === `25x^2+4y^2`) return { type: `warn`, msg: `Mittleres Glied 2ab (+20xy) vergessen!` };
+              return null;
+            }
+          },
+          {
+            id: `exB-2`,
+            points: 4,
+            diff: `standard`,
+            promptHtml: `<strong>Aufgabe 2 (4 P.):</strong> Hebe vollständig heraus: <span class="math">15a²b − 20ab²</span>`,
+            inputLabel: `Ergebnis Aufgabe 2`,
+            accepted: [`5ab(3a-4b)`],
+            steps: [
+              `Größter gemeinsamer Faktor: 5ab`,
+              `= 5ab(3a − 4b)`
+            ]
+          },
+          {
+            id: `exB-3`,
+            points: 5,
+            diff: `standard`,
+            promptHtml: `<strong>Aufgabe 3 (5 P.):</strong> Kürze den Bruchterm vollständig (a, b ≠ 0): <span class="frac"><span>12a³b</span><span>18ab²</span></span>`,
+            inputLabel: `Gekürzter Bruchterm`,
+            accepted: [`(2a^2)/(3b)`, `2a^2/(3b)`],
+            steps: [
+              `Zahlen durch 6 kürzen: 12/18 = 2/3`,
+              `a³ : a = a² (Zähler), b : b² = 1/b (Nenner)`,
+              `Ergebnis: (2a²)/(3b)`
+            ]
+          },
+          {
+            id: `exB-4`,
+            points: 5,
+            diff: `standard`,
+            promptHtml: `<strong>Aufgabe 4 (5 P.):</strong> Ein gleichschenkliges Dreieck hat die Schenkel <span class="math">a = 13 cm</span> und die Basis <span class="math">c = 10 cm</span>. Berechne die Höhe <span class="math">h_c</span> (in cm).`,
+            inputLabel: `Höhe h_c (in cm)`,
+            isNumeric: true,
+            acceptedNumeric: 12,
+            tolerance: 0.05,
+            steps: [
+              `Die Höhe h_c halbiert die Basis c: c/2 = 10 : 2 = 5 cm`,
+              `Rechtwinkliges Teildreieck: a² = h_c² + (c/2)²`,
+              `h_c² = 13² − 5² = 169 − 25 = 144`,
+              `h_c = √144 = 12 cm`
+            ],
+            diagnoseNum: function(val) {
+              if (val > 8.2 && val < 8.4) return { type: `warn`, msg: `Hast du vergessen, die Basis c = 10 cm zu halbieren (c/2 = 5 cm)?` };
+              return null;
+            }
+          },
+          {
+            id: `exB-5`,
+            points: 6,
+            diff: `knifflig`,
+            promptHtml: `<strong>Aufgabe 5 (6 P.):</strong> In einem rechtwinkligen Dreieck sind <span class="math">p = 4 cm</span> und <span class="math">q = 9 cm</span> gegeben. Berechne die Höhe <span class="math">h</span> (in cm) mit dem Höhensatz.`,
+            inputLabel: `Höhe h (in cm)`,
+            isNumeric: true,
+            acceptedNumeric: 6,
+            tolerance: 0.05,
+            steps: [
+              `Höhensatz: h² = p · q`,
+              `h² = 4 · 9 = 36`,
+              `h = √36 = 6 cm`
+            ]
+          }
+        ]
+      }
+    };
+
+    const CHECKLIST_ITEMS = [
+      { id: `chk-1`, diff: `basis`, text: `Ich beachte KLAPUSTRI und löse Minusklammern ohne Vorzeichenfehler auf.` },
+      { id: `chk-2`, diff: `basis`, text: `Ich quadriere bei Termen wie (3a)² sowohl die Zahl als auch die Variable (9a²).` },
+      { id: `chk-3`, diff: `standard`, text: `Ich hebe bei Summen immer den größtmöglichen gemeinsamen Faktor (Zahl + Variablen) heraus.` },
+      { id: `chk-4`, diff: `basis`, text: `Ich beherrsche alle drei binomischen Formeln auswendig und vergesse das 2ab-Glied nie.` },
+      { id: `chk-5`, diff: `standard`, text: `Ich kann Ausdrücke wie 25x² − 30x + 9 rückwärts in (5x − 3)² faktorisieren.` },
+      { id: `chk-6`, diff: `knifflig`, text: `Ich erkenne binomische Formeln auch bei höheren Potenzen wie 9a⁴ − 12a² + 4 = (3a² − 2)².` },
+      { id: `chk-7`, diff: `standard`, text: `Ich bestimme bei Produkt-Nennern wie x(x − 3) alle ausgeschlossenen Werte der Definitionsmenge.` },
+      { id: `chk-8`, diff: `knifflig`, text: `Ich faktorisiere Zähler und Nenner vor dem Kürzen und kürze niemals aus einer Summe.` },
+      { id: `chk-9`, diff: `basis`, text: `Ich erkenne im rechtwinkligen Dreieck sofort die Hypotenuse gegenüber dem 90°-Winkel.` },
+      { id: `chk-10`, diff: `standard`, text: `Ich weiß, wann ich addieren (c² = a² + b²) und wann ich subtrahieren (a² = c² − b²) muss.` },
+      { id: `chk-11`, diff: `standard`, text: `Ich kann Pythagoras in Rechtecken, gleichschenkligen Dreiecken und bei Leiter-Aufgaben anwenden.` },
+      { id: `chk-12`, diff: `knifflig`, text: `Ich beherrsche den Höhensatz (h² = p·q) und den Kathetensatz (a² = c·p, b² = c·q).` }
+    ];
+
+    /* ========================================================================
+       2. APP STATE & PERSISTENCE (notebookAppApi)
+       ======================================================================== */
+    let appState = {
+      skipModule0: false,
+      streak: 0,
+      bestStreak: 0,
+      solvedIds: [],
+      answers: {},
+      checklist: {},
+      endlessSolved: 0,
+      printMode: `exercises`,
+      paperPreviewOpen: false,
+      activeExam: `A`,
+      examLocked: true,
+      examSubmitted: false,
+      examSecondsLeft: 3000,
+      examAnswers: {},
+      lastExamResult: null
+    };
+
+    let activeInputId = null;
+    let currentEndlessProblem = null;
+    let timerInterval = null;
+    let timerRunning = false;
+
+    async function loadAppState() {
+      if (!window.notebookAppApi || typeof window.notebookAppApi.getAppState !== `function`) return;
+      try {
+        const saved = await window.notebookAppApi.getAppState();
+        if (saved && typeof saved === `object`) {
+          appState = Object.assign({}, appState, saved);
+          if (!Array.isArray(appState.solvedIds)) appState.solvedIds = [];
+          if (!appState.answers) appState.answers = {};
+          if (!appState.checklist) appState.checklist = {};
+          if (!appState.examAnswers) appState.examAnswers = {};
+        }
+      } catch (err) {
+        // Use defaults if state unavailable
+      }
+    }
+
+    async function persistAppState() {
+      if (!window.notebookAppApi || typeof window.notebookAppApi.setAppState !== `function`) return;
+      try {
+        await window.notebookAppApi.setAppState(appState);
+      } catch (err) {
+        // Ignore transient write failure
+      }
+    }
+
+    /* ========================================================================
+       3. NORMALIZATION & INTELLIGENT CHECKER
+       ======================================================================== */
+    function normalizeMath(raw) {
+      if (!raw) return ``;
+      let s = String(raw).trim();
+      s = s.replace(/²/g, `^2`).replace(/³/g, `^3`).replace(/⁴/g, `^4`);
+      s = s.replace(/−/g, `-`).replace(/–/g, `-`).replace(/·/g, `*`).replace(/×/g, `*`);
+      s = s.replace(/\s+/g, ``);
+      s = s.replace(/\*/g, ``); // ignore explicit multiplication dots in algebraic terms
+      return s;
+    }
+
+    function normalizeNumber(raw) {
+      if (!raw) return NaN;
+      const cleaned = String(raw).trim().replace(`,`, `.`).replace(/[^\d.-]/g, ``);
+      if (!cleaned) return NaN;
+      return Number(cleaned);
+    }
+
+    function parseSetValues(raw) {
+      if (!raw) return [];
+      return String(raw)
+        .replace(/−/g, `-`)
+        .replace(/;/g, `,`)
+        .replace(/\bund\b/gi, `,`)
+        .replace(/x\s*≠/gi, ``)
+        .replace(/x\s*=/gi, ``)
+        .split(/[\s,]+/)
+        .map(function(t) { return t.trim().replace(`,`, `.`); })
+        .filter(function(t) { return t.length > 0; });
+    }
+
+    function evaluateExerciseObj(ex, userRaw) {
+      const trimmed = (userRaw || ``).trim();
+      if (!trimmed) {
+        return { ok: false, type: `err`, msg: `Bitte gib zuerst eine Antwort ein, bevor du prüfst.` };
+      }
+
+      if (ex.isNumeric) {
+        const num = normalizeNumber(trimmed);
+        if (isNaN(num)) {
+          return { ok: false, type: `err`, msg: `Bitte gib eine Zahl ein (z. B. 10 oder 4,8).` };
+        }
+        const tol = ex.tolerance || 0.05;
+        if (Math.abs(num - ex.acceptedNumeric) <= tol) {
+          return { ok: true, type: `ok`, msg: `Richtig! Sehr sauber gerechnet.` };
+        }
+        if (typeof ex.diagnoseNum === `function`) {
+          const diag = ex.diagnoseNum(num);
+          if (diag) return { ok: false, type: diag.type, msg: diag.msg };
+        }
+        return { ok: false, type: `err`, msg: `Leider noch nicht ganz richtig. Nutze den Tipp oder sieh dir den Lösungsweg an.` };
+      }
+
+      if (ex.isSetAnswer) {
+        const vals = parseSetValues(trimmed);
+        if (typeof ex.diagnoseSet === `function`) {
+          const diag = ex.diagnoseSet(vals);
+          if (diag) return { ok: false, type: diag.type, msg: diag.msg };
+        }
+        if (ex.orderedPair) {
+          const matchOrdered = vals.length === ex.acceptedSet.length && vals.every(function(v, idx) {
+            return Number(v) === Number(ex.acceptedSet[idx]);
+          });
+          if (matchOrdered) {
+            return { ok: true, type: `ok`, msg: `Richtig! Beide Größen korrekt bestimmt.` };
+          }
+          return { ok: false, type: `err`, msg: `Noch nicht ganz richtig. Achte auf die Reihenfolge (zuerst h, dann a).` };
+        }
+        const uniqueUser = Array.from(new Set(vals.map(function(v) { return String(Number(v)); }))).sort();
+        const uniqueExp = Array.from(new Set(ex.acceptedSet.map(function(v) { return String(Number(v)); }))).sort();
+        if (uniqueUser.length === uniqueExp.length && uniqueUser.every(function(v, i) { return v === uniqueExp[i]; })) {
+          return { ok: true, type: `ok`, msg: `Richtig! Alle verbotenen Werte vollständig erkannt.` };
+        }
+        if (uniqueUser.length === 1 && uniqueExp.length > 1 && uniqueExp.includes(uniqueUser[0])) {
+          return { ok: false, type: `warn`, msg: `Nur einen Wert gefunden! Ein Produkt im Nenner hat meist mehrere Faktoren — prüfe jeden Faktor auf 0.` };
+        }
+        return { ok: false, type: `err`, msg: `Noch nicht ganz richtig. Setze jeden Faktor im Nenner einzeln = 0.` };
+      }
+
+      const norm = normalizeMath(trimmed);
+      const acceptedNorms = ex.accepted.map(normalizeMath);
+      if (acceptedNorms.includes(norm)) {
+        return { ok: true, type: `ok`, msg: `Richtig! Perfekt umgeformt.` };
+      }
+      if (typeof ex.diagnose === `function`) {
+        const diag = ex.diagnose(norm);
+        if (diag) return { ok: false, type: diag.type, msg: diag.msg };
+      }
+      return { ok: false, type: `err`, msg: `Noch nicht ganz richtig. Prüfe Vorzeichen, Exponenten und Klammern oder schau dir den Lösungsweg an.` };
+    }
+
+    /* ========================================================================
+       4. RENDERING EXERCISES & MODULES
+       ======================================================================== */
+    function getDiffBadgeHtml(diff) {
+      if (diff === `basis`) return `<span class="tag tag--basis">🟢 Basis</span>`;
+      if (diff === `standard`) return `<span class="tag tag--standard">🔵 Standard-Schularbeit</span>`;
+      return `<span class="tag tag--knifflig">🔴 Knifflig / 1er-Niveau</span>`;
+    }
+
+    function buildExerciseCardHtml(ex, contextPrefix) {
+      const savedVal = (contextPrefix === `exam` ? appState.examAnswers[ex.id] : appState.answers[ex.id]) || ``;
+      const isSolved = contextPrefix === `core` && appState.solvedIds.includes(ex.id);
+      const isExam = contextPrefix === `exam`;
+      const lockedExam = isExam && appState.examLocked && !appState.examSubmitted;
+
+      let stepsHtml = ``;
+      ex.steps.forEach(function(st) {
+        stepsHtml += `<li class="solution-line">${st}</li>`;
+      });
+
+      const solBtnText = lockedExam ? `🔒 Im Prüfungsmodus gesperrt` : `Lösungsweg anzeigen`;
+      const solBtnDisabled = lockedExam ? `disabled` : ``;
+
+      return `
+        <article class="exercise-item ${isSolved ? `is-solved` : ``}" id="card-${ex.id}">
+          <div class="exercise-header">
+            <span class="exercise-id">${isExam ? `Schularbeits-Aufgabe` : `Aufgabe ${ex.id.toUpperCase()}`}</span>
+            ${getDiffBadgeHtml(ex.diff)}
+          </div>
+          <div class="exercise-prompt">${ex.promptHtml}</div>
+          <div class="input-row">
+            <div class="field-group">
+              <label for="inp-${ex.id}">${ex.inputLabel}</label>
+              <input
+                type="text"
+                id="inp-${ex.id}"
+                class="math-input"
+                value="${savedVal.replace(/"/g, `&quot;`)}"
+                onfocus="setActiveInput('${ex.id}')"
+                oninput="handleExerciseInput('${ex.id}', '${contextPrefix}', this.value)"
+                onkeydown="if(event.key==='Enter'){ ${isExam ? `` : `checkCoreExercise('${ex.id}')`} }"
+                autocomplete="off"
+                spellcheck="false"
+              >
+            </div>
+            ${!isExam ? `<button type="button" class="button button--small" onclick="checkCoreExercise('${ex.id}')">Prüfen</button>` : ``}
+            <button type="button" class="button button--secondary button--small" id="solbtn-${ex.id}" onclick="toggleSolution('${ex.id}')" ${solBtnDisabled}>${solBtnText}</button>
+          </div>
+          <div class="feedback-box" id="fb-${ex.id}" aria-live="polite"></div>
+          <div class="solution-panel" id="sol-${ex.id}">
+            <strong>Musterlösung (zeilenweise):</strong>
+            <ol class="solution-step-list">${stepsHtml}</ol>
+          </div>
+        </article>
+      `;
+    }
+
+    function renderCoreModules() {
+      const m0 = document.getElementById(`exercises-mod0`);
+      const m1 = document.getElementById(`exercises-mod1`);
+      const m2 = document.getElementById(`exercises-mod2`);
+      const m3 = document.getElementById(`exercises-mod3`);
+      if (!m0 || !m1 || !m2 || !m3) return;
+
+      m0.innerHTML = CORE_EXERCISES.filter(function(e) { return e.module === `0`; }).map(function(e) { return buildExerciseCardHtml(e, `core`); }).join(``);
+      m1.innerHTML = CORE_EXERCISES.filter(function(e) { return e.module === `1`; }).map(function(e) { return buildExerciseCardHtml(e, `core`); }).join(``);
+      m2.innerHTML = CORE_EXERCISES.filter(function(e) { return e.module === `2`; }).map(function(e) { return buildExerciseCardHtml(e, `core`); }).join(``);
+      m3.innerHTML = CORE_EXERCISES.filter(function(e) { return e.module === `3`; }).map(function(e) { return buildExerciseCardHtml(e, `core`); }).join(``);
+
+      // Apply module 0 skip state
+      const body0 = document.getElementById(`mod0-body`);
+      const btn0 = document.getElementById(`btn-toggle-mod0`);
+      if (body0 && btn0) {
+        if (appState.skipModule0) {
+          body0.classList.add(`is-collapsed`);
+          btn0.textContent = `Modul 0 wieder einblenden`;
+        } else {
+          body0.classList.remove(`is-collapsed`);
+          btn0.textContent = `Überspringen & einklappen`;
+        }
+      }
+    }
+
+    function toggleModule0() {
+      appState.skipModule0 = !appState.skipModule0;
+      const body0 = document.getElementById(`mod0-body`);
+      const btn0 = document.getElementById(`btn-toggle-mod0`);
+      if (body0 && btn0) {
+        if (appState.skipModule0) {
+          body0.classList.add(`is-collapsed`);
+          btn0.textContent = `Modul 0 wieder einblenden`;
+        } else {
+          body0.classList.remove(`is-collapsed`);
+          btn0.textContent = `Überspringen & einklappen`;
+        }
+      }
+      persistAppState();
+    }
+
+    function handleExerciseInput(id, contextPrefix, value) {
+      if (contextPrefix === `exam`) {
+        appState.examAnswers[id] = value;
+      } else if (contextPrefix === `core`) {
+        appState.answers[id] = value;
+      }
+      persistAppState();
+    }
+
+    function checkCoreExercise(id) {
+      const ex = CORE_EXERCISES.find(function(item) { return item.id === id; });
+      const inp = document.getElementById(`inp-${id}`);
+      const fb = document.getElementById(`fb-${id}`);
+      const card = document.getElementById(`card-${id}`);
+      if (!ex || !inp || !fb || !card) return;
+
+      const res = evaluateExerciseObj(ex, inp.value);
+      fb.className = `feedback-box is-visible feedback-box--${res.type}`;
+      fb.textContent = res.msg;
+
+      if (res.ok) {
+        if (!appState.solvedIds.includes(id)) {
+          appState.solvedIds.push(id);
+        }
+        appState.streak += 1;
+        if (appState.streak > appState.bestStreak) appState.bestStreak = appState.streak;
+        card.classList.add(`is-solved`);
+      } else {
+        appState.streak = 0;
+      }
+      updateKpiReadouts();
+      persistAppState();
+    }
+
+    function toggleSolution(id) {
+      const sol = document.getElementById(`sol-${id}`);
+      const btn = document.getElementById(`solbtn-${id}`);
+      if (!sol) return;
+      const open = sol.classList.toggle(`is-visible`);
+      if (btn && !btn.disabled) {
+        btn.textContent = open ? `Lösungsweg verbergen` : `Lösungsweg anzeigen`;
+      }
+    }
+
+    /* ========================================================================
+       5. INTERACTIVE SVG VISUALS (BINOMIAL PROOF & PYTHAGORAS)
+       ======================================================================== */
+    function syncBinomAFromSlider(val) {
+      const num = document.getElementById(`input-a`);
+      if (num) num.value = val;
+      renderBinomProof();
+    }
+    function syncBinomAFromNumber(val) {
+      const clamped = Math.max(2, Math.min(8, Number(val) || 5));
+      const sl = document.getElementById(`slider-a`);
+      if (sl) sl.value = clamped;
+      renderBinomProof();
+    }
+    function syncBinomBFromSlider(val) {
+      const num = document.getElementById(`input-b`);
+      if (num) num.value = val;
+      renderBinomProof();
+    }
+    function syncBinomBFromNumber(val) {
+      const clamped = Math.max(1, Math.min(5, Number(val) || 3));
+      const sl = document.getElementById(`slider-b`);
+      if (sl) sl.value = clamped;
+      renderBinomProof();
+    }
+
+    function renderBinomProof() {
+      const slA = document.getElementById(`slider-a`);
+      const slB = document.getElementById(`slider-b`);
+      const svg = document.getElementById(`binom-svg`);
+      const out = document.getElementById(`binom-proof-readout`);
+      const rA = document.getElementById(`readout-a`);
+      const rB = document.getElementById(`readout-b`);
+      if (!slA || !slB || !svg || !out) return;
+
+      const a = Number(slA.value) || 5;
+      const b = Number(slB.value) || 3;
+      if (rA) rA.textContent = `${a} cm`;
+      if (rB) rB.textContent = `${b} cm`;
+
+      const total = a + b;
+      const size = 240;
+      const ox = 46;
+      const oy = 40;
+      const aPx = (a / total) * size;
+      const bPx = (b / total) * size;
+
+      svg.innerHTML = `
+        <!-- Outer dimension labels -->
+        <text x="${ox + aPx / 2}" y="${oy - 12}" text-anchor="middle" font-family="Public Sans, sans-serif" font-size="14" font-weight="800" fill="var(--data-1)">a = ${a}</text>
+        <text x="${ox + aPx + bPx / 2}" y="${oy - 12}" text-anchor="middle" font-family="Public Sans, sans-serif" font-size="14" font-weight="800" fill="var(--data-3)">b = ${b}</text>
+        <text x="${ox - 12}" y="${oy + aPx / 2 + 5}" text-anchor="end" font-family="Public Sans, sans-serif" font-size="14" font-weight="800" fill="var(--data-1)">a</text>
+        <text x="${ox - 12}" y="${oy + aPx + bPx / 2 + 5}" text-anchor="end" font-family="Public Sans, sans-serif" font-size="14" font-weight="800" fill="var(--data-3)">b</text>
+
+        <!-- a^2 square -->
+        <rect x="${ox}" y="${oy}" width="${aPx}" height="${aPx}" fill="var(--svg-a2-fill)" stroke="var(--on-surface)" stroke-width="2"/>
+        <text x="${ox + aPx / 2}" y="${oy + aPx / 2 - 4}" text-anchor="middle" font-family="Public Sans, sans-serif" font-size="15" font-weight="800" fill="var(--on-primary-container)">a²</text>
+        <text x="${ox + aPx / 2}" y="${oy + aPx / 2 + 16}" text-anchor="middle" font-family="Public Sans, sans-serif" font-size="12" font-weight="700" fill="var(--on-primary-container)">= ${a * a}</text>
+
+        <!-- Top-right a*b -->
+        <rect x="${ox + aPx}" y="${oy}" width="${bPx}" height="${aPx}" fill="var(--svg-ab-fill)" stroke="var(--on-surface)" stroke-width="2"/>
+        <text x="${ox + aPx + bPx / 2}" y="${oy + aPx / 2 - 4}" text-anchor="middle" font-family="Public Sans, sans-serif" font-size="13" font-weight="800" fill="var(--on-warning-container)">a·b</text>
+        <text x="${ox + aPx + bPx / 2}" y="${oy + aPx / 2 + 14}" text-anchor="middle" font-family="Public Sans, sans-serif" font-size="11" font-weight="700" fill="var(--on-warning-container)">= ${a * b}</text>
+
+        <!-- Bottom-left a*b -->
+        <rect x="${ox}" y="${oy + aPx}" width="${aPx}" height="${bPx}" fill="var(--svg-ab-fill)" stroke="var(--on-surface)" stroke-width="2"/>
+        <text x="${ox + aPx / 2}" y="${oy + aPx + bPx / 2 - 2}" text-anchor="middle" font-family="Public Sans, sans-serif" font-size="13" font-weight="800" fill="var(--on-warning-container)">a·b = ${a * b}</text>
+
+        <!-- b^2 square -->
+        <rect x="${ox + aPx}" y="${oy + aPx}" width="${bPx}" height="${bPx}" fill="var(--svg-b2-fill)" stroke="var(--on-surface)" stroke-width="2"/>
+        <text x="${ox + aPx + bPx / 2}" y="${oy + aPx + bPx / 2 + 4}" text-anchor="middle" font-family="Public Sans, sans-serif" font-size="12" font-weight="800" fill="var(--on-positive-container)">b²=${b * b}</text>
+
+        <!-- Bottom total bar -->
+        <text x="${ox + size / 2}" y="${oy + size + 24}" text-anchor="middle" font-family="Public Sans, sans-serif" font-size="13" font-weight="700" fill="var(--on-surface)">Gesamtseite: a + b = ${total} cm</text>
+      `;
+
+      const totalArea = total * total;
+      const a2 = a * a;
+      const ab2 = 2 * a * b;
+      const b2 = b * b;
+      out.innerHTML = `
+        <strong>Rechnerische Probe:</strong>
+        <span class="tabular">(a + b)² = (${a} + ${b})² = ${total}² = <strong>${totalArea} cm²</strong></span>
+        <span class="tabular">a² + 2ab + b² = ${a2} + 2·${a * b} + ${b2} = ${a2} + ${ab2} + ${b2} = <strong>${totalArea} cm²</strong></span>
+        <span style="font-size: 0.875rem;">Ohne 2ab hättest du nur ${a2 + b2} cm² statt ${totalArea} cm²!</span>
+      `;
+    }
+
+    function setPythPreset(p, q) {
+      const svg = document.getElementById(`pyth-svg`);
+      const out = document.getElementById(`pyth-readout`);
+      if (!svg || !out) return;
+
+      const c = p + q;
+      const h = Math.sqrt(p * q);
+      const a = Math.sqrt(c * p);
+      const b = Math.sqrt(c * q);
+
+      // Coordinates scaled to fit nicely
+      const leftX = 30;
+      const rightX = 310;
+      const baseY = 175;
+      const scale = (rightX - leftX) / c;
+      const footX = leftX + q * scale;
+      const topY = baseY - h * scale;
+
+      svg.innerHTML = `
+        <polygon points="${leftX},${baseY} ${rightX},${baseY} ${footX},${topY}" fill="var(--svg-tri-fill)" stroke="var(--on-surface)" stroke-width="2.5"/>
+        <!-- Altitude h -->
+        <line x1="${footX}" y1="${topY}" x2="${footX}" y2="${baseY}" stroke="var(--data-2)" stroke-width="2.5" stroke-dasharray="5 3"/>
+        <!-- Right angle marker at foot -->
+        <polyline points="${footX - 10},${baseY} ${footX - 10},${baseY - 10} ${footX},${baseY - 10}" fill="none" stroke="var(--on-surface)" stroke-width="1.5"/>
+        <!-- Right angle dot at C -->
+        <circle cx="${footX}" cy="${topY + 12}" r="2.5" fill="var(--on-surface)"/>
+        <!-- Labels -->
+        <text x="${(leftX + footX) / 2 - 12}" y="${(baseY + topY) / 2 - 6}" font-family="Public Sans, sans-serif" font-size="13" font-weight="800" fill="var(--data-1)">b = ${b}</text>
+        <text x="${(rightX + footX) / 2 + 8}" y="${(baseY + topY) / 2 - 6}" font-family="Public Sans, sans-serif" font-size="13" font-weight="800" fill="var(--data-1)">a = ${a}</text>
+        <text x="${footX + 6}" y="${(topY + baseY) / 2 + 4}" font-family="Public Sans, sans-serif" font-size="13" font-weight="800" fill="var(--data-2)">h = ${h}</text>
+        <text x="${(leftX + footX) / 2}" y="${baseY + 20}" text-anchor="middle" font-family="Public Sans, sans-serif" font-size="13" font-weight="700" fill="var(--on-surface)">q = ${String(q).replace(`.`, `,`)}</text>
+        <text x="${(footX + rightX) / 2}" y="${baseY + 20}" text-anchor="middle" font-family="Public Sans, sans-serif" font-size="13" font-weight="700" fill="var(--on-surface)">p = ${String(p).replace(`.`, `,`)}</text>
+        <text x="${(leftX + rightX) / 2}" y="${baseY + 40}" text-anchor="middle" font-family="Public Sans, sans-serif" font-size="13" font-weight="800" fill="var(--primary)">c = p + q = ${c}</text>
+      `;
+
+      out.innerHTML = `
+        <div style="display: grid; gap: 4px;" class="tabular">
+          <div><strong>Pythagoras:</strong> a² + b² = ${a}² + ${b}² = ${a * a + b * b} = ${c}² = c²</div>
+          <div><strong>Höhensatz:</strong> h² = p · q = ${String(p).replace(`.`, `,`)} · ${String(q).replace(`.`, `,`)} = ${Number((p * q).toFixed(2))} → h = ${h}</div>
+          <div><strong>Kathetensatz:</strong> a² = c · p = ${c} · ${String(p).replace(`.`, `,`)} = ${Number((c * p).toFixed(2))} → a = ${a}</div>
+        </div>
+      `;
+    }
+
+    /* ========================================================================
+       6. ENDLESS PRACTICE MODE GENERATOR
+       ======================================================================== */
+    function randInt(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function generateEndlessProblem() {
+      const topicSel = document.getElementById(`endless-topic`);
+      const diffSel = document.getElementById(`endless-diff`);
+      const container = document.getElementById(`endless-container`);
+      if (!topicSel || !diffSel || !container) return;
+
+      const topic = topicSel.value;
+      const diff = diffSel.value;
+
+      const pools = [];
+
+      // Pool 1: Binom Basis/Standard
+      if ((topic === `all` || topic === `binom`) && (diff === `all` || diff === `basis` || diff === `standard`)) {
+        pools.push(function() {
+          const a = randInt(2, 6);
+          const b = randInt(2, 7);
+          const sign = Math.random() < 0.5 ? `+` : `-`;
+          const isBasis = a <= 3 && b <= 5;
+          const a2 = a * a;
+          const mid = 2 * a * b;
+          const b2 = b * b;
+          return {
+            id: `endless`,
+            diff: isBasis ? `basis` : `standard`,
+            promptHtml: `Multipliziere mithilfe der binomischen Formel aus: <span class="math">(${a}x ${sign === `+` ? `+` : `−`} ${b})²</span>`,
+            inputLabel: `Ausmultiplizierter Term`,
+            accepted: [`${a2}x^2${sign}${mid}x+${b2}`],
+            steps: [
+              `(${a}x ${sign === `+` ? `+` : `−`} ${b})²`,
+              `= (${a}x)² ${sign === `+` ? `+` : `−`} 2 · ${a}x · ${b} + ${b}²`,
+              `= ${a2}x² ${sign === `+` ? `+` : `−`} ${mid}x + ${b2}`
+            ],
+            diagnose: function(norm) {
+              if (norm === `${a2}x^2+${b2}`) return { type: `warn`, msg: `Mittleres Glied 2ab (${mid}x) vergessen!` };
+              const opp = sign === `+` ? `-` : `+`;
+              if (norm === `${a2}x^2${opp}${mid}x+${b2}`) return { type: `warn`, msg: `Vorzeichenfehler beim Mittelglied!` };
+              return null;
+            }
+          };
+        });
+      }
+
+      // Pool 2: Binom Höhere Potenzen (Knifflig)
+      if ((topic === `all` || topic === `binom`) && (diff === `all` || diff === `knifflig`)) {
+        pools.push(function() {
+          const a = randInt(2, 5);
+          const b = randInt(2, 5);
+          const sign = Math.random() < 0.5 ? `-` : `+`;
+          const a2 = a * a;
+          const mid = 2 * a * b;
+          const b2 = b * b;
+          return {
+            id: `endless`,
+            diff: `knifflig`,
+            promptHtml: `Faktorisiere vollständig (höhere Potenzen): <span class="math">${a2}a⁴ ${sign === `+` ? `+` : `−`} ${mid}a² + ${b2}</span>`,
+            inputLabel: `Faktorisierter Term`,
+            accepted: [`(${a}a^2${sign}${b})^2`],
+            steps: [
+              `Vorne: √(${a2}a⁴) = ${a}a²`,
+              `Hinten: √${b2} = ${b}`,
+              `Mittelglied-Check: 2 · ${a}a² · ${b} = ${mid}a²`,
+              `Ergebnis: (${a}a² ${sign === `+` ? `+` : `−`} ${b})²`
+            ],
+            diagnose: function(norm) {
+              const opp = sign === `+` ? `-` : `+`;
+              if (norm === `(${a}a^2${opp}${b})^2`) return { type: `warn`, msg: `Vorzeichenfehler in der Klammer!` };
+              if (norm === `(${a}a${sign}${b})^2`) return { type: `warn`, msg: `Du hast das Quadrat bei a² vergessen — (${a}a)² wäre nur ${a2}a², nicht ${a2}a⁴.` };
+              return null;
+            }
+          };
+        });
+      }
+
+      // Pool 3: Bruchterme Definitionsmenge (Standard/Knifflig)
+      if ((topic === `all` || topic === `bruch`) && (diff === `all` || diff === `standard` || diff === `basis`)) {
+        pools.push(function() {
+          const r = randInt(2, 9);
+          const plusMode = Math.random() < 0.5;
+          const excluded = plusMode ? -r : r;
+          const signTxt = plusMode ? `+` : `−`;
+          return {
+            id: `endless`,
+            diff: `standard`,
+            promptHtml: `Bestimme alle ausgeschlossenen Werte der Definitionsmenge: <span class="frac"><span>3x + 1</span><span>x · (x ${signTxt} ${r})</span></span>`,
+            inputLabel: `Ausgeschlossene Werte (mit Beistrich trennen)`,
+            isSetAnswer: true,
+            acceptedSet: [`0`, String(excluded)],
+            steps: [
+              `Nenner = 0 setzen: x · (x ${signTxt} ${r}) = 0`,
+              `Faktor 1: x = 0 → x ≠ 0`,
+              `Faktor 2: x ${signTxt} ${r} = 0 → x ≠ ${excluded}`,
+              `Ausgeschlossen: 0, ${excluded}`
+            ],
+            diagnoseSet: function(vals) {
+              if (vals.length === 1) return { type: `warn`, msg: `Beide Faktoren des Produkts prüfen! Du hast nur einen Wert angegeben.` };
+              return null;
+            }
+          };
+        });
+      }
+
+      // Pool 4: Bruchterme Kürzen mit Binom (Knifflig)
+      if ((topic === `all` || topic === `bruch`) && (diff === `all` || diff === `knifflig` || diff === `standard`)) {
+        pools.push(function() {
+          const k = randInt(2, 7);
+          const k2 = k * k;
+          const kDouble = 2 * k;
+          return {
+            id: `endless`,
+            diff: `knifflig`,
+            promptHtml: `Kürze vollständig (für x ≠ ${k}, x ≠ −${k}): <span class="frac"><span>x² − ${k2}</span><span>x² + ${kDouble}x + ${k2}</span></span>`,
+            inputLabel: `Gekürzter Bruchterm`,
+            accepted: [`(x-${k})/(x+${k})`],
+            steps: [
+              `Zähler (3. Binom): (x − ${k})(x + ${k})`,
+              `Nenner (1. Binom): (x + ${k})²`,
+              `Kürzen durch (x + ${k}) → (x − ${k}) / (x + ${k})`
+            ],
+            diagnose: function(norm) {
+              if (norm === `(x+${k})/(x-${k})`) return { type: `warn`, msg: `Zähler und Nenner verwechselt / Vorzeichen vertauscht!` };
+              return null;
+            }
+          };
+        });
+      }
+
+      // Pool 5: Pythagoras (Basis / Standard)
+      if ((topic === `all` || topic === `pyth`) && (diff === `all` || diff === `basis` || diff === `standard`)) {
+        pools.push(function() {
+          const triples = [[3, 4, 5], [5, 12, 13], [8, 15, 17], [6, 8, 10]];
+          const t = triples[randInt(0, triples.length - 1)];
+          const mult = randInt(1, 2);
+          const a = t[0] * mult;
+          const b = t[1] * mult;
+          const c = t[2] * mult;
+          const askHyp = Math.random() < 0.5;
+          if (askHyp) {
+            return {
+              id: `endless`,
+              diff: `basis`,
+              promptHtml: `Rechtwinkliges Dreieck: <span class="math">a = ${a} cm</span>, <span class="math">b = ${b} cm</span>. Berechne die Hypotenuse <span class="math">c</span> (in cm).`,
+              inputLabel: `Hypotenuse c (in cm)`,
+              isNumeric: true,
+              acceptedNumeric: c,
+              tolerance: 0.05,
+              steps: [`c² = ${a}² + ${b}² = ${a * a + b * b}`, `c = √${a * a + b * b} = ${c} cm`]
+            };
+          } else {
+            return {
+              id: `endless`,
+              diff: `standard`,
+              promptHtml: `Rechtwinkliges Dreieck: Hypotenuse <span class="math">c = ${c} cm</span>, Kathete <span class="math">a = ${a} cm</span>. Berechne die zweite Kathete <span class="math">b</span> (in cm).`,
+              inputLabel: `Kathete b (in cm)`,
+              isNumeric: true,
+              acceptedNumeric: b,
+              tolerance: 0.05,
+              steps: [`b² = c² − a² = ${c}² − ${a}² = ${c * c - a * a}`, `b = √${c * c - a * a} = ${b} cm`],
+              diagnoseNum: function(val) {
+                if (val > c) return { type: `warn`, msg: `Achtung: Eine Kathete muss kürzer sein als die Hypotenuse (${c} cm)! Hier muss subtrahiert werden.` };
+                return null;
+              }
+            };
+          }
+        });
+      }
+
+      // Pool 6: Höhensatz (Knifflig)
+      if ((topic === `all` || topic === `pyth`) && (diff === `all` || diff === `knifflig`)) {
+        pools.push(function() {
+          const pairs = [[4, 9, 6], [9, 16, 12], [2, 8, 4], [3, 12, 6], [4, 16, 8]];
+          const pr = pairs[randInt(0, pairs.length - 1)];
+          return {
+            id: `endless`,
+            diff: `knifflig`,
+            promptHtml: `Höhensatz im rechtwinkligen Dreieck: <span class="math">p = ${pr[0]} cm</span>, <span class="math">q = ${pr[1]} cm</span>. Berechne die Höhe <span class="math">h</span> (in cm).`,
+            inputLabel: `Höhe h (in cm)`,
+            isNumeric: true,
+            acceptedNumeric: pr[2],
+            tolerance: 0.05,
+            steps: [`h² = p · q = ${pr[0]} · ${pr[1]} = ${pr[0] * pr[1]}`, `h = √${pr[0] * pr[1]} = ${pr[2]} cm`]
+          };
+        });
+      }
+
+      const builder = pools.length > 0 ? pools[randInt(0, pools.length - 1)] : null;
+      if (!builder) {
+        container.innerHTML = `<div class="inset">Für diese Filterkombination gibt es aktuell keine Aufgaben. Wähle „Alle Stufen“.</div>`;
+        return;
+      }
+
+      currentEndlessProblem = builder();
+      let stepsHtml = currentEndlessProblem.steps.map(function(s) { return `<li class="solution-line">${s}</li>`; }).join(``);
+      container.innerHTML = `
+        <article class="exercise-item" id="card-endless">
+          <div class="exercise-header">
+            <span class="exercise-id">Zufallsaufgabe</span>
+            ${getDiffBadgeHtml(currentEndlessProblem.diff)}
+          </div>
+          <div class="exercise-prompt">${currentEndlessProblem.promptHtml}</div>
+          <div class="input-row">
+            <div class="field-group">
+              <label for="inp-endless">${currentEndlessProblem.inputLabel}</label>
+              <input type="text" id="inp-endless" class="math-input" onfocus="setActiveInput('endless')" onkeydown="if(event.key==='Enter'){ checkEndlessProblem() }" autocomplete="off" spellcheck="false">
+            </div>
+            <button type="button" class="button button--small" onclick="checkEndlessProblem()">Prüfen</button>
+            <button type="button" class="button button--secondary button--small" id="solbtn-endless" onclick="toggleSolution('endless')">Lösungsweg anzeigen</button>
+          </div>
+          <div class="feedback-box" id="fb-endless" aria-live="polite"></div>
+          <div class="solution-panel" id="sol-endless">
+            <strong>Musterlösung (zeilenweise):</strong>
+            <ol class="solution-step-list">${stepsHtml}</ol>
+          </div>
+        </article>
+      `;
+    }
+
+    function checkEndlessProblem() {
+      if (!currentEndlessProblem) return;
+      const inp = document.getElementById(`inp-endless`);
+      const fb = document.getElementById(`fb-endless`);
+      const card = document.getElementById(`card-endless`);
+      if (!inp || !fb || !card) return;
+
+      const res = evaluateExerciseObj(currentEndlessProblem, inp.value);
+      fb.className = `feedback-box is-visible feedback-box--${res.type}`;
+      fb.textContent = res.msg;
+
+      if (res.ok) {
+        if (!card.dataset.counted) {
+          card.dataset.counted = `true`;
+          appState.endlessSolved += 1;
+          appState.streak += 1;
+          if (appState.streak > appState.bestStreak) appState.bestStreak = appState.streak;
+        }
+        card.classList.add(`is-solved`);
+      } else {
+        appState.streak = 0;
+      }
+      updateKpiReadouts();
+      persistAppState();
+    }
+
+    /* ========================================================================
+       7. PRACTICE EXAMS (TIMER, LOCKABLE SOLUTIONS, GRADING SCALE)
+       ======================================================================== */
+    function selectExam(which) {
+      appState.activeExam = which;
+      appState.examSubmitted = false;
+      appState.examLocked = true;
+      renderExamView();
+      persistAppState();
+    }
+
+    function renderExamView() {
+      const btnA = document.getElementById(`btn-select-examA`);
+      const btnB = document.getElementById(`btn-select-examB`);
+      const container = document.getElementById(`exam-questions-container`);
+      const banner = document.getElementById(`exam-result-banner`);
+      const unlockBtn = document.getElementById(`btn-unlock-exam`);
+      if (!container || !btnA || !btnB) return;
+
+      if (appState.activeExam === `A`) {
+        btnA.className = `button`;
+        btnB.className = `button button--secondary`;
+      } else {
+        btnA.className = `button button--secondary`;
+        btnB.className = `button`;
+      }
+
+      if (unlockBtn) {
+        unlockBtn.textContent = (appState.examLocked && !appState.examSubmitted) ? `Lösungen entsperren` : `Prüfungsmodus aktivieren (sperren)`;
+      }
+
+      const exam = EXAMS[appState.activeExam];
+      container.innerHTML = exam.questions.map(function(q) { return buildExerciseCardHtml(q, `exam`); }).join(``);
+
+      if (banner) {
+        if (!appState.examSubmitted) {
+          banner.className = `feedback-box`;
+          banner.textContent = ``;
+        }
+      }
+      updateTimerDisplay();
+    }
+
+    function updateTimerDisplay() {
+      const el = document.getElementById(`exam-timer-display`);
+      if (!el) return;
+      const mins = Math.floor(appState.examSecondsLeft / 60);
+      const secs = appState.examSecondsLeft % 60;
+      el.textContent = `${String(mins).padStart(2, `0`)}:${String(secs).padStart(2, `0`)}`;
+      if (appState.examSecondsLeft <= 300) {
+        el.classList.add(`is-urgent`);
+      } else {
+        el.classList.remove(`is-urgent`);
+      }
+    }
+
+    function toggleExamTimer() {
+      const btn = document.getElementById(`btn-timer-start`);
+      if (timerRunning) {
+        clearInterval(timerInterval);
+        timerRunning = false;
+        if (btn) btn.textContent = `Timer fortsetzen`;
+      } else {
+        timerRunning = true;
+        if (btn) btn.textContent = `Timer pausieren`;
+        timerInterval = setInterval(function() {
+          if (appState.examSecondsLeft > 0) {
+            appState.examSecondsLeft -= 1;
+            updateTimerDisplay();
+            if (appState.examSecondsLeft % 15 === 0) persistAppState();
+          } else {
+            clearInterval(timerInterval);
+            timerRunning = false;
+            submitExam();
+          }
+        }, 1000);
+      }
+    }
+
+    function resetExamTimer() {
+      clearInterval(timerInterval);
+      timerRunning = false;
+      appState.examSecondsLeft = 3000;
+      const btn = document.getElementById(`btn-timer-start`);
+      if (btn) btn.textContent = `Timer starten`;
+      updateTimerDisplay();
+      persistAppState();
+    }
+
+    function toggleExamLock(btn) {
+      if (appState.examLocked && btn.dataset.armed !== `true`) {
+        btn.dataset.armed = `true`;
+        btn.textContent = `Wirklich vor Abgabe entsperren?`;
+        return;
+      }
+      btn.dataset.armed = `false`;
+      appState.examLocked = !appState.examLocked;
+      if (appState.examLocked) appState.examSubmitted = false;
+      renderExamView();
+      persistAppState();
+    }
+
+    function computeAustrianGrade(points, maxPoints) {
+      const pct = (points / maxPoints) * 100;
+      if (pct >= 87.5) return { grade: 1, label: `Sehr gut (1)` };
+      if (pct >= 75.0) return { grade: 2, label: `Gut (2)` };
+      if (pct >= 62.5) return { grade: 3, label: `Befriedigend (3)` };
+      if (pct >= 50.0) return { grade: 4, label: `Genügend (4)` };
+      return { grade: 5, label: `Nicht genügend (5)` };
+    }
+
+    function submitExam() {
+      clearInterval(timerInterval);
+      timerRunning = false;
+      const startBtn = document.getElementById(`btn-timer-start`);
+      if (startBtn) startBtn.textContent = `Timer starten`;
+
+      appState.examSubmitted = true;
+      appState.examLocked = false;
+      renderExamView();
+
+      const exam = EXAMS[appState.activeExam];
+      let earned = 0;
+
+      exam.questions.forEach(function(q) {
+        const val = appState.examAnswers[q.id] || ``;
+        const res = evaluateExerciseObj(q, val);
+        const fb = document.getElementById(`fb-${q.id}`);
+        const card = document.getElementById(`card-${q.id}`);
+        if (fb) {
+          fb.className = `feedback-box is-visible feedback-box--${res.type}`;
+          fb.textContent = res.ok ? `Volle Punktzahl (+${q.points} P.): ${res.msg}` : `0 / ${q.points} P.: ${res.msg}`;
+        }
+        if (res.ok) {
+          earned += q.points;
+          if (card) card.classList.add(`is-solved`);
+        }
+      });
+
+      const gradeInfo = computeAustrianGrade(earned, exam.maxPoints);
+      appState.lastExamResult = {
+        exam: appState.activeExam,
+        points: earned,
+        max: exam.maxPoints,
+        grade: gradeInfo.grade,
+        label: gradeInfo.label
+      };
+
+      const banner = document.getElementById(`exam-result-banner`);
+      if (banner) {
+        const cls = gradeInfo.grade <= 3 ? `ok` : (gradeInfo.grade === 4 ? `warn` : `err`);
+        banner.className = `feedback-box is-visible feedback-box--${cls}`;
+        banner.textContent = `Auswertung ${exam.title}: ${earned} von ${exam.maxPoints} Punkten (${Math.round((earned / exam.maxPoints) * 100)} %) → Note: ${gradeInfo.label}. Alle Musterlösungen sind jetzt freigeschaltet.`;
+      }
+      updateKpiReadouts();
+      persistAppState();
+    }
+
+    /* ========================================================================
+       8. CHECKLIST & KPI READOUTS
+       ======================================================================== */
+    function renderChecklist() {
+      const container = document.getElementById(`checklist-container`);
+      if (!container) return;
+      container.innerHTML = CHECKLIST_ITEMS.map(function(item) {
+        const checked = Boolean(appState.checklist[item.id]);
+        return `
+          <label class="check-row">
+            <input type="checkbox" ${checked ? `checked` : ``} onchange="toggleChecklistItem('${item.id}', this.checked)">
+            <span>${getDiffBadgeHtml(item.diff)} ${item.text}</span>
+          </label>
+        `;
+      }).join(``);
+      updateKpiReadouts();
+    }
+
+    function toggleChecklistItem(id, checked) {
+      appState.checklist[id] = checked;
+      updateKpiReadouts();
+      persistAppState();
+    }
+
+    function updateKpiReadouts() {
+      const totalCore = CORE_EXERCISES.length;
+      const solvedCount = appState.solvedIds.length;
+      const checkDone = CHECKLIST_ITEMS.filter(function(i) { return appState.checklist[i.id]; }).length;
+      const checkPct = Math.round((checkDone / CHECKLIST_ITEMS.length) * 100);
+
+      const setTxt = function(id, txt) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = txt;
+      };
+
+      setTxt(`hdr-streak`, String(appState.streak));
+      setTxt(`hdr-solved`, `${solvedCount} / ${totalCore}`);
+      setTxt(`hdr-check`, `${checkPct} %`);
+
+      setTxt(`kpi-streak`, String(appState.streak));
+      setTxt(`kpi-best-streak`, String(appState.bestStreak));
+      setTxt(`kpi-solved`, `${solvedCount} / ${totalCore}`);
+      setTxt(`kpi-endless`, String(appState.endlessSolved));
+      setTxt(`kpi-check-pct`, `${checkPct} %`);
+      setTxt(`kpi-check-count`, `${checkDone} von ${CHECKLIST_ITEMS.length}`);
+      setTxt(`endless-streak-badge`, String(appState.streak));
+
+      if (appState.lastExamResult) {
+        setTxt(`kpi-exam-grade`, appState.lastExamResult.label);
+        setTxt(`kpi-exam-points`, `Schularbeit ${appState.lastExamResult.exam}: ${appState.lastExamResult.points} / ${appState.lastExamResult.max} P.`);
+      } else {
+        setTxt(`kpi-exam-grade`, `Noch offen`);
+        setTxt(`kpi-exam-points`, `Wähle Schularbeit A oder B`);
+      }
+
+      const bar = document.getElementById(`checklist-progress-bar`);
+      if (bar) bar.style.width = `${checkPct}%`;
+
+      const statusTxt = document.getElementById(`checklist-status-text`);
+      if (statusTxt) {
+        if (checkPct === 100) {
+          statusTxt.textContent = `12 von 12 Punkten sicher — du bist bestens vorbereitet für die Schularbeit!`;
+        } else {
+          statusTxt.textContent = `${checkDone} von ${CHECKLIST_ITEMS.length} Kompetenzen abgehakt (${checkPct} %).`;
+        }
+      }
+    }
+
+    /* ========================================================================
+       9. PRINT & STUDY DASHBOARD + TXT EXPORT
+       ======================================================================== */
+    function setPrintMode(mode) {
+      appState.printMode = mode;
+      const map = {
+        exercises: `lbl-print-exercises`,
+        solutions: `lbl-print-solutions`,
+        examA: `lbl-print-examA`,
+        examB: `lbl-print-examB`,
+        bundle: `lbl-print-bundle`
+      };
+      Object.keys(map).forEach(function(k) {
+        const lbl = document.getElementById(map[k]);
+        if (lbl) {
+          if (k === mode) lbl.classList.add(`is-selected`);
+          else lbl.classList.remove(`is-selected`);
+        }
+      });
+      buildPaperSheetHtml();
+      persistAppState();
+    }
+
+    function buildPaperSheetHtml() {
+      const mode = appState.printMode || `exercises`;
+      let html = ``;
+
+      if (mode === `exercises` || mode === `bundle`) {
+        html += `<h2>Übungsblatt: Terme, Binome, Bruchterme &amp; Pythagoras</h2>
+                 <p class="muted">Name: ___________________________ &nbsp;&nbsp; Datum: ______________</p>`;
+        CORE_EXERCISES.forEach(function(ex, idx) {
+          html += `
+            <div class="print-sheet-item">
+              <div><strong>${idx + 1}. [${ex.moduleLabel}]</strong> ${ex.promptHtml}</div>
+              <div class="print-work-space"></div>
+            </div>
+          `;
+        });
+      }
+
+      if (mode === `solutions` || mode === `bundle`) {
+        html += `<h2 style="margin-top: var(--space-lg);">Musterlösungen (zeilenweise Rechenwege)</h2>`;
+        CORE_EXERCISES.forEach(function(ex, idx) {
+          const lines = ex.steps.map(function(s) { return `<div>${s}</div>`; }).join(``);
+          html += `
+            <div class="print-sheet-item">
+              <div><strong>Lösung zu ${idx + 1}:</strong> ${ex.label}</div>
+              <div style="margin-top: 4px; padding-left: 1rem; border-left: 2px solid var(--on-surface);">${lines}</div>
+            </div>
+          `;
+        });
+      }
+
+      if (mode === `examA` || mode === `examB`) {
+        const exObj = EXAMS[mode === `examA` ? `A` : `B`];
+        html += `<h2>${exObj.title}</h2>
+                 <p class="muted">Arbeitszeit: 50 Minuten · Gesamtpunkte: ${exObj.maxPoints} · Name: _________________________</p>`;
+        exObj.questions.forEach(function(q) {
+          html += `
+            <div class="print-sheet-item">
+              <div>${q.promptHtml}</div>
+              <div class="print-work-space"></div>
+            </div>
+          `;
+        });
+        html += `
+          <div style="margin-top: var(--space-lg);">
+            <strong>Notenschlüssel (24 Punkte):</strong>
+            Sehr gut (21–24 P.) · Gut (18–20,5 P.) · Befriedigend (15–17,5 P.) · Genügend (12–14,5 P.) · Nicht genügend (&lt; 12 P.)
+          </div>
+        `;
+      }
+
+      const printTarget = document.getElementById(`print-only-sheet`);
+      const previewTarget = document.getElementById(`paper-preview-box`);
+      if (printTarget) printTarget.innerHTML = html;
+      if (previewTarget) previewTarget.innerHTML = html;
+    }
+
+    function togglePaperPreview() {
+      const box = document.getElementById(`paper-preview-box`);
+      const btn = document.getElementById(`btn-toggle-paper`);
+      if (!box || !btn) return;
+      buildPaperSheetHtml();
+      const hidden = box.classList.toggle(`is-hidden`);
+      btn.textContent = hidden ? `Papier-Vorschau einblenden` : `Papier-Vorschau ausblenden`;
+    }
+
+    function triggerPaperPrint() {
+      buildPaperSheetHtml();
+      window.print();
+    }
+
+    function downloadPaperTxt() {
+      const mode = appState.printMode || `exercises`;
+      let lines = [`SCHULARBEITS-TRAINER MATHEMATIK (3./4. KLASSE MS & AHS)`, `========================================================`, ``];
+
+      if (mode === `exercises` || mode === `bundle`) {
+        lines.push(`ÜBUNGSAUFGABEN:`);
+        CORE_EXERCISES.forEach(function(ex, idx) {
+          lines.push(`${idx + 1}. [${ex.moduleLabel}] ${ex.label}`);
+          lines.push(`   Rechenweg: ____________________________________________`);
+          lines.push(``);
+        });
+      }
+      if (mode === `solutions` || mode === `bundle`) {
+        lines.push(`MUSTERLÖSUNGEN (ZEILENWEISE):`);
+        CORE_EXERCISES.forEach(function(ex, idx) {
+          lines.push(`Lösung ${idx + 1}: ${ex.label}`);
+          ex.steps.forEach(function(s) { lines.push(`   ${s}`); });
+          lines.push(``);
+        });
+      }
+      if (mode === `examA` || mode === `examB`) {
+        const key = mode === `examA` ? `A` : `B`;
+        const exObj = EXAMS[key];
+        lines.push(exObj.title);
+        lines.push(`Arbeitszeit: 50 Min. | Gesamtpunkte: ${exObj.maxPoints}`);
+        lines.push(``);
+        exObj.questions.forEach(function(q, idx) {
+          lines.push(`Aufgabe ${idx + 1} (${q.points} P.): ${q.inputLabel}`);
+          lines.push(`Lösungsschritte zum Abgleich:`);
+          q.steps.forEach(function(s) { lines.push(`   ${s}`); });
+          lines.push(``);
+        });
+      }
+
+      const content = lines.join(`\n`);
+      if (window.notebookAppApi && typeof window.notebookAppApi.triggerFileDownload === `function`) {
+        window.notebookAppApi.triggerFileDownload({
+          content: content,
+          contentType: `text/plain`,
+          encoding: `UTF-8`,
+          filename: `mathe-schularbeit-${mode}.txt`
+        });
+      }
+    }
+
+    function handleResetProgress(btn) {
+      if (btn.dataset.armed !== `true`) {
+        btn.dataset.armed = `true`;
+        btn.textContent = `Nochmal klicken zum Zurücksetzen`;
+        return;
+      }
+      btn.dataset.armed = `false`;
+      btn.textContent = `Fortschritt zurücksetzen`;
+      appState.streak = 0;
+      appState.bestStreak = 0;
+      appState.solvedIds = [];
+      appState.answers = {};
+      appState.checklist = {};
+      appState.endlessSolved = 0;
+      appState.examSubmitted = false;
+      appState.examLocked = true;
+      appState.examAnswers = {};
+      appState.lastExamResult = null;
+      resetExamTimer();
+      renderAllViews();
+      persistAppState();
+    }
+
+    /* ========================================================================
+       10. PHONE-FRIENDLY MATH KEYBOARD
+       ======================================================================== */
+    function setActiveInput(id) {
+      document.querySelectorAll(`.math-input`).forEach(function(el) {
+        el.classList.remove(`is-active-target`);
+      });
+      activeInputId = `inp-${id}`;
+      const el = document.getElementById(activeInputId);
+      const lbl = document.getElementById(`keyboard-target-label`);
+      if (el) el.classList.add(`is-active-target`);
+      if (lbl) lbl.textContent = `Aktives Feld: ${id.toUpperCase()}`;
+    }
+
+    function insertMathSymbol(sym) {
+      if (!activeInputId) {
+        const first = document.querySelector(`.math-input`);
+        if (first) activeInputId = first.id;
+      }
+      const el = activeInputId ? document.getElementById(activeInputId) : null;
+      if (!el) return;
+      const start = el.selectionStart || el.value.length;
+      const end = el.selectionEnd || el.value.length;
+      el.value = el.value.slice(0, start) + sym + el.value.slice(end);
+      el.focus();
+      el.setSelectionRange(start + sym.length, start + sym.length);
+      el.dispatchEvent(new Event(`input`));
+    }
+
+    function backspaceMathSymbol() {
+      const el = activeInputId ? document.getElementById(activeInputId) : null;
+      if (!el || !el.value) return;
+      const start = el.selectionStart || el.value.length;
+      const end = el.selectionEnd || el.value.length;
+      if (start !== end) {
+        el.value = el.value.slice(0, start) + el.value.slice(end);
+        el.setSelectionRange(start, start);
+      } else if (start > 0) {
+        el.value = el.value.slice(0, start - 1) + el.value.slice(start);
+        el.setSelectionRange(start - 1, start - 1);
+      }
+      el.focus();
+      el.dispatchEvent(new Event(`input`));
+    }
+
+    function toggleKeyboardDock() {
+      const dock = document.getElementById(`math-keyboard-dock`);
+      const btn = document.getElementById(`btn-toggle-kb`);
+      if (!dock || !btn) return;
+      const collapsed = dock.classList.toggle(`is-collapsed`);
+      btn.textContent = collapsed ? `Tastatur einblenden` : `Tastatur ausblenden`;
+    }
+
+    /* ========================================================================
+       11. BOOTSTRAP
+       ======================================================================== */
+    function renderAllViews() {
+      renderCoreModules();
+      renderBinomProof();
+      setPythPreset(9, 16);
+      generateEndlessProblem();
+      renderExamView();
+      renderChecklist();
+      setPrintMode(appState.printMode || `exercises`);
+      updateKpiReadouts();
+    }
+
+    document.addEventListener(`DOMContentLoaded`, async function() {
+      await loadAppState();
+      renderAllViews();
+      // Wire the examB radio button cleanly
+      const radioB = document.querySelector(`input[name="printMode"][value="examB"]`);
+      if (radioB) {
+        radioB.addEventListener(`change`, function() { setPrintMode(`examB`); });
+      }
+      if (window.notebookAppApi && typeof window.notebookAppApi.notifyAppReady === `function`) {
+        window.notebookAppApi.notifyAppReady();
+      }
+    });
+  </script>
+</body>
+</html>
